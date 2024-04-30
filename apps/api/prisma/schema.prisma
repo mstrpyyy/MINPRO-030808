@@ -10,12 +10,118 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
+enum EventCategory {
+  Sports
+  Conferences
+  Expos
+  Concerts
+  Festivals
+  ArtPerformance
+}
+
+enum TransactionStatus {
+  Pending
+  Paid
+  Cancel
+}
+
+model User {
+  id             Int           @id @default(autoincrement())
+  name           String
+  email          String        @unique
+  profilePicture String?       @db.LongText
+  password       String        @db.LongText
+  isActive       Boolean       @default(false)
+  referral       String        @unique
+  isRedeem       Boolean       @default(true)
+  points         Int
+  wishlist       Wishlist?
+  Transaction    Transaction[]
+  review         review[]
+}
+
+model Organizer {
+  id             Int     @id @default(autoincrement())
+  name           String
+  email          String  @unique
+  profilePicture String? @db.LongText
+  password       String  @db.LongText
+  isActive       Boolean @default(false)
+  event          Event[]
+}
+
+model Event {
+  id           Int            @id @default(autoincrement())
+  name         String
+  organizerId  Int
+  date         DateTime       @default(now())
+  price        Int
+  category     EventCategory
+  location     String
+  stock        Int
+  description  String?        @db.LongText
+  organizer    Organizer      @relation(fields: [organizerId], references: [id])
+  wishlistItem WishlistItem[]
+  Transaction  Transaction[]
+  review       review[]
+  Promo        Promo[]
+}
+
+model Wishlist {
+  id           Int            @id @default(autoincrement())
+  userId       Int            @unique
+  user         User           @relation(fields: [userId], references: [id])
+  wishlistItem WishlistItem[]
+}
+
+model WishlistItem {
+  id         Int      @id @default(autoincrement())
+  wishlistId Int
+  eventId    Int
+  wishlist   Wishlist @relation(fields: [wishlistId], references: [id])
+  event      Event    @relation(fields: [eventId], references: [id])
+}
+
+model Promo {
+  id        Int         @id @default(autoincrement())
+  eventId   Int
+  event     Event       @relation(fields: [eventId], references: [id])
+  PromoItem PromoItem[]
+}
+
+model PromoItem {
   id        Int      @id @default(autoincrement())
   name      String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  discount  Int
+  startDate DateTime
+  endDate   DateTime
+  promoId   Int
+  promo     Promo    @relation(fields: [promoId], references: [id])
+}
 
-  @@map("samples") // if you want to use snake_case format
+
+model Transaction {
+  id         Int               @id @default(autoincrement())
+  userId     Int
+  eventId    Int
+  quantity   Int
+  promoItemId Int
+  totalDiscount Int
+  total      Int
+  grandTotal Int
+  status     TransactionStatus
+  imageUrl   String?
+  createdAt  DateTime          @default(now())
+  user       User              @relation(fields: [userId], references: [id])
+  event      Event             @relation(fields: [eventId], references: [id])
+}
+
+model review {
+  id      Int    @id @default(autoincrement())
+  userId  Int
+  eventId Int
+  Rating  Int
+  Review  String
+  user    User   @relation(fields: [userId], references: [id])
+  event   Event  @relation(fields: [eventId], references: [id])
 }
