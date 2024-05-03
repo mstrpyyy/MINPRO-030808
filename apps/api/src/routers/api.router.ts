@@ -1,17 +1,19 @@
 import {Router} from 'express'
-import { SampleRouter } from './sample.router'
+import { EventRouter } from './event.router'
+
 
 export class ApiRouter {
-    private sampleRouter: SampleRouter
     private router: Router
+    private eventRouter : EventRouter
 
     constructor() {
         this.router = Router()
-        this.sampleRouter = new SampleRouter()
+        this.eventRouter = new EventRouter()
+        this.initializeRoutes()
     }
 
     private initializeRoutes(): void {
-        this.router.use('/samples', this.sampleRouter.getRouter)
+        this.router.use('/events', this.eventRouter.getRouter())
     }
 
     getRouter(): Router {

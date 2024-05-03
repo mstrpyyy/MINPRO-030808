@@ -60,6 +60,7 @@ model Event {
   location     String
   stock        Int
   description  String?        @db.LongText
+  slug         String         @unique
   organizer    Organizer      @relation(fields: [organizerId], references: [id])
   wishlistItem WishlistItem[]
   Transaction  Transaction[]
