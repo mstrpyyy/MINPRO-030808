@@ -9,7 +9,6 @@ import express, {
 } from 'express';
 import cors from 'cors';
 import { PORT } from './config';
-import { SampleRouter } from './routers/sample.router';
 import { ApiRouter } from './routers/api.router';
 
 export default class App {

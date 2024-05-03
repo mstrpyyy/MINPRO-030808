@@ -10,6 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum EventStatus {
+  ComingSoon
+  available
+  Finished
+}
+
 enum EventCategory {
   Sports
   Conferences
@@ -32,12 +38,13 @@ model User {
   profilePicture String?       @db.LongText
   password       String        @db.LongText
   isActive       Boolean       @default(false)
-  referral       String        @unique
+  referral       String?       @unique
   isRedeem       Boolean       @default(true)
-  points         Int
+  accountType    String        @default("user")
   wishlist       Wishlist?
   Transaction    Transaction[]
   review         review[]
+  PointUser      PointUser[]
 }
 
 model Organizer {
@@ -46,25 +53,30 @@ model Organizer {
   email          String  @unique
   profilePicture String? @db.LongText
   password       String  @db.LongText
+  accountType    String  @default("organizer")
   isActive       Boolean @default(false)
   event          Event[]
 }
 
 model Event {
-  id           Int            @id @default(autoincrement())
-  name         String
-  organizerId  Int
-  date         DateTime       @default(now())
-  price        Int
-  category     EventCategory
-  location     String
-  stock        Int
-  description  String?        @db.LongText
-  organizer    Organizer      @relation(fields: [organizerId], references: [id])
-  wishlistItem WishlistItem[]
-  Transaction  Transaction[]
-  review       review[]
-  Promo        Promo[]
+  id               Int            @id @default(autoincrement())
+  name             String
+  organizerId      Int
+  startSale        DateTime       @default(now())
+  eventDate        DateTime       @default(now())
+  status           EventStatus
+  price            Int
+  slug             String         @db.LongText
+  category         EventCategory
+  city             String
+  address          String
+  availableTickets Int
+  description      String?        @db.LongText
+  organizer        Organizer      @relation(fields: [organizerId], references: [id])
+  wishlistItem     WishlistItem[]
+  Transaction      Transaction[]
+  review           review[]
+  Promo            Promo[]
 }
 
 model Wishlist {
@@ -99,21 +111,20 @@ model PromoItem {
   promo     Promo    @relation(fields: [promoId], references: [id])
 }
 
-
 model Transaction {
-  id         Int               @id @default(autoincrement())
-  userId     Int
-  eventId    Int
-  quantity   Int
-  promoItemId Int
+  id            Int               @id @default(autoincrement())
+  userId        Int
+  eventId       Int
+  quantity      Int
+  promoItemId   Int
   totalDiscount Int
-  total      Int
-  grandTotal Int
-  status     TransactionStatus
-  imageUrl   String?
-  createdAt  DateTime          @default(now())
-  user       User              @relation(fields: [userId], references: [id])
-  event      Event             @relation(fields: [eventId], references: [id])
+  total         Int
+  grandTotal    Int
+  status        TransactionStatus
+  imageUrl      String?
+  createdAt     DateTime          @default(now())
+  user          User              @relation(fields: [userId], references: [id])
+  event         Event             @relation(fields: [eventId], references: [id])
 }
 
 model review {
@@ -124,4 +135,13 @@ model review {
   Review  String
   user    User   @relation(fields: [userId], references: [id])
   event   Event  @relation(fields: [eventId], references: [id])
+}
+
+model PointUser {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  point      Int
+  expireDate DateTime
+  isRedeem   Boolean  @default(false)
+  user       User     @relation(fields: [userId], references: [id])
 }
