@@ -1,14 +1,14 @@
-"use client"
-import Image from 'next/image'
-import styles from './page.module.css'
 import MainHero from '@/components/mainHero'
-import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
+const Point = dynamic(() => import('@/components/pointBox'), { ssr: false })
 
 export default function Home() {
+
   return (
    <div className='bg-xwhite h-screen flex justify-center'>
-    <div className='flex w-full md:w-[80%]'>
+    <div className='flex flex-col w-full md:w-[80%]'>
       <MainHero />
+      <Point />
     </div>
    </div>
   )

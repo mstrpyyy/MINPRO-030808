@@ -9,17 +9,15 @@ const registerSchema = yup.object().shape({
     name: yup.string().required('name can not be empty'),
     email: yup.string().email('invalid email').required('email can not be empty'),
     password: yup.string().min(6, 'password must contains at least 6 characters').required('password can not be empty'),
-    refCode: yup.string().min(6, 'referral code must contains at least 5 characters').optional()
 })
 
 
 export default function Register() {
     const [loadingDisplay, setLoadingDisplay] = useState("hidden")
     const router = useRouter()
-    const handleRegister = async (dataSet: {name: string, email: string, password: string, refCode: string}) => {
+    const handleRegister = async (dataSet: {name: string, email: string, password: string}) => {
         try {
             setLoadingDisplay("absolute")
-            console.log(dataSet);
             const response = await fetch('http://localhost:8000/api/organizers/register', {
                 method: "POST",
                 headers: {
@@ -28,7 +26,6 @@ export default function Register() {
                 body: JSON.stringify(dataSet)
             })
             const data = await response.json()
-            console.log(data.token);
             if (data.status != "ok") {
                 throw data
             } else {
@@ -48,10 +45,9 @@ export default function Register() {
                 name: "",
                 email: "",
                 password: "",
-                refCode: ""
             }}
             validationSchema={registerSchema}
-            onSubmit={(values: {name: string, email: string, password: string, refCode: string}, action: {resetForm: () => void}) => {
+            onSubmit={(values: {name: string, email: string, password: string}, action: {resetForm: () => void}) => {
                 console.log(values);
                 handleRegister(values)
                 action.resetForm()
@@ -59,26 +55,26 @@ export default function Register() {
             {() => {
                 return (
                     <div className='flex bg-xwhite min-h-[calc(100vh-64px)] justify-center items-center'>
-                        <div className='flex flex-col items-center justify-center mx-10 bg-white drop-shadow-[0_0_4px_rgba(0,0,0,0.3)] rounded-2xl h-[700px] shrink w-[500px] px-12'>
-                                <h1 className='text-xorange text-4xl sm:text-5xl font-bold mb-10 sm:mb-20 text-center'>Register account</h1>
+                        <div className='flex flex-col items-center justify-center mx-10 bg-white drop-shadow-[0_0_4px_rgba(0,0,0,0.3)] rounded-2xl h-[600px] shrink w-[480px] px-12'>
+                                <h1 className='text-xgreen2 text-4xl sm:text-5xl font-bold mb-10 sm:mb-20 text-center'>Register account</h1>
                             <Form className='flex flex-col items-center w-full gap-7'>
                                     <div className='w-full'>
                                         <div  className='flex flex-col'>
-                                            <label htmlFor="name" className="text-sm text-xorange font-semibold">Name</label>
+                                            <label htmlFor="name" className="text-sm text-xgreen font-semibold">Name</label>
                                             <Field type="name" placeholder="Company name" name="name" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                         </div>
                                         <ErrorMessage component="div" name="name"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                     </div>
                                     <div className='w-full'>
                                         <div  className='flex flex-col'>
-                                            <label htmlFor="email" className="text-sm text-xorange font-semibold">Email</label>
+                                            <label htmlFor="email" className="text-sm text-xgreen font-semibold">Email</label>
                                             <Field type="email" placeholder="Company email" name="email" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                         </div>
                                         <ErrorMessage component="div" name="email"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                     </div>
                                     <div className='w-full'>
                                         <div  className='flex flex-col'>                                            
-                                            <label htmlFor="password" className="text-sm text-xorange font-semibold">Password</label>
+                                            <label htmlFor="password" className="text-sm text-xgreen font-semibold">Password</label>
                                             <Field type="password" placeholder="Company password" name="password" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                         </div>
                                         <ErrorMessage component="div" name="password"  className="text-xmetal text-sm text-[0.7rem] fixed" />

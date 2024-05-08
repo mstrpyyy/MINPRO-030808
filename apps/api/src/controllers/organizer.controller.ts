@@ -56,7 +56,7 @@ export class OrganizerController {
                 })
             }
             const payload = {id: organizer.id, accountType: organizer.accountType}
-            const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '1h'})
+            const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '5m'})
             const link = `http://localhost:3000/signup/verify/${token}`
             const templatePath = path.join(__dirname, "../templates", "userRegister.html")
             const templateSource = fs.readFileSync(templatePath, 'utf-8')
@@ -101,9 +101,15 @@ export class OrganizerController {
             const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '1d'})                                                                                                                                         
             res.status(200).send({
                 status: 'ok',
-                organizer,
-                accountType: organizer.accountType,
-                token
+                message: 'account found',
+                token,
+                userData: {
+                    id: organizer.id,
+                    name: organizer.name,
+                    email: organizer.email,
+                    accountType: organizer.accountType,
+                    profilePicture: organizer.profilePicture
+                }
             })
         } catch (error) {
             res.status(400).send({
