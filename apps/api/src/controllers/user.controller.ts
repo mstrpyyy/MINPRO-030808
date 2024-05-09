@@ -126,7 +126,7 @@ export class UserController {
             if (user == null) throw "user not found"
 
             const isiValidPass = await compare(password, user.password)                                                                      
-            if (isiValidPass == false) throw "wrong password!"
+            if (isiValidPass == false) throw "incorrect password"
             const payload = {id: user.id, accountType: user.accountType}
             const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '1d'})  
 

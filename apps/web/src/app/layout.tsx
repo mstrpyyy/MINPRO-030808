@@ -1,12 +1,15 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Montserrat, Roboto } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import Navbar from '@/components/navbar';
 import { StoreProvider } from './storeProvider';
 
-const inter = Inter({ subsets: ['latin'] });
+const roboto = Roboto({ 
+  subsets: ['latin'],
+  weight: ["100", "300", "400", "500", "700", "900"]
+});
 
 export const metadata: Metadata = {
   title: 'Eventopia',
@@ -21,7 +24,7 @@ export default function RootLayout({
   return (
     <StoreProvider>
     <html lang="en">
-      <body className={inter.className}>
+      <body className={roboto.className}>
         <Navbar />
         {/* <Header /> */}
         {children}
