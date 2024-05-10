@@ -4,7 +4,7 @@ import {compare, genSalt, hash} from 'bcrypt'
 import {sign} from 'jsonwebtoken'
 import path from 'path'
 import fs from 'fs'
-import Handlebars from 'handlebars';
+// import Handlebars from 'handlebars'
 import { transporter } from '@/helpers/nodemailer';
 
 export class UserController {
@@ -79,20 +79,20 @@ export class UserController {
             })
             const payload = {id: user.id, accountType: user.accountType, refCode: refCode}
             const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '1m'})
-            const link = `http://localhost:3000/signup/verify/${token}`
-            const templatePath = path.join(__dirname, "../templates", "userRegister.html")
-            const templateSource = fs.readFileSync(templatePath, 'utf-8')
-            const compiletemplate = Handlebars.compile(templateSource)
-            const html = compiletemplate({
-                name: user.name,
-                link
-            })
-            await transporter.sendMail({
-                from:process.env.MAIL_USER,
-                to: user.email,
-                subject: "Verify your Eventopia account 📝",
-                html
-            })
+            // const link = `http://localhost:3000/signup/verify/${token}`
+            // const templatePath = path.join(__dirname, "../templates", "userRegister.html")
+            // const templateSource = fs.readFileSync(templatePath, 'utf-8')
+            // const compiletemplate = Handlebars.compile(templateSource)
+            // const html = compiletemplate({
+            //     name: user.name,
+            //     link
+            // })
+            // await transporter.sendMail({
+            //     from:process.env.MAIL_USER,
+            //     to: user.email,
+            //     subject: "Verify your Eventopia account 📝",
+            //     html
+            // })
             res.status(200).send({
                 status: 'ok',
                 user,

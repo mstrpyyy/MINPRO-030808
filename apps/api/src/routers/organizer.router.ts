@@ -1,5 +1,5 @@
 import { OrganizerController } from '@/controllers/organizer.controller';
-import { VerifyToken } from '@/middleware/token.middleware';
+// import { VerifyToken } from '@/middleware/token.middleware';
 import { Router } from 'express';
 
 export class OrganizerRouter {
