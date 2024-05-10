@@ -13,7 +13,7 @@ export class EventRouter{
     private initializeRouter () : void {
         this.router.get('/', this.eventController.getEvent)
         this.router.get('/:slug', this.eventController.getEventSlug)
-        this.router.get('/', this.eventController.createEvent)
+        this.router.post('/', this.eventController.createEvent)
     }
     getRouter() : Router{
         return this.router

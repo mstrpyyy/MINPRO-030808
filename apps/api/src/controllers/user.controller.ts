@@ -4,7 +4,7 @@ import {compare, genSalt, hash} from 'bcrypt'
 import {sign} from 'jsonwebtoken'
 import path from 'path'
 import fs from 'fs'
-import Handlebars from 'handlebars';
+// import Handlebars from 'handlebars'
 import { transporter } from '@/helpers/nodemailer';
 
 export class UserController {
@@ -29,24 +29,20 @@ export class UserController {
             const {name, email, password, refCode} = req.body
             const salt = await genSalt(10)
             const hashPassword = await hash(password, salt)
-            let userId
             let existingUsers = await prisma.user.findUnique({
                 where: {
                     email
                 }
             })
-            if (existingUsers?.isActive == true) throw "email already exist"
             if (refCode.length !== 0) {
                 const existingReferrals = await prisma.user.findUnique({
                     where: {
-                        referral: refCode.toUpperCase(),
-                        isActive: true
+                        referral: refCode
                     }
                 })
                 if (existingReferrals == null) throw "referral code does not exist"
-                userId = existingReferrals.id
-                
             }
+            if (existingUsers?.isActive == true) throw "email already exist"
             if (existingUsers?.isActive == false && existingUsers) {
                 existingUsers = await prisma.user.update({
                     data: {
@@ -71,7 +67,8 @@ export class UserController {
 
             const mili = new Date().getMilliseconds().toString()
             const referralNum = mili + existingUsers.id
-            const referralItem = name.replace(" ", "").toUpperCase().slice(0, 7) + referralNum
+            const referralItem = name.replace(" ", "").slice(0, 7) + referralNum
+            console.log(referralItem);
             const user = await prisma.user.update({
                 data: {
                     referral: referralItem,
@@ -80,23 +77,22 @@ export class UserController {
                     email: existingUsers.email
                 }
             })
-            console.log(userId);
-            const payload = {id: user.id, accountType: user.accountType, userId: userId}
-            const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '1h'})
-            const link = `http://localhost:3000/signup/verify/${token}`
-            const templatePath = path.join(__dirname, "../templates", "userRegister.html")
-            const templateSource = fs.readFileSync(templatePath, 'utf-8')
-            const compiletemplate = Handlebars.compile(templateSource)
-            const html = compiletemplate({
-                name: user.name,
-                link
-            })
-            await transporter.sendMail({
-                from:process.env.MAIL_USER,
-                to: user.email,
-                subject: "Verify your Eventopia account 📝",
-                html
-            })
+            const payload = {id: user.id, accountType: user.accountType, refCode: refCode}
+            const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '1m'})
+            // const link = `http://localhost:3000/signup/verify/${token}`
+            // const templatePath = path.join(__dirname, "../templates", "userRegister.html")
+            // const templateSource = fs.readFileSync(templatePath, 'utf-8')
+            // const compiletemplate = Handlebars.compile(templateSource)
+            // const html = compiletemplate({
+            //     name: user.name,
+            //     link
+            // })
+            // await transporter.sendMail({
+            //     from:process.env.MAIL_USER,
+            //     to: user.email,
+            //     subject: "Verify your Eventopia account 📝",
+            //     html
+            // })
             res.status(200).send({
                 status: 'ok',
                 user,
@@ -115,80 +111,23 @@ export class UserController {
 
     async loginUser(req: Request, res: Response) {
         try {
-            const {email, password} = req.body  
-            console.log(req.body);                                                         
+            const {email, password} = req.body                                                           
             const user = await prisma.user.findFirst({
                 where: {
-                    email,
-                    isActive: true
+                    email
                 }
             })                                                     
             if (user == null) throw "user not found"
-
             const isiValidPass = await compare(password, user.password)                                                                      
-            if (isiValidPass == false) throw "incorrect password"
+            if (isiValidPass == false) throw "wrong password!"
             const payload = {id: user.id, accountType: user.accountType}
-            const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '1d'})  
-
-            const getPoint = await prisma.pointUser.findFirst({
-                where: {
-                    userId: user.id,
-                    isRedeem: false
-                },
+            const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '1d'})                                                                                                                                         
+            res.status(200).send({
+                status: 'ok',
+                user,
+                accountType: user.accountType,
+                token
             })
-            if (getPoint !== null) {
-                const userPoint = await prisma.pointUser.aggregate({
-                        where: {
-                            userId: user.id,
-                            isRedeem: false
-                        },
-                        _sum: {
-                            point: true
-                        },
-                        _min: {
-                            expireAt: true
-                        }
-                    })
-                const expireSoonPoint = await prisma.pointUser.aggregate({
-                    where: {
-                        expireAt: new Date(userPoint._min?.expireAt!),
-                        isRedeem: false
-                    },
-                    _sum: {
-                        point: true
-                    }
-                })
-                return res.status(200).send({
-                    status: 'ok',
-                    message: 'user found',
-                    token,
-                    userData: {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        referral: user.referral,
-                        accountType: user.accountType,
-                        sumPoint: userPoint._sum.point,
-                        expireSoonPoint: expireSoonPoint._sum.point,
-                        expireDate: userPoint._min.expireAt,
-                        profilePicture: user.profilePicture
-                    }
-                })
-            } else {
-                return res.status(200).send({
-                    status: 'ok',
-                    message: 'user found and has no point',
-                    userData: {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        referral: user.referral,
-                        sumPoint: 0,
-                        accountType: user.accountType,
-                    },
-                    token
-                })
-            }
         } catch (error) {
             res.status(400).send({
                 status: 'error',
