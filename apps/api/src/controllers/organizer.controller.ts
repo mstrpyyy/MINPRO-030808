@@ -96,7 +96,7 @@ export class OrganizerController {
             })                                                     
             if (organizer == null) throw "user not found"
             const isiValidPass = await compare(password, organizer.password)                                                                      
-            if (isiValidPass == false) throw "wrong password!"
+            if (isiValidPass == false) throw "incorrect password"
             const payload = {id: organizer.id, accountType: organizer.accountType}
             const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '1d'})                                                                                                                                         
             res.status(200).send({

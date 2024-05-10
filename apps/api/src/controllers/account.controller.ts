@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import prisma from '@/prisma';
 import {sign} from 'jsonwebtoken'
+import { compare, genSalt, hash } from 'bcrypt';
+import Handlebars from 'handlebars';
+import path from 'path'
+import fs from 'fs'
+import { transporter } from '@/helpers/nodemailer';
 
 export class AccountController {
     async verifyAccount(req: Request, res: Response) {
@@ -215,6 +220,162 @@ export class AccountController {
                 status: "error",
                 message: error
             })      
+        }
+    }
+
+    async changePassword(req: Request, res: Response) {
+        try {
+            const { password, newPassword } = req.body
+            if (req.user?.accountType == "user") {
+                const checkPassword = await prisma.user.findFirst({
+                    where: {
+                        id: req.user?.id,
+                    }
+                })
+                if (checkPassword == null) throw "account not found"
+                const isValidPass = await compare(password, checkPassword.password)                                                                   
+                const isSamePass = await compare(newPassword, checkPassword.password)                                                                   
+                if (isValidPass == false) throw "incorrect password"
+                if (isSamePass == true) throw "new password must be different"
+                if (isValidPass) {
+                    const salt = await genSalt(10)
+                    const hashPassword = await hash(newPassword, salt)
+                    await prisma.user.update({
+                        data: {
+                            password: hashPassword
+                        },
+                        where: {
+                            id: req.user?.id
+                        }
+                    })
+                    return res.status(200).send({
+                        status: 'ok',
+                        message: 'password successfully changed'
+                    })
+                }               
+            }
+            if (req.user?.accountType == "organizer") {
+                const checkPassword = await prisma.organizer.findFirst({
+                    where: {
+                        id: req.user?.id,
+                    }
+                })
+                if (checkPassword == null) throw "account not found"
+                const isSamePass = await compare(newPassword, checkPassword.password)                                                                   
+                const isValidPass = await compare(password, checkPassword.password)                                                                   
+                if (isValidPass == false) throw "incorrect password"
+                if (isSamePass == true) throw "new password must be different"
+                if (isValidPass) {
+                    const salt = await genSalt(10)
+                    const hashPassword = await hash(newPassword, salt)
+                    await prisma.organizer.update({
+                        data: {
+                            password: hashPassword
+                        },
+                        where: {
+                            id: req.user?.id
+                        }
+                    })
+                    return res.status(200).send({
+                        status: 'ok',
+                        message: 'password successfully changed'
+                    })
+                }               
+            }
+            
+        } catch (error) {
+            res.status(400).send({
+                status: 'error',
+                message: error
+            })
+        }
+    }
+
+    async forgotPassword_step1(req: Request, res: Response) {
+        try {
+            const { accountType, email } = req.query
+            console.log(accountType, email);
+            let account
+            if (accountType == "user") {
+                account = await prisma.user.findFirst({
+                    where: {
+                        email: email as string
+                    }
+                }) 
+                if (account == null) throw 'account not found'
+            }
+            if (accountType == "organizer") {
+                account = await prisma.organizer.findFirst({
+                    where: {
+                        email: email as string
+                    }
+                }) 
+                if (account == null) throw 'account not found'
+            }
+            const payload = {id: account?.id, accountType}
+            const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '10m'})
+            const link = `http://localhost:3000/change-password/${token}`
+            const templatePath = path.join(__dirname, "../templates", "resetPassword.html")
+            const templateSource = fs.readFileSync(templatePath, 'utf-8')
+            const compiletemplate = Handlebars.compile(templateSource)
+            const html = compiletemplate({
+                name: account?.name,
+                link
+            })
+            await transporter.sendMail({
+                from: process.env.MAIL_USER,
+                to: account?.email,
+                subject: "Eventopia reset password 🔐",
+                html
+            })
+            res.status(200).send({
+                status: 'ok',
+                message: 'email sent',
+                token
+            })
+        } catch (error) {
+            console.log(error);
+            res.status(400).send({
+                status: 'error',
+                message: error
+            })
+        }
+    }
+
+    async forgotPassword_step2(req: Request, res: Response) {
+        try {
+            const { newPassword } = req.body
+            const salt = await genSalt(10)
+            const hashPassword = await hash(newPassword, salt)
+            if (req.user?.accountType == "user") {
+                await prisma.user.update({
+                    data: {
+                        password: hashPassword
+                    },
+                    where: {
+                        id: req.user?.id
+                    }
+                })
+            }
+            if (req.user?.accountType == "organizer") {
+                await prisma.organizer.update({
+                    data: {
+                        password: hashPassword
+                    },
+                    where: {
+                        id: req.user?.id
+                    }
+                })
+            }
+            res.status(200).send({
+                status: 'ok',
+                message: 'password has been reset'
+            })
+        } catch (error) {
+            res.status(400).send({
+                status: 'error',
+                message: error
+            })
         }
     }
 }

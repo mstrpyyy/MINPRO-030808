@@ -35,7 +35,7 @@ export default function LoginRedirectModal() {
         
   return (
     <div>
-        <button className={`${account?.accountType == null ? "block" : "hidden"} w-20 py-1 text-white border-2 bg-xgreen border-xgreen hover:bg-xgreen3 hover:border-xgreen3 rounded-xl max-sm:hidden text-center font-semibold`} onClick={showModal}>Login</button>
+        <button className={`${account?.accountType == null ? "block" : "hidden"}  h-8 grow-0  w-20 py-1 text-white bg-xgreen  hover:bg-xgreen3  rounded-xl max-sm:hidden text-center font-semibold`} onClick={showModal}>Log in</button>
         <dialog id="my_modal_redirect" className="modal">
         <div className="modal-box bg-white max-w-[750px] pb-16">
             <form method="dialog">
