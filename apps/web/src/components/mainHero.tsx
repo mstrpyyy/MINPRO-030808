@@ -24,9 +24,9 @@ export default function MainHero() {
                     </Link>
                 </div>
             </div>
-            <li>
+            <br>
             <Card />
-            </li>
+            </br>
         </div>
     )
 }
