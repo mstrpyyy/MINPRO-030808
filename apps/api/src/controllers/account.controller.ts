@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import prisma from '@/prisma';
 import {sign} from 'jsonwebtoken'
 import { compare, genSalt, hash } from 'bcrypt';
-import { template } from 'handlebars';
+import Handlebars from 'handlebars';
 import path from 'path'
 import fs from 'fs'
 import { transporter } from '@/helpers/nodemailer';
@@ -250,7 +250,7 @@ export class AccountController {
                     })
                     return res.status(200).send({
                         status: 'ok',
-                        message: 'password changed successfully '
+                        message: 'password successfully changed'
                     })
                 }               
             }
@@ -278,7 +278,7 @@ export class AccountController {
                     })
                     return res.status(200).send({
                         status: 'ok',
-                        message: 'password changed successfully'
+                        message: 'password successfully changed'
                     })
                 }               
             }
@@ -291,14 +291,15 @@ export class AccountController {
         }
     }
 
-    async forgotPassword(req: Request, res: Response) {
+    async forgotPassword_step1(req: Request, res: Response) {
         try {
-            const { accountType } = req.params
+            const { accountType, email } = req.query
+            console.log(accountType, email);
             let account
             if (accountType == "user") {
                 account = await prisma.user.findFirst({
                     where: {
-                        email: req.body.email
+                        email: email as string
                     }
                 }) 
                 if (account == null) throw 'account not found'
@@ -306,7 +307,7 @@ export class AccountController {
             if (accountType == "organizer") {
                 account = await prisma.organizer.findFirst({
                     where: {
-                        email: req.body.email
+                        email: email as string
                     }
                 }) 
                 if (account == null) throw 'account not found'
@@ -331,6 +332,44 @@ export class AccountController {
                 status: 'ok',
                 message: 'email sent',
                 token
+            })
+        } catch (error) {
+            console.log(error);
+            res.status(400).send({
+                status: 'error',
+                message: error
+            })
+        }
+    }
+
+    async forgotPassword_step2(req: Request, res: Response) {
+        try {
+            const { newPassword } = req.body
+            const salt = await genSalt(10)
+            const hashPassword = await hash(newPassword, salt)
+            if (req.user?.accountType == "user") {
+                await prisma.user.update({
+                    data: {
+                        password: hashPassword
+                    },
+                    where: {
+                        id: req.user?.id
+                    }
+                })
+            }
+            if (req.user?.accountType == "organizer") {
+                await prisma.organizer.update({
+                    data: {
+                        password: hashPassword
+                    },
+                    where: {
+                        id: req.user?.id
+                    }
+                })
+            }
+            res.status(200).send({
+                status: 'ok',
+                message: 'password has been reset'
             })
         } catch (error) {
             res.status(400).send({
