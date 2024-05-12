@@ -7,7 +7,6 @@ import { useParams } from "next/navigation";
 
 
 export default function Verify() {
-    const dispatch = useAppDispatch()
     const params = useParams()
     const handleVerify = async () => {
         try {
@@ -21,13 +20,9 @@ export default function Verify() {
             })
             const data = await res.json()
             console.log(data);
-            if (data.status == "ok") {
-                createToken(data.token, "/")
-                dispatch(setUser(data.userData))
-            } 
             if (data.message.message == "jwt expired") {
                 deleteToken('token', "/")
-                throw ("verification link expired, please sign up again.")
+                throw ("verification link expired.")
             }
         } catch (error) {
             console.log(error)

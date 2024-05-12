@@ -5,6 +5,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as yup from 'yup'
+import UserResetForm from './userResetForm'
 
 const registerSchema = yup.object().shape({
     email: yup.string().email('invalid email').required('email can not be empty'),
@@ -21,6 +22,15 @@ export default function UserLoginForm() {
         if (modal instanceof HTMLDialogElement) {
             modal.close()}
         }
+
+    const toResetUserModal = () => {
+        closeModal()
+        const resetModal = document.getElementById("my_modal_userReset");
+        if (resetModal instanceof HTMLDialogElement) {
+            resetModal.showModal()}
+    }
+
+    
     const handleLogin = async (dataSet: {email: string, password: string}) => {
         try {
             setLoadingDisplay("absolute")
@@ -81,6 +91,15 @@ export default function UserLoginForm() {
                                     </div>                                  
                                 <button type="submit" className="bg-xblue hover:bg-xblue1 text-white font-semibold text-2xl w-full py-2 rounded-xl mt-10 sm:mt-20 relative">Login<span className={`ml-5 loading loading-dots loading-lg ${loadingDisplay}`}></span></button>
                             </Form>
+                            <button onClick={toResetUserModal} className='text-zinc-500 text-sm mt-2'>Forgot password?</button>
+                            <dialog id="my_modal_userReset" className="modal">
+                                <div className="modal-box bg-white max-w-[350px]">
+                                    <form method="dialog">
+                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+                                    </form>
+                                    <UserResetForm />
+                                </div>
+                            </dialog>
                         </div>
                 )
             }}

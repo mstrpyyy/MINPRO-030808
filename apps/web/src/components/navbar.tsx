@@ -8,14 +8,13 @@ import Cookies from 'js-cookie'
 import { deleteToken } from "@/app/action";
 import { useAppDispatch, useAppSelector } from "@/lib/features/hooks";
 import { setUser } from "@/lib/features/account/account";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const [searchEffect, setSearchEffect] = useState("flex")
   const account = useAppSelector((state) => state.account.value)
-  console.log(account)
 
   const getUser = async(token: any) => {
     try {

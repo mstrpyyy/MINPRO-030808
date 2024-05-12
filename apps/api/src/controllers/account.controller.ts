@@ -16,8 +16,8 @@ export class AccountController {
         d.setMilliseconds(0)
         const expireDate = d.setMonth(d.getMonth() + 3);
         try {
+            let user
             if (req.user?.accountType == "user") {
-                let user
                 if (req.user?.userId !== undefined) {
                     user = await prisma.user.update({
                         data: {
@@ -223,6 +223,131 @@ export class AccountController {
         }
     }
 
+    async changeName(req: Request, res:Response) {
+        try {
+            console.log(req.body);
+            const { name } = req.body
+            let account
+            if (req.user?.accountType == "user") {
+                account = await prisma.user.update({
+                    where: {
+                        id: req.user?.id
+                    },
+                    data: {
+                        name
+                    }
+                })
+            }
+            if (req.user?.accountType == "organizer") {
+                account = await prisma.organizer.update({
+                    where: {
+                        id: req.user?.id
+                    },
+                    data: {
+                        name
+                    }
+                })
+            }
+            res.status(200).send({
+                status: 'ok',
+                message: 'name successfully changed',
+                account
+            })
+        } catch (error) {
+            res.status(400).send({
+                status: 'error',
+                message: error
+            })
+        }
+    }
+
+    async changeEmail(req: Request, res: Response) {
+        try {
+            const { email } = req.body
+            let account 
+            if (req.user?.accountType == "user") {
+                account = await prisma.user.findFirst({
+                    where: {
+                        id: req.user?.id
+                    }
+                })
+            }
+            if (req.user?.accountType == "organizer") {
+                account = await prisma.organizer.findFirst({
+                    where: {
+                        id: req.user?.id
+                    }
+                })
+            }
+            const payload = {id: req.user?.id, accountType: req.user?.accountType, email}
+            const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '10m'})
+            const link = `http://localhost:3000/signup/verify/${token}`
+            const templatePath = path.join(__dirname, "../templates", "userRegister.html")
+            const templateSource = fs.readFileSync(templatePath, 'utf-8')
+            const compiletemplate = Handlebars.compile(templateSource)
+            const html = compiletemplate({
+                name: account?.name,
+                link
+            })
+            await transporter.sendMail({
+                from:process.env.MAIL_USER,
+                to: account?.email,
+                subject: "Verify your Eventopia account 📝",
+                html
+            })
+            res.status(200).send({
+                status: 'ok',
+                message: 'email sent',
+                token
+            })
+            
+        } catch (error) {
+            res.status(400).send({
+                status: 'error',
+                message: error
+            })
+        }
+    }
+
+    async verifyEmail(req:Request, res:Response) {
+        try {
+            try {
+                if (req.user?.accountType == "user") {
+                    await prisma.user.update({
+                        where: {
+                            id: req.user.id
+                        },
+                        data: {
+                            email: req.user.email
+                        }
+                    })
+                }
+                if (req.user?.accountType == "organizer") {
+                    await prisma.organizer.update({
+                        where: {
+                            id: req.user.id
+                        },
+                        data: {
+                            email: req.user.email
+                        }
+                    })
+                }
+                res.status(200).send({
+                    status: 'ok',
+                    message: 'email successfully changed'
+                })
+            } catch (error) {
+                res.status(400).send({
+                    status: 'error',
+                    message: error
+                })
+                
+            }
+        } catch (error) {
+            
+        }
+    }
+
     async changePassword(req: Request, res: Response) {
         try {
             const { password, newPassword } = req.body
@@ -314,7 +439,7 @@ export class AccountController {
             }
             const payload = {id: account?.id, accountType}
             const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '10m'})
-            const link = `http://localhost:3000/change-password/${token}`
+            const link = `http://localhost:3000/reset/${token}`
             const templatePath = path.join(__dirname, "../templates", "resetPassword.html")
             const templateSource = fs.readFileSync(templatePath, 'utf-8')
             const compiletemplate = Handlebars.compile(templateSource)
@@ -344,9 +469,9 @@ export class AccountController {
 
     async forgotPassword_step2(req: Request, res: Response) {
         try {
-            const { newPassword } = req.body
+            const { password } = req.body
             const salt = await genSalt(10)
-            const hashPassword = await hash(newPassword, salt)
+            const hashPassword = await hash(password, salt)
             if (req.user?.accountType == "user") {
                 await prisma.user.update({
                     data: {
@@ -370,6 +495,41 @@ export class AccountController {
             res.status(200).send({
                 status: 'ok',
                 message: 'password has been reset'
+            })
+        } catch (error) {
+            res.status(400).send({
+                status: 'error',
+                message: error
+            })
+        }
+    }
+
+    async profileUpload(req: Request, res: Response) {
+        try {
+            const {file} = req
+            if (!file) throw "No file uploaded"
+            const imageUrl = `http://localhost:8000/public/images/${file.filename}`
+            if (req.user?.accountType == "user") {
+                await prisma.user.update({
+                    data: {
+                        profilePicture: imageUrl
+                    }, where: {
+                        id: req.user?.id
+                    }
+                })
+            }
+            if (req.user?.accountType == "organizer") {
+                await prisma.organizer.update({
+                    data: {
+                        profilePicture: imageUrl
+                    }, where: {
+                        id: req.user?.id
+                    }
+                })
+            }
+            res.status(200).send({ 
+                status: 'ok',
+                message: 'image successfully uploaded'
             })
         } catch (error) {
             res.status(400).send({

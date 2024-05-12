@@ -5,11 +5,12 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as yup from 'yup'
+import OrganizerResetForm from './organizerResetForm'
 
 const registerSchema = yup.object().shape({
     email: yup.string().email('invalid email').required('email can not be empty'),
     password: yup.string().min(6, 'password must contains at least 6 characters').required('password can not be empty'),
-})
+})  
 
 
 export default function OrganizerLoginForm() {
@@ -21,6 +22,14 @@ export default function OrganizerLoginForm() {
         if (modal instanceof HTMLDialogElement) {
             modal.close()}
         }
+
+    const toResetOrganizerModal = () => {
+        closeModal()
+        const resetModal = document.getElementById("my_modal_organizerReset");
+        if (resetModal instanceof HTMLDialogElement) {
+            resetModal.showModal()}
+    }
+        
     const handleLogin = async (dataSet: {email: string, password: string}) => {
         try {
             setLoadingDisplay("absolute")
@@ -63,12 +72,12 @@ export default function OrganizerLoginForm() {
             {() => {
                 return (
                         <div className='flex flex-col items-center justify-center mx-3 bg-white rounded-2xl'>
-                                <h1 className='text-xgreen2 text-4xl font-bold mb-10 sm:mb-20 text-center text-balance'>Login to organizer account</h1>
+                                <h1 className='text-xgreen2 text-4xl font-bold mb-10 sm:mb-20 text-center text-balance'>Organizer account login</h1>
                             <Form className='flex flex-col items-center w-full gap-7'>
                                     <div className='w-full'>
                                         <div  className='flex flex-col'>
                                             <label htmlFor="email" className="text-sm text-xgreen font-semibold">Email</label>
-                                            <Field type="email" placeholder="Organizer email" name="email" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
+                                            <Field type="email" placeholder="Your email" name="email" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                         </div>
                                         <ErrorMessage component="div" name="email"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                     </div>
@@ -79,8 +88,17 @@ export default function OrganizerLoginForm() {
                                         </div>
                                         <ErrorMessage component="div" name="password"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                     </div>                                  
-                                <button type="submit" className="bg-xblue hover:bg-xblue1 text-white font-semibold text-2xl w-full py-2 rounded-xl mt-10 sm:mt-20 relative">Login<span className={`ml-5 loading loading-dots loading-lg ${loadingDisplay}`}></span></button>
+                                <button type="submit" className="bg-xblue hover:bg-xblue1 text-white font-semibold text-2xl w-full py-2 rounded-xl mt-10 sm:mt-20 relative">Login<span className={`ml-5 loading loading-dots loading-lg ${loadingDisplay}`}></span></button> 
                             </Form>
+                            <button onClick={toResetOrganizerModal} className='text-zinc-500 text-sm mt-2'>Forgot password?</button>
+                            <dialog id="my_modal_organizerReset" className="modal">
+                                <div className="modal-box bg-white max-w-[350px]">
+                                    <form method="dialog">
+                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+                                    </form>
+                                    <OrganizerResetForm/>
+                                </div>
+                            </dialog>
                         </div>
                 )
             }}

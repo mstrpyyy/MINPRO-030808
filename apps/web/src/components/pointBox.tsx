@@ -54,7 +54,7 @@ export default function PointBox() {
         </div>
         
 
-        <Link href={'/organizers/dashboard/event-settings'} className={`bg-white hover:bg-xwhite transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
+        <Link href={'/organizers/dashboard/account-settings'} className={`bg-white hover:bg-xwhite transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
             <h1 className='text-xl text-xblue'>Manage account</h1>
         </Link>
         <Link href={'/organizers/dashboard/general'} className={`bg-white hover:bg-xwhite transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
