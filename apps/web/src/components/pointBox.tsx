@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 import { MdOutlineContentCopy } from "react-icons/md";
 import { PiEye } from "react-icons/pi";
 import { PiEyeSlash } from "react-icons/pi";
-import { Card } from './card';
 
 export default function PointBox() {
     const [showReferral, setShowReferral] = useState("hidden")
@@ -34,6 +33,7 @@ export default function PointBox() {
             </p>
             <p className={`text-white ${+account?.sumPoint! == 0? "block" : "hidden"}`} >Share your referral and get points!</p>
         </div>
+        
         <div className={`bg-xdark h-32 grow flex flex-col rounded-xl justify-center items-center ${account?.accountType == "user" ? "flex" : "hidden"}`}>
             <p className='text-xl text-xgreen3 font-semibold'>Your referral code:</p>
             <div className='flex justify-between items-center w-60'>
@@ -67,17 +67,6 @@ export default function PointBox() {
             <h1 className='text-xl text-white'>Create Event</h1>
         </div>
 
-            <Link href={'/organizers/dashboard/event-settings'} className={`bg-white hover:bg-xwhite transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
-                <h1 className='text-xl text-xblue'>Manage account</h1>
-            </Link>
-            <Link href={'/organizers/dashboard/general'} className={`bg-white hover:bg-xwhite transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
-                <h1 className='text-xl text-xblue'>Dashboard</h1>
-            </Link>
-            <div className={`bg-xgreen3 hover:bg-xgreen transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
-                <h1 className='text-xl text-white'>Create Event</h1>
-            </div>
-        </div>
-        <Card />
-        </>
+    </div>
     )
 }

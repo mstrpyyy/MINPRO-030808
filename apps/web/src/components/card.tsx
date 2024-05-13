@@ -5,11 +5,11 @@ import axios from "axios"
 
 const baseURL = `http://localhost:8000/api/event`
 export const Card = () => {
-    const [events, setPost] = React.useState<any[]>([]);
+    const [events, setEvents] = React.useState<any[]>([]);
 
     React.useEffect(() => {
-        axios.get(baseURL).then((response) => {
-            setPost(response.data.events);
+        axios.get(baseURL).then((response: { data: { events: React.SetStateAction<any[]> } }) => {
+            setEvents(response.data.events);
         });
     }, []);
 

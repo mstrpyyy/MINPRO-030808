@@ -8,6 +8,7 @@ CREATE TABLE `User` (
     `isActive` BOOLEAN NOT NULL DEFAULT false,
     `referral` VARCHAR(191) NULL,
     `isRedeem` BOOLEAN NOT NULL DEFAULT true,
+    `RedeemExpire` DATETIME(3) NULL,
     `accountType` VARCHAR(191) NOT NULL DEFAULT 'user',
 
     UNIQUE INDEX `User_email_key`(`email`),
@@ -119,7 +120,7 @@ CREATE TABLE `PointUser` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `point` INTEGER NOT NULL,
-    `expireDate` DATETIME(3) NOT NULL,
+    `expireAt` DATETIME(3) NOT NULL,
     `isRedeem` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)

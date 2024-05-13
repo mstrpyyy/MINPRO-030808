@@ -40,6 +40,7 @@ model User {
   isActive       Boolean       @default(false)
   referral       String?       @unique
   isRedeem       Boolean       @default(true)
+  RedeemExpire   DateTime?
   accountType    String        @default("user")
   wishlist       Wishlist?
   Transaction    Transaction[]
@@ -138,10 +139,10 @@ model review {
 }
 
 model PointUser {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  point      Int
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  point    Int      @default(10000)
   expireAt DateTime
-  isRedeem   Boolean  @default(false)
-  user       User     @relation(fields: [userId], references: [id])
+  isRedeem Boolean  @default(false)
+  user     User     @relation(fields: [userId], references: [id])
 }

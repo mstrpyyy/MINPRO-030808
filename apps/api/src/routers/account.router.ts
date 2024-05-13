@@ -16,6 +16,7 @@ export class AccountRouter {
   }
 
   private initializeRoutes(): void {
+    this.router.get('/accountType', this.verifyToken.verify, this.accountController.getAccountType)
     this.router.patch('/verify', this.verifyToken.verify, this.accountController.verifyAccount)
     this.router.get('/', this.verifyToken.verify, this.accountController.getAccount)
     this.router.patch('/change-password', this.verifyToken.verify, this.accountController.changePassword)
