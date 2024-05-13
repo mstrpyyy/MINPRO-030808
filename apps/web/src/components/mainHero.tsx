@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { MdKeyboardArrowDown } from "react-icons/md";
 
+
 export default function MainHero() {
   return (
         <div id="1" className="relative w-full md:my-4">

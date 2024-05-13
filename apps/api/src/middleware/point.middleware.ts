@@ -8,7 +8,7 @@ export class updatePoint {
         const pointUsers = await prisma.pointUser.findMany({
           where: {
             expireAt: {
-              not: null
+              not: ""
             }
           }
         });

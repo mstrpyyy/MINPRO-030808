@@ -1,0 +1,919 @@
+{
+    "status": true,
+    "result": {
+        "id": 15,
+        "title": "Event Pilihan",
+        "url": null,
+        "content_type": "e",
+        "banner_desktops": [],
+        "banner_mobile": [],
+        "section_formats": [],
+        "section_topics": [],
+        "section_events": [
+            {
+                "identifier": "IiZ",
+                "event": {
+                    "name": "2024 Junny Tour: (Intro) Dopamine - Jakarta",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240507074604_663979cc7c14f.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/junnyjakarta"
+                },
+                "creator": {
+                    "name": "Flabbergast Productions  x NB Entertainment",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20240430084750_66304dc6d4ab6.png",
+                    "url": "https:\/\/www.loket.com\/o\/flabbergast"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-06-28 20:00:00",
+                    "end": "2024-06-28 22:00:00",
+                    "label_date": "28 Jun 2024",
+                    "label_time": "20:00 - 22:00",
+                    "label_range": "28 Jun 2024 20:00 - 22:00"
+                },
+                "location": {
+                    "location_name": "FYNE",
+                    "address": "Jl. Wijaya I No.49, RT.10\/RW.5, Petogogan, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12170, Indonesia",
+                    "country": "Indonesia",
+                    "province": "DKI Jakarta",
+                    "district": "Jakarta Selatan",
+                    "region": "Cilandak"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 3,
+                        "name": "Konser"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [
+                        {
+                            "identifier": 41464,
+                            "name": "Junny"
+                        },
+                        {
+                            "identifier": 28993,
+                            "name": "Kpop"
+                        },
+                        {
+                            "identifier": 29104,
+                            "name": "Concert"
+                        }
+                    ],
+                    "segment": [
+                        {
+                            "identifier": 5,
+                            "name": "Umum"
+                        }
+                    ]
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 2500000,
+                    "price_min": 850000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": true,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "I7y",
+                "event": {
+                    "name": "P-LAND: K-Pop Art Market Vol.3",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240507111924_6639abcc66970.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/p-land-k-pop-art-market-vol-3_I7y"
+                },
+                "creator": {
+                    "name": "PLAND ART MARKET",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20240507111935_6639abd731822.jpg",
+                    "url": "https:\/\/www.loket.com\/o\/lkt-RWE5OQ"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-06-22 10:00:00",
+                    "end": "2024-06-23 18:30:00",
+                    "label_date": "22 Jun - 23 Jun 2024",
+                    "label_time": "10:00 - 18:30",
+                    "label_range": "22 Jun 2024 10:00 - 23 Jun 2024 18:30"
+                },
+                "location": {
+                    "location_name": "The Krakatau, Taman Mini, Jakarta",
+                    "address": "Jl. Taman Mini Indonesia Indah Pintu 1 Tmii, Ceger, Kec. Cipayung, Jakarta, Daerah Khusus Ibukota Jakarta 13820, Indonesia",
+                    "country": "Indonesia",
+                    "province": "DKI Jakarta",
+                    "district": "DKI Jakarta",
+                    "region": "Jakarta"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 5,
+                        "name": "Exhibition Expo Pameran"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [
+                        {
+                            "identifier": 36162,
+                            "name": "P-Land"
+                        },
+                        {
+                            "identifier": 41485,
+                            "name": "ArtMarket"
+                        },
+                        {
+                            "identifier": 28993,
+                            "name": "Kpop"
+                        },
+                        {
+                            "identifier": 30207,
+                            "name": "KpopEvent"
+                        },
+                        {
+                            "identifier": 41484,
+                            "name": "PLAND"
+                        }
+                    ],
+                    "segment": []
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 170000,
+                    "price_min": 55000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": false,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "I04D",
+                "event": {
+                    "name": "Scent of Indonesia",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240506160110_66389c5655100.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/scentofindonesia"
+                },
+                "creator": {
+                    "name": "Scent of Indonesia",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20240504172030_66360beeabd97.png",
+                    "url": "https:\/\/www.loket.com\/o\/scentofindonesia"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-06-28 10:00:00",
+                    "end": "2024-06-30 22:00:00",
+                    "label_date": "28 Jun - 30 Jun 2024",
+                    "label_time": "10:00 - 22:00",
+                    "label_range": "28 Jun 2024 10:00 - 30 Jun 2024 22:00"
+                },
+                "location": {
+                    "location_name": "Chillax Sudirman",
+                    "address": "Jl. Jenderal Sudirman No.Kav 22-23, RT.10\/RW.1, Kuningan, Karet, Kecamatan Setiabudi, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12920, Indonesia",
+                    "country": "Indonesia",
+                    "province": "DKI Jakarta",
+                    "district": "Jakarta Selatan",
+                    "region": "Cilandak"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 2,
+                        "name": "Festival Fair Bazaar"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [
+                        {
+                            "identifier": 37659,
+                            "name": "parfume"
+                        },
+                        {
+                            "identifier": 29829,
+                            "name": "bodycare"
+                        },
+                        {
+                            "identifier": 31404,
+                            "name": "LocalGuides"
+                        },
+                        {
+                            "identifier": 28877,
+                            "name": "beauty"
+                        },
+                        {
+                            "identifier": 40680,
+                            "name": "workshopparfum"
+                        }
+                    ],
+                    "segment": []
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 30000,
+                    "price_min": 30000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": false,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "IPDY",
+                "event": {
+                    "name": "JOURNEY IN HARMONY",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240424192022_6628f906ed82b.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/journey-in-harmony_IPDY"
+                },
+                "creator": {
+                    "name": "REDROSE RECORDS",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20240425170436_662a2ab4c3880.png",
+                    "url": "https:\/\/www.loket.com\/o\/RedRoseRecords"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-05-08 19:00:00",
+                    "end": "2024-05-29 22:00:00",
+                    "label_date": "08 May - 29 May 2024",
+                    "label_time": "19:00 - 22:00",
+                    "label_range": "08 May 2024 19:00 - 29 May 2024 22:00"
+                },
+                "location": {
+                    "location_name": "Krapela, Row 9",
+                    "address": "Jl. Bulungan No.9, Kramat Pela, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12130, Indonesia",
+                    "country": "Indonesia",
+                    "province": "DKI Jakarta",
+                    "district": "Jakarta Selatan",
+                    "region": "Cilandak"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 3,
+                        "name": "Konser"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [],
+                    "segment": []
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 353000,
+                    "price_min": 295000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": false,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "IiI",
+                "event": {
+                    "name": "B.I Hype Up Tour 2024",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240430035151.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/b-i-hype-up-tour-2024_IiI"
+                },
+                "creator": {
+                    "name": "Viu Scream Dates",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20240217085844.png",
+                    "url": "https:\/\/www.loket.com\/o\/lkt-T1BO"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-06-15 19:00:00",
+                    "end": "2024-06-15 22:00:00",
+                    "label_date": "15 Jun 2024",
+                    "label_time": "19:00 - 22:00",
+                    "label_range": "15 Jun 2024 19:00 - 22:00"
+                },
+                "location": {
+                    "location_name": "Kasablanka Hall",
+                    "address": "Kota Kasablanka Lt. 3, Jl. Casablanca Raya Kav. 88, Jakarta",
+                    "country": "Indonesia",
+                    "province": "DKI Jakarta",
+                    "district": "Jakarta Selatan",
+                    "region": "Tebet"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 3,
+                        "name": "Konser"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [],
+                    "segment": [
+                        {
+                            "identifier": 5,
+                            "name": "Umum"
+                        }
+                    ]
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 2750000,
+                    "price_min": 1350000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": true,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "I0b9",
+                "event": {
+                    "name": "NGEDEM ATI VOL 4 ~ HAPPY & GILGA, MASDDDHO, ROYAL MUSIC @ PINTULANGIT",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240504173817_66361019bb600.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/ngedem-ati-vol-4-happy-gilga-masdddho-royal-i0b9"
+                },
+                "creator": {
+                    "name": "Pintu Langit",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20220517151447_628359775c162.png",
+                    "url": "https:\/\/www.loket.com\/o\/lkt-bHc4"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-06-02 17:30:00",
+                    "end": "2024-06-02 22:00:00",
+                    "label_date": "02 Jun 2024",
+                    "label_time": "17:30 - 22:00",
+                    "label_range": "02 Jun 2024 17:30 - 22:00"
+                },
+                "location": {
+                    "location_name": "Ngopibareng Pintulangit",
+                    "address": "Jl. Raya Tulang, Kec. Prigen, Pasuruan, Jawa Timur 67157, Indonesia",
+                    "country": "Indonesia",
+                    "province": "Jawa Timur",
+                    "district": "Kab. Pasuruan",
+                    "region": "Bangil"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 3,
+                        "name": "Konser"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [
+                        {
+                            "identifier": 37350,
+                            "name": "Gilga"
+                        },
+                        {
+                            "identifier": 35712,
+                            "name": "happyasmara"
+                        },
+                        {
+                            "identifier": 37333,
+                            "name": "Gildcoustic"
+                        },
+                        {
+                            "identifier": 41493,
+                            "name": "masdddho"
+                        },
+                        {
+                            "identifier": 41494,
+                            "name": "ngopibareng"
+                        }
+                    ],
+                    "segment": []
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 125000,
+                    "price_min": 25000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": false,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "InS",
+                "event": {
+                    "name": "FLASHBACK motion - Enchanting",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240420041901.png",
+                    "url": "https:\/\/www.loket.com\/event\/flashback-motion-enchanting_InS"
+                },
+                "creator": {
+                    "name": "FLASHBACK motion",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20240419015518_66216c96a98e5.png",
+                    "url": "https:\/\/www.loket.com\/o\/flashbackmotion"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-07-28 18:00:00",
+                    "end": "2024-07-28 22:00:00",
+                    "label_date": "28 Jul 2024",
+                    "label_time": "18:00 - 22:00",
+                    "label_range": "28 Jul 2024 18:00 - 22:00"
+                },
+                "location": {
+                    "location_name": "Plenary Hall, Jakarta Convention Center",
+                    "address": "Jl. Gatot Subroto No.1, RT.1\/RW.3, Gelora, Kecamatan Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10270",
+                    "country": "Indonesia",
+                    "province": "DKI Jakarta",
+                    "district": "Jakarta Pusat",
+                    "region": "Tanah Abang"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 3,
+                        "name": "Konser"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [
+                        {
+                            "identifier": 17450,
+                            "name": "musik"
+                        },
+                        {
+                            "identifier": 13417,
+                            "name": "konser"
+                        }
+                    ],
+                    "segment": [
+                        {
+                            "identifier": 5,
+                            "name": "Umum"
+                        }
+                    ]
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 3477000,
+                    "price_min": 1277000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": true,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "Itb9",
+                "event": {
+                    "name": "Siksa Kubur Experience (Wahana Official Film Siksa Kubur)",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240504132724_6635d54ce2a75.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/siksa-kubur-experience-wahana-official-film-siksa-kubur_Itb9"
+                },
+                "creator": {
+                    "name": "Loket Screen",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20240414085643.jpg",
+                    "url": "https:\/\/www.loket.com\/o\/lkt-T3FiRA"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-04-16 15:00:00",
+                    "end": "2024-05-23 21:00:00",
+                    "label_date": "16 Apr - 23 May 2024",
+                    "label_time": "15:00 - 21:00",
+                    "label_range": "16 Apr 2024 15:00 - 23 May 2024 21:00"
+                },
+                "location": {
+                    "location_name": "CGV AEON MALL Jakarta Garden\u00a0City",
+                    "address": "Jl. Jkt Garden City Boulevard, East Cakung",
+                    "country": "Indonesia",
+                    "province": "DKI Jakarta",
+                    "district": "Jakarta Timur",
+                    "region": "Cakung"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 19,
+                        "name": "Lainnya"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [],
+                    "segment": [
+                        {
+                            "identifier": 5,
+                            "name": "Umum"
+                        }
+                    ]
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 105000,
+                    "price_min": 80100
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": true,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "I2DU",
+                "event": {
+                    "name": "Gedebage Jazz Festival",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240405213040_66100b10221fb.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/gedebagejazzfestivalsummaba"
+                },
+                "creator": {
+                    "name": "Summarecon Mall Bandung",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20240326134205_66026e3d83c80.png",
+                    "url": "https:\/\/www.loket.com\/o\/lkt-TzRVRFU"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-05-11 13:00:00",
+                    "end": "2024-05-12 22:00:00",
+                    "label_date": "11 May - 12 May 2024",
+                    "label_time": "13:00 - 22:00",
+                    "label_range": "11 May 2024 13:00 - 12 May 2024 22:00"
+                },
+                "location": {
+                    "location_name": "Summarecon Mall Bandung",
+                    "address": "Jl. Grand Bulevar, Cisaranten Kidul, Kec. Gedebage, Kota Bandung, Jawa Barat 40295, Indonesia",
+                    "country": "Indonesia",
+                    "province": "Jawa Barat",
+                    "district": "Kab. Bandung",
+                    "region": "Arjasari"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 3,
+                        "name": "Konser"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [
+                        {
+                            "identifier": 17450,
+                            "name": "musik"
+                        },
+                        {
+                            "identifier": 13417,
+                            "name": "konser"
+                        },
+                        {
+                            "identifier": 29789,
+                            "name": "jazz"
+                        },
+                        {
+                            "identifier": 1960,
+                            "name": "bandung"
+                        },
+                        {
+                            "identifier": 30024,
+                            "name": "eventbandung"
+                        }
+                    ],
+                    "segment": []
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 399000,
+                    "price_min": 239000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": false,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "IKN",
+                "event": {
+                    "name": "Le Laguan with Reality Club",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240425150520_662a0ec09fef3.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/realityclub-dom"
+                },
+                "creator": {
+                    "name": "DOM SOCIAL HUB",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20240425150219_662a0e0b82077.jpg",
+                    "url": "https:\/\/www.loket.com\/o\/lkt-SG9N"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-05-12 16:00:00",
+                    "end": "2024-05-12 23:00:00",
+                    "label_date": "12 May 2024",
+                    "label_time": "16:00 - 23:00",
+                    "label_range": "12 May 2024 16:00 - 23:00"
+                },
+                "location": {
+                    "location_name": "Dom Social Hub",
+                    "address": "Jl Kanjeng Dalem No.Pertigaan",
+                    "country": "Indonesia",
+                    "province": "Banten",
+                    "district": "Kab Tangerang",
+                    "region": "jati uwung"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 3,
+                        "name": "Konser"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [
+                        {
+                            "identifier": 29602,
+                            "name": "RealityClub"
+                        },
+                        {
+                            "identifier": 33258,
+                            "name": "konsertangerang"
+                        },
+                        {
+                            "identifier": 41441,
+                            "name": "Magnoliacelebration"
+                        },
+                        {
+                            "identifier": 41442,
+                            "name": "Domsocialhub"
+                        },
+                        {
+                            "identifier": 41443,
+                            "name": "LeLaguan"
+                        }
+                    ],
+                    "segment": []
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 80000,
+                    "price_min": 80000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": false,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "IaUc",
+                "event": {
+                    "name": "Ultra Beach Bali 2024",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240315010313.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/ultra-beach-bali-2024_IaUc"
+                },
+                "creator": {
+                    "name": "ULTRA BEACH BALI",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20240315010435.jpg",
+                    "url": "https:\/\/www.loket.com\/o\/lkt-TzkzVUQ"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-06-06 14:00:00",
+                    "end": "2024-06-07 23:00:00",
+                    "label_date": "06 Jun - 07 Jun 2024",
+                    "label_time": "14:00 - 23:00",
+                    "label_range": "06 Jun 2024 14:00 - 07 Jun 2024 23:00"
+                },
+                "location": {
+                    "location_name": "Caf\u00e9 Del Mar",
+                    "address": "Jl. Subak Sari, Canggu, Tibubeneng, Kec. Kuta Utara, Kabupaten Badung, Bali",
+                    "country": "Indonesia",
+                    "province": "Bali",
+                    "district": "KAB BADUNG",
+                    "region": "kuta utara"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 3,
+                        "name": "Konser"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [],
+                    "segment": [
+                        {
+                            "identifier": 5,
+                            "name": "Umum"
+                        }
+                    ]
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 3000000,
+                    "price_min": 2600000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": true,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "I2B",
+                "event": {
+                    "name": "Saloka Fest 2024",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240411163809_6617af81ebcfe.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/saloka-fest-2024_I2B"
+                },
+                "creator": {
+                    "name": "PT Panorama Indah Permai",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20190703035853.jpg",
+                    "url": "https:\/\/www.loket.com\/o\/lkt-Ymc0VWM"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-06-22 10:00:00",
+                    "end": "2024-06-23 22:00:00",
+                    "label_date": "22 Jun - 23 Jun 2024",
+                    "label_time": "10:00 - 22:00",
+                    "label_range": "22 Jun 2024 10:00 - 23 Jun 2024 22:00"
+                },
+                "location": {
+                    "location_name": "Saloka Theme Park",
+                    "address": "Jl. Fatmawati No.156, Gumuksari, Lopait, Kec. Tuntang, Kabupaten Semarang, Jawa Tengah 50773, Indonesia",
+                    "country": "Indonesia",
+                    "province": "Jawa Tengah",
+                    "district": "Kab. Semarang",
+                    "region": "Ambarawa"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 3,
+                        "name": "Konser"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [
+                        {
+                            "identifier": 13417,
+                            "name": "konser"
+                        },
+                        {
+                            "identifier": 17450,
+                            "name": "musik"
+                        }
+                    ],
+                    "segment": []
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 200000,
+                    "price_min": 125000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": false,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            },
+            {
+                "identifier": "IKD3",
+                "event": {
+                    "name": "Jakarta Family Walk",
+                    "banner": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/banner\/20240507141929_6639d60185f72.jpg",
+                    "url": "https:\/\/www.loket.com\/event\/jakarta-family-walk-ikd3"
+                },
+                "creator": {
+                    "name": "Malo Enterprise",
+                    "avatar": "https:\/\/s3-ap-southeast-1.amazonaws.com\/loket-production-sg\/images\/organization\/20240507142311_6639d6dfbb6fa.jpg",
+                    "url": "https:\/\/www.loket.com\/o\/maloenterprise"
+                },
+                "schedule": {
+                    "timezone": "Asia\/Jakarta",
+                    "start": "2024-06-09 05:45:00",
+                    "end": "2024-06-09 10:00:00",
+                    "label_date": "09 Jun 2024",
+                    "label_time": "05:45 - 10:00",
+                    "label_range": "09 Jun 2024 05:45 - 10:00"
+                },
+                "location": {
+                    "location_name": "FX Sudirman",
+                    "address": "Jl. Jenderal Sudirman, Gelora, Kecamatan Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10270, Indonesia",
+                    "country": "Indonesia",
+                    "province": "DKI Jakarta",
+                    "district": "Jakarta Pusat",
+                    "region": "Cempaka Putih"
+                },
+                "metadata": {
+                    "format": {
+                        "identifier": 2,
+                        "name": "Festival Fair Bazaar"
+                    },
+                    "topic": {
+                        "identifier": 26,
+                        "name": "Lainnya"
+                    },
+                    "tags": [],
+                    "segment": []
+                },
+                "pricing": {
+                    "streak_mode": false,
+                    "streak_init": 0,
+                    "currency_code": "IDR",
+                    "currency_prefix": "Rp. ",
+                    "price_max": 300000,
+                    "price_min": 150000
+                },
+                "flags": {
+                    "availability": true,
+                    "is_widget_mode": false,
+                    "is_online_event": false,
+                    "is_live_streaming": false,
+                    "is_all_free_ticket": false,
+                    "is_past": false
+                }
+            }
+        ],
+        "section_event_creators": []
+    },
+    "stamp": "20240512114742"
+}

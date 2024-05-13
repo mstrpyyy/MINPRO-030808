@@ -141,7 +141,7 @@ model PointUser {
   id         Int      @id @default(autoincrement())
   userId     Int
   point      Int
-  expireDate DateTime
+  expireAt DateTime
   isRedeem   Boolean  @default(false)
   user       User     @relation(fields: [userId], references: [id])
 }

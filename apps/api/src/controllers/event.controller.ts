@@ -56,8 +56,7 @@ export class EventController {
       res.status(400).send({
         status : 'error',
         message : err
-      })
-      
+      });      
     }
   }
 }
