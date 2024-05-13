@@ -64,21 +64,21 @@ export default function Register() {
                                         <div>
                                             <div  className='flex flex-col'>
                                                 <label htmlFor="name" className="text-sm text-xgreen font-semibold">Name</label>
-                                                <Field type="name" placeholder="Your name" name="name" className="bg-zinc-200 text-xl text-xblack  border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
+                                                <Field type="name" placeholder="Your name" name="name" className="bg-zinc-200 text-xl text-xdark  border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                             </div>
                                             <ErrorMessage component="div" name="name"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                         </div>
                                         <div>
                                             <div  className='flex flex-col'>
                                                 <label htmlFor="email" className="text-sm text-xgreen font-semibold">Email</label>
-                                                <Field type="email" placeholder="Your email" name="email" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
+                                                <Field type="email" placeholder="Your email" name="email" className="bg-zinc-200 text-xl text-xdark border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                             </div>
                                             <ErrorMessage component="div" name="email"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                         </div>
                                         <div>
                                             <div  className='flex flex-col'>                                            
                                                 <label htmlFor="password" className="text-sm text-xgreen font-semibold">Password</label>
-                                                <Field type="password" placeholder="Your password" name="password" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
+                                                <Field type="password" placeholder="Your password" name="password" className="bg-zinc-200 text-xl text-xdark border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                             </div>
                                             <ErrorMessage component="div" name="password"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                         </div>
@@ -89,9 +89,9 @@ export default function Register() {
                                             <h1 className='text-xgreen2 w-full max-sm:text-center text-2xl'>Have referral code?</h1>
                                             <p className='text-zinc-500 w-full max-sm:text-center sm:w-48'>Use referral code and get 10% on your transaction.</p>
                                             <label htmlFor="refCode" className="text-sm text-xgreen font-semibold mt-5">Referral code</label>
-                                            <Field type="refCode" placeholder="referral code" name="refCode" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
+                                            <Field type="refCode" placeholder="referral code" name="refCode" className="bg-zinc-200 text-xl text-xdark border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                         </div>
-                                        <ErrorMessage component="div" name="refCode"  className="text-xblack text-[0.7rem] fixed" />
+                                        <ErrorMessage component="div" name="refCode"  className="text-xdark text-[0.7rem] fixed" />
                                     </div>
                                 </div>
                                 <button type="submit" className="bg-xblue hover:bg-xblue1 text-white font-semibold text-2xl w-full py-2 rounded-xl mt-10 sm:mt-20 relative">Register<span className={`ml-5 loading loading-dots loading-lg ${loadingDisplay}`}></span></button>

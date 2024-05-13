@@ -271,6 +271,7 @@ export class AccountController {
                         id: req.user?.id
                     }
                 })
+                if (account?.email == email) throw 'You are using this email already'
             }
             if (req.user?.accountType == "organizer") {
                 account = await prisma.organizer.findFirst({
@@ -278,10 +279,11 @@ export class AccountController {
                         id: req.user?.id
                     }
                 })
+                if (account?.email == email) throw 'You are using this email already'
             }
             const payload = {id: req.user?.id, accountType: req.user?.accountType, email}
             const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '10m'})
-            const link = `http://localhost:3000/signup/verify/${token}`
+            const link = `http://localhost:3000/${req.user?.accountType}s/verify/${token}`
             const templatePath = path.join(__dirname, "../templates", "userRegister.html")
             const templateSource = fs.readFileSync(templatePath, 'utf-8')
             const compiletemplate = Handlebars.compile(templateSource)
@@ -291,8 +293,8 @@ export class AccountController {
             })
             await transporter.sendMail({
                 from:process.env.MAIL_USER,
-                to: account?.email,
-                subject: "Verify your Eventopia account 📝",
+                to: email,
+                subject: "Verify your new Eventopia email 📝",
                 html
             })
             res.status(200).send({

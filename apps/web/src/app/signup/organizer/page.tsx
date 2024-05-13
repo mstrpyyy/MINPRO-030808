@@ -61,21 +61,21 @@ export default function Register() {
                                     <div className='w-full'>
                                         <div  className='flex flex-col'>
                                             <label htmlFor="name" className="text-sm text-xgreen font-semibold">Name</label>
-                                            <Field type="name" placeholder="Company name" name="name" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
+                                            <Field type="name" placeholder="Company name" name="name" className="bg-zinc-200 text-xl text-xdark border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                         </div>
                                         <ErrorMessage component="div" name="name"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                     </div>
                                     <div className='w-full'>
                                         <div  className='flex flex-col'>
                                             <label htmlFor="email" className="text-sm text-xgreen font-semibold">Email</label>
-                                            <Field type="email" placeholder="Company email" name="email" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
+                                            <Field type="email" placeholder="Company email" name="email" className="bg-zinc-200 text-xl text-xdark border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                         </div>
                                         <ErrorMessage component="div" name="email"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                     </div>
                                     <div className='w-full'>
                                         <div  className='flex flex-col'>                                            
                                             <label htmlFor="password" className="text-sm text-xgreen font-semibold">Password</label>
-                                            <Field type="password" placeholder="Company password" name="password" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
+                                            <Field type="password" placeholder="Company password" name="password" className="bg-zinc-200 text-xl text-xdark border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                         </div>
                                         <ErrorMessage component="div" name="password"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                     </div>                                  
