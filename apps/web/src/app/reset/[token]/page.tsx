@@ -74,7 +74,7 @@ return (
                             <div className='w-full'>
                                 <div  className='flex flex-col'>
                                     <label htmlFor="password" className="text-sm text-xgreen font-semibold">password</label>
-                                    <Field type="password" placeholder="new password" name="password" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
+                                    <Field type="password" placeholder="new password" name="password" className="bg-zinc-200 text-xl text-xdark border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                 </div>
                                 <ErrorMessage component="div" name="password"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                             </div>                                

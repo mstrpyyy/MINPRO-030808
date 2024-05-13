@@ -11,7 +11,6 @@ export class AccountRouter {
   constructor() {
     this.accountController = new AccountController()
     this.verifyToken = new VerifyToken()
-    
     this.router = Router();
     this.initializeRoutes();
   }

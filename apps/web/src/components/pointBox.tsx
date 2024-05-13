@@ -9,7 +9,6 @@ import { PiEyeSlash } from "react-icons/pi";
 export default function PointBox() {
     const [showReferral, setShowReferral] = useState("hidden")
     const account = useAppSelector((state) => state.account.value)
-    console.log(+account?.sumPoint!);
 
     const showReferralCode = () => {
         if (showReferral ==  "hidden") {
@@ -21,32 +20,34 @@ export default function PointBox() {
 
   return (
     <div className='w-full flex drop-shadow-[0_0_4px_rgba(0,0,0,0.3)] gap-4'>
-        <div className={`bg-white h-32 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "user" ? "flex" : "hidden"}`}>
-            <p className='text-xl text-xgreen font-semibold'>
+        <div className={`bg-xdark h-32 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "user" ? "flex" : "hidden"}`}>
+            <p className='text-xl text-xgreen3 font-semibold'>
                 Your points:
             </p>   
-            <p className='text-4xl text-xgreen2'>
+            <p className='text-4xl text-xgreen1'>
                 {new Intl.NumberFormat('en-DE').format(+account?.sumPoint!)}
             </p> 
-            <p className={`text-xmetal ${+account?.sumPoint! == 0? "hidden" : "block"}`} >
+            <p className={`text-white ${+account?.sumPoint! == 0? "hidden" : "block"}`} >
                 {new Intl.NumberFormat('en-DE').format(+account?.expireSoonPoint!)}pts will expire on {account?.expireDate?.slice(0, 10)}
             </p>
-            <p className={`text-xmetal ${+account?.sumPoint! == 0? "block" : "hidden"}`} >Share your referral and get points!</p>
+            <p className={`text-white ${+account?.sumPoint! == 0? "block" : "hidden"}`} >Share your referral and get points!</p>
         </div>
-        <div className={`bg-white h-32 grow flex flex-col rounded-xl justify-center items-center ${account?.accountType == "user" ? "flex" : "hidden"}`}>
-            <p className='text-xl text-xgreen font-semibold'>Your referral code:</p>
-            <div className='flex justify-between'>
-                <p className={`text-4xl text-xgreen2 ${showReferral == "show" ? "block" : "hidden"}`}>{account?.referral}</p>
-                <p className={`text-4xl text-xgreen2 ${showReferral == "show" ? "hidden" : "block"}`}>{'-'.repeat(account?.referral?.length!)}</p>
-                <button onClick={showReferralCode}>
-                    <PiEye className={`text-zinc-500 ${showReferral == "show" ? "block" : "hidden"}`}/>
-                    <PiEyeSlash className={`text-zinc-500 ${showReferral == "show" ? "hidden" : "block"}`}/>
-                </button>
-                <button onClick={() =>  navigator.clipboard.writeText(account?.referral!)}>
-                    <MdOutlineContentCopy className='text-zinc-500'/>
-                </button>
+        <div className={`bg-xdark h-32 grow flex flex-col rounded-xl justify-center items-center ${account?.accountType == "user" ? "flex" : "hidden"}`}>
+            <p className='text-xl text-xgreen3 font-semibold'>Your referral code:</p>
+            <div className='flex justify-between items-center w-60'>
+                <p className={`text-4xl text-xgreen1 ${showReferral == "show" ? "block" : "hidden"}`}>{account?.referral}</p>
+                <p className={`text-4xl text-xgreen1 ${showReferral == "show" ? "hidden" : "block"}`}>{'●'.repeat(account?.referral?.length!)}</p>
+                <div className='flex items-center gap-1'>
+                    <button onClick={showReferralCode}>
+                        <PiEye className={`text-zinc-300 text-xl ${showReferral == "show" ? "block" : "hidden"}`}/>
+                        <PiEyeSlash className={`text-zinc-300 text-xl ${showReferral == "show" ? "hidden" : "block"}`}/>
+                    </button>
+                    <button onClick={() =>  navigator.clipboard.writeText(account?.referral!)}>
+                        <MdOutlineContentCopy className='text-zinc-300'/>
+                    </button>
+                </div>
             </div>
-            <p className={`text-xmetal ${account?.sumPoint == 0? "hidden" : "block"}`} >Share your referral and get points!</p>
+            <p className={`text-white ${account?.sumPoint == 0? "hidden" : "block"}`} >Share your referral and get points!</p>
         </div>
         <div  className={`signupCTA h-32 grow flex-col rounded-xl justify-center items-center ${account?.accountType == null ? "flex" : "hidden"}`}>
             <h1 className='text-4xl text-xgreen3'>Sign up today and get rewards!</h1>
