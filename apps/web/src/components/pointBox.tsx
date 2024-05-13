@@ -5,18 +5,20 @@ import React, { useState } from 'react'
 import { MdOutlineContentCopy } from "react-icons/md";
 import { PiEye } from "react-icons/pi";
 import { PiEyeSlash } from "react-icons/pi";
+import { Card } from './card';
 
 export default function PointBox() {
     const [showReferral, setShowReferral] = useState("hidden")
     const account = useAppSelector((state) => state.account.value)
 
     const showReferralCode = () => {
-        if (showReferral ==  "hidden") {
+        if (showReferral == "hidden") {
             setShowReferral("show")
         } else if (showReferral == "show") {
             setShowReferral("hidden")
         }
     }
+
 
   return (
     <div className='w-full flex drop-shadow-[0_0_4px_rgba(0,0,0,0.3)] gap-4'>
@@ -65,6 +67,17 @@ export default function PointBox() {
             <h1 className='text-xl text-white'>Create Event</h1>
         </div>
 
-    </div>
-  )
+            <Link href={'/organizers/dashboard/event-settings'} className={`bg-white hover:bg-xwhite transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
+                <h1 className='text-xl text-xblue'>Manage account</h1>
+            </Link>
+            <Link href={'/organizers/dashboard/general'} className={`bg-white hover:bg-xwhite transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
+                <h1 className='text-xl text-xblue'>Dashboard</h1>
+            </Link>
+            <div className={`bg-xgreen3 hover:bg-xgreen transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
+                <h1 className='text-xl text-white'>Create Event</h1>
+            </div>
+        </div>
+        <Card />
+        </>
+    )
 }

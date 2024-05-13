@@ -116,7 +116,7 @@ model Transaction {
   userId        Int
   eventId       Int
   quantity      Int
-  promoItemId   Int?
+  promoItemId   Int
   totalDiscount Int
   total         Int
   grandTotal    Int
@@ -138,11 +138,10 @@ model review {
 }
 
 model PointUser {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  point     Int      @default(10000)
-  createdAt DateTime @default(now())
-  expireAt DateTime 
-  isRedeem  Boolean  @default(false)
-  user      User     @relation(fields: [userId], references: [id])
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  point      Int
+  expireAt DateTime
+  isRedeem   Boolean  @default(false)
+  user       User     @relation(fields: [userId], references: [id])
 }

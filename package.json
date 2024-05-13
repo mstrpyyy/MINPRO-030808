@@ -17,6 +17,7 @@
     "husky": "^8.0.0",
     "lint-staged": "^15.1.0",
     "prettier": "^3.1.0",
+    "prisma": "^5.13.0",
     "tsconfig": "*",
     "turbo": "latest"
   },
@@ -30,5 +31,8 @@
     "hooks": {
       "pre-commit": "npx lint-staged"
     }
+  },
+  "dependencies": {
+    "@prisma/client": "^5.13.0"
   }
 }

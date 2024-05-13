@@ -4,6 +4,7 @@
     "module": "commonjs",
     "types": ["./src/custom.d.ts"],
     "strict": true,
+    "types": ["./src/custom.d.ts"],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,

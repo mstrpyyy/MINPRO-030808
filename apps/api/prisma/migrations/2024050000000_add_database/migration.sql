@@ -1,12 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `samples` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE `samples`;
-
 -- CreateTable
 CREATE TABLE `User` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
@@ -15,9 +6,9 @@ CREATE TABLE `User` (
     `profilePicture` LONGTEXT NULL,
     `password` LONGTEXT NOT NULL,
     `isActive` BOOLEAN NOT NULL DEFAULT false,
-    `referral` VARCHAR(191) NOT NULL,
+    `referral` VARCHAR(191) NULL,
     `isRedeem` BOOLEAN NOT NULL DEFAULT true,
-    `points` INTEGER NOT NULL,
+    `accountType` VARCHAR(191) NOT NULL DEFAULT 'user',
 
     UNIQUE INDEX `User_email_key`(`email`),
     UNIQUE INDEX `User_referral_key`(`referral`),
@@ -31,6 +22,7 @@ CREATE TABLE `Organizer` (
     `email` VARCHAR(191) NOT NULL,
     `profilePicture` LONGTEXT NULL,
     `password` LONGTEXT NOT NULL,
+    `accountType` VARCHAR(191) NOT NULL DEFAULT 'organizer',
     `isActive` BOOLEAN NOT NULL DEFAULT false,
 
     UNIQUE INDEX `Organizer_email_key`(`email`),
@@ -42,11 +34,15 @@ CREATE TABLE `Event` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
     `organizerId` INTEGER NOT NULL,
-    `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `startSale` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `eventDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `status` ENUM('ComingSoon', 'available', 'Finished') NOT NULL,
     `price` INTEGER NOT NULL,
+    `slug` LONGTEXT NOT NULL,
     `category` ENUM('Sports', 'Conferences', 'Expos', 'Concerts', 'Festivals', 'ArtPerformance') NOT NULL,
-    `location` VARCHAR(191) NOT NULL,
-    `stock` INTEGER NOT NULL,
+    `city` VARCHAR(191) NOT NULL,
+    `address` VARCHAR(191) NOT NULL,
+    `availableTickets` INTEGER NOT NULL,
     `description` LONGTEXT NULL,
 
     PRIMARY KEY (`id`)
@@ -118,6 +114,17 @@ CREATE TABLE `review` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `PointUser` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `userId` INTEGER NOT NULL,
+    `point` INTEGER NOT NULL,
+    `expireDate` DATETIME(3) NOT NULL,
+    `isRedeem` BOOLEAN NOT NULL DEFAULT false,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `Event` ADD CONSTRAINT `Event_organizerId_fkey` FOREIGN KEY (`organizerId`) REFERENCES `Organizer`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -147,3 +154,6 @@ ALTER TABLE `review` ADD CONSTRAINT `review_userId_fkey` FOREIGN KEY (`userId`) 
 
 -- AddForeignKey
 ALTER TABLE `review` ADD CONSTRAINT `review_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `PointUser` ADD CONSTRAINT `PointUser_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

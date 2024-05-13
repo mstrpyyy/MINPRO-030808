@@ -31,6 +31,7 @@ export class AccountController {
                     await prisma.pointUser.create({
                         data:{
                             userId: req.user?.userId!,
+                            point: 0,
                             expireAt: new Date(expireDate)
                         }
                     })
@@ -541,10 +542,3 @@ export class AccountController {
         }
     }
 }
-
-
-
-
-
-
-
