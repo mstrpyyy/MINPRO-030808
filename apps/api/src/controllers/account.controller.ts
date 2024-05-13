@@ -22,7 +22,8 @@ export class AccountController {
                     user = await prisma.user.update({
                         data: {
                             isRedeem: false,
-                            isActive: true
+                            isActive: true,
+                            RedeemExpire: new Date(expireDate)
                         },
                         where: {
                             id: req.user?.id
@@ -31,7 +32,6 @@ export class AccountController {
                     await prisma.pointUser.create({
                         data:{
                             userId: req.user?.userId!,
-                            point: 0,
                             expireAt: new Date(expireDate)
                         }
                     })
@@ -56,6 +56,8 @@ export class AccountController {
                             point: true
                         }
                     })
+
+                    
                     const payload = {id: user.id, accountType: user.accountType}
                     const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '1d'})
                     return res.status(200).send({
@@ -221,6 +223,22 @@ export class AccountController {
                 status: "error",
                 message: error
             })      
+        }
+    }
+
+    async getAccountType(req: Request, res: Response) {
+        try {
+            const accountType = req.user?.accountType
+            res.status(200).send(({
+                status: 'ok',
+                message: 'accountType found',
+                accountType
+            }))
+        } catch (error) {
+            res.status(400).send({
+                status: 'error',
+                message: error
+            })
         }
     }
 
