@@ -43,3 +43,7 @@ select:-webkit-autofill:focus {
 .signupCTA {
   background-image: linear-gradient(to right, #003049 70%, #6AB600 100%);
 }
+
+input[type="file"] {
+  display: none;
+}

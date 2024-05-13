@@ -42,8 +42,8 @@ export default function LoginRedirectModal() {
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
             </form>
             <div className='bg-white flex flex-col items-center'>
-            <h1 className='text-xgreen2 text-4xl md:text-5xl font-bold mt-7 mb-4 text-center text-balance'>Choose your account type.</h1>
-            <h2 className='text-zinc-500 text-lg md:text-xl mb-7 text-center'>Click one of the following types:</h2>
+            <h1 className='text-xgreen2 text-4xl md:text-5xl font-bold mt-7 max-sm:mb-6 text-center text-balance'>Choose your account type.</h1>
+            <h2 className='text-zinc-500 text-lg md:text-xl max-sm:hidden mb-7 text-center'>Click one of the following types:</h2>
             <div className='flex shrink gap-5 md:gap-10 flex-wrap justify-center mx-7'>
                 <button onClick={toLoginUserModal} className='flex flex-col justify-center items-center w-60 h-72  md:hover:drop-shadow-[0_0_7px_rgba(0,0,0,0.3)] transition-all drop-shadow-[0_0_4px_rgba(0,0,0,0.3)] rounded-xl bg-white'>
                 <GoPersonAdd className='text-[12rem] text-xblue'/>
@@ -64,7 +64,7 @@ export default function LoginRedirectModal() {
                 <p className='text-zinc-500'>Create, manage, track events.</p>
                 </button>
                 <dialog id="my_modal_organizerLogin" className="modal">
-                    <div className="modal-box bg-white max-w-[400px]">
+                    <div className="modal-box bg-white max-w-[350px]">
                         <form method="dialog">
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
                         </form>

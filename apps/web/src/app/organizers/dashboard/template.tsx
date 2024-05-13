@@ -23,7 +23,7 @@ export default function Template({children}: Readonly<{children: React.ReactNode
 
   return (
     <div className="bg-xwhite h-[3000px] flex">
-      <div className="h-[calc(100vh-64px)] flex flex-col max-sm:hidden justify-between overflow-y-auto w-20 lg:w-80 sticky top-[67px] grow-0 shrink-0 py-10 bg-xblack">
+      <div className="h-[calc(100vh-64px)] flex flex-col max-sm:hidden justify-between overflow-y-auto w-20 lg:w-80 sticky top-[67px] grow-0 shrink-0 py-10 bg-xdark">
         <DashboardOwner />
         <div className="flex flex-col  justify-center items-center ">
           <button
@@ -32,7 +32,7 @@ export default function Template({children}: Readonly<{children: React.ReactNode
             ${
               activeButton == 'general'
                 ? 'bg-xmetal font-bold lg:pl-10'
-                : 'bg-xblack'
+                : 'bg-xdark'
             }`}
           >
             <RiFileChartLine
@@ -53,7 +53,7 @@ export default function Template({children}: Readonly<{children: React.ReactNode
             ${
               activeButton == 'event-management'
                 ? 'bg-xmetal font-bold lg:pl-10'
-                : 'bg-xblack'
+                : 'bg-xdark'
             }`}
           >
             <MdOutlineTableChart
@@ -74,7 +74,7 @@ export default function Template({children}: Readonly<{children: React.ReactNode
             ${
               activeButton == 'account-settings'
                 ? 'bg-xmetal font-bold lg:pl-10'
-                : 'bg-xblack'
+                : 'bg-xdark'
             }`}
           >
             <MdOutlineManageAccounts

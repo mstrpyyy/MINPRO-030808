@@ -5,7 +5,7 @@ import { FaCalendarCheck } from "react-icons/fa";
 import { RiMailStarFill } from "react-icons/ri";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { FaMoneyCheck } from "react-icons/fa";
-import { HiTicket } from "react-icons/hi2";
+import { BsTicketDetailedFill } from "react-icons/bs";
 
 export default function General() {
   return (
@@ -16,7 +16,7 @@ export default function General() {
       </div>
 
       <div className='flex w-full flex-wrap gap-5 my-7'>
-        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[350px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
+        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
           <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
             <FaCalendarCheck  />
             Active Events
@@ -27,7 +27,7 @@ export default function General() {
           </div>
         </div>
 
-        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[350px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
+        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
           <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
             <RiCalendarScheduleFill  />
             Scheduled Events
@@ -38,7 +38,7 @@ export default function General() {
           </div>
         </div>
 
-        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[350px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
+        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
           <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
             <RiMailStarFill />
             Average Reviews
@@ -49,7 +49,7 @@ export default function General() {
           </div>
         </div>
 
-      <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[350px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
+      <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
           <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
             <FaMoneyBillWave />
             Total Revenues
@@ -60,9 +60,9 @@ export default function General() {
           </div>
         </div>
 
-        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[350px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
+        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
           <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
-            <HiTicket />
+            < BsTicketDetailedFill  />
             Tickets Sold
           </h2>
           <div className='flex items-end grow'>
@@ -71,7 +71,7 @@ export default function General() {
           </div>
         </div>
         
-        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[350px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
+        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
           <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
             <FaMoneyCheck />
             Total Transactions

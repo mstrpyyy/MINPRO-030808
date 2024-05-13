@@ -3,6 +3,7 @@ type User = {
     accountType: string
     refCode?: string
     userId?: number
+    email?: string
 }
 
 type Transaction = {

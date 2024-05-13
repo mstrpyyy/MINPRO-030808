@@ -5,6 +5,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as yup from 'yup'
+import UserResetForm from './userResetForm'
 
 const registerSchema = yup.object().shape({
     email: yup.string().email('invalid email').required('email can not be empty'),
@@ -21,6 +22,15 @@ export default function UserLoginForm() {
         if (modal instanceof HTMLDialogElement) {
             modal.close()}
         }
+
+    const toResetUserModal = () => {
+        closeModal()
+        const resetModal = document.getElementById("my_modal_userReset");
+        if (resetModal instanceof HTMLDialogElement) {
+            resetModal.showModal()}
+    }
+
+    
     const handleLogin = async (dataSet: {email: string, password: string}) => {
         try {
             setLoadingDisplay("absolute")
@@ -68,19 +78,28 @@ export default function UserLoginForm() {
                                     <div className='w-full'>
                                         <div  className='flex flex-col'>
                                             <label htmlFor="email" className="text-sm text-xgreen font-semibold">Email</label>
-                                            <Field type="email" placeholder="User email" name="email" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
+                                            <Field type="email" placeholder="User email" name="email" className="bg-zinc-200 text-xl text-xdark border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                         </div>
                                         <ErrorMessage component="div" name="email"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                     </div>
                                     <div className='w-full'>
                                         <div  className='flex flex-col'>                                            
                                             <label htmlFor="password" className="text-sm text-xgreen font-semibold">Password</label>
-                                            <Field type="password" placeholder="User password" name="password" className="bg-zinc-200 text-xl text-xblack border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
+                                            <Field type="password" placeholder="User password" name="password" className="bg-zinc-200 text-xl text-xdark border-b-[1px] border-xmetal focus:outline-none placeholder:text-zinc-400" />
                                         </div>
                                         <ErrorMessage component="div" name="password"  className="text-xmetal text-sm text-[0.7rem] fixed" />
                                     </div>                                  
                                 <button type="submit" className="bg-xblue hover:bg-xblue1 text-white font-semibold text-2xl w-full py-2 rounded-xl mt-10 sm:mt-20 relative">Login<span className={`ml-5 loading loading-dots loading-lg ${loadingDisplay}`}></span></button>
                             </Form>
+                            <button onClick={toResetUserModal} className='text-zinc-500 text-sm mt-2'>Forgot password?</button>
+                            <dialog id="my_modal_userReset" className="modal">
+                                <div className="modal-box bg-white max-w-[350px]">
+                                    <form method="dialog">
+                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+                                    </form>
+                                    <UserResetForm />
+                                </div>
+                            </dialog>
                         </div>
                 )
             }}

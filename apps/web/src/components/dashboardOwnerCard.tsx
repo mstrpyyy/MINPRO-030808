@@ -12,7 +12,7 @@ export default function DashboardOwnerCard() {
             alt="orgLogo"
             width={650}
             height={650}
-            src={'/images/testlogoOrg.jpg'}
+            src={account?.profilePicture ? account?.profilePicture : '/images/accountLogo.png'}
             className="w-14 rounded-full border-2 border-zinc-200"
           ></Image>
           <div className="flex w-full justify-between flex-col">

@@ -20,7 +20,6 @@ const config: Config = {
         'xgreen1': '#69d1c5',
         'xorange1': '#D96756',
         'xyellow': '#F77F00',
-        'xblack': '#1d232a'
       }
     },
   },

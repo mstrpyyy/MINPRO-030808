@@ -9,14 +9,10 @@ export class UserRouter {
   private router: Router;
   private userController: UserController
   private validator: Validator
-  private verifyToken: VerifyToken
-  private updatePoint: updatePoint
 
   constructor() {
     this.userController = new UserController()
     this.validator = new Validator()
-    this.verifyToken = new VerifyToken()
-    this.updatePoint = new updatePoint()
     this.router = Router();
     this.initializeRoutes();
   }

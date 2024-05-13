@@ -8,14 +8,13 @@ import Cookies from 'js-cookie'
 import { deleteToken } from "@/app/action";
 import { useAppDispatch, useAppSelector } from "@/lib/features/hooks";
 import { setUser } from "@/lib/features/account/account";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const [searchEffect, setSearchEffect] = useState("flex")
   const account = useAppSelector((state) => state.account.value)
-  console.log(account)
 
   const getUser = async(token: any) => {
     try {
@@ -67,18 +66,18 @@ export default function Navbar() {
 }
 
   return (
-    <div className="navbar bg-xwhite flex w-full shadow-[0_0_15px_0px_rgba(113,113,122,1)]  px-2 md:px-10 select-none sticky top-0 z-40">
+    <div className="navbar bg-xwhite flex w-full shadow-[0_0_15px_0px_rgba(0,0,0,0.5)]  px-2 md:px-10 select-none sticky top-0 z-40">
       <Link href={'/'} className="hidden md:block text-xgreen3 text-2xl font-bold">Eventopia</Link>
       <Link href={'/'} className={`${searchEffect} items-center md:hidden text-xgreen font-bold text-3xl`}><TfiTicket /><p>E</p></Link>
       <div className="flex-1 max-lg:mx-8 mx-16">
         <form className="join w-full">
-          <input className="input  input-bordered join-item w-full h-10 rounded-l-xl bg-white text-xblack focus:outline-none" onFocus={() => {setSearchEffect("hidden")}} onBlur={() => {setSearchEffect("flex")}} placeholder="Search events"/>
+          <input className="input  input-bordered join-item w-full h-10 rounded-l-xl bg-white text-xdark focus:outline-none" onFocus={() => {setSearchEffect("hidden")}} onBlur={() => {setSearchEffect("flex")}} placeholder="Search events"/>
           <div className="dropdown dropdown-end dropdown-hover">
             <div tabIndex={0} role="button" className="bg-xgreen hover:bg-xgreen3 text-white w-20 md:w-32 h-10 flex items-center justify-evenly rounded-r-xl">
               <p>Filter</p>
               <FaCaretDown />
             </div>
-            <ul tabIndex={0} className="dropdown-content z-[2] menu rounded-box w-28 bg-xmetal text-white shadow-[0_0_15px_0px_rgba(113,113,122,1)]">
+            <ul tabIndex={0} className="dropdown-content z-[2] menu rounded-box w-28 bg-xmetal text-white shadow-[0_0_15px_0px_rgba(0,0,0,0.5)] ">
               <li className="hover:bg-xgreen2 hover:font-bold w-[100%] p-2 rounded-xl">Event</li>
               <li className="hover:bg-xgreen2 hover:font-bold w-[100%] p-2 rounded-xl">Organizer</li>
               <li className="hover:bg-xgreen2 hover:font-bold w-[100%] p-2 rounded-xl">City</li>
@@ -102,10 +101,10 @@ export default function Navbar() {
                 <img alt="Tailwind CSS Navbar component" src="/images/noUserLogo.png" className={`${account?.accountType == null ? "block" : "hidden"}`}/>
               </div>
           </div>
-          <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content rounded-box w-52 bg-xmetal text-white">
-              <li className={`${account?.accountType == "organizer"? "block" : "hidden"} hover:bg-xgreen2 hover:font-bold rounded-xl`} onClick={() => checkOrganizer('/organizers/dashboard/general')}><a>Dashboard</a></li>
+          <ul tabIndex={0} className="mt-3 z-[1] p-2 menu menu-sm dropdown-content rounded-box w-52 bg-xmetal text-white shadow-[0_0_15px_0px_rgba(0,0,0,0.5)] ">
+              <li className={`block hover:bg-xgreen2 hover:font-bold rounded-xl`} onClick={() => {account?.accountType == 'user' ? router.push('/users/dashboard/general') : router.push('/organizers/dashboard/general')}}><a>Dashboard</a></li>
               <li className={`${account?.accountType == "user"? "block" : "hidden"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Wishlist</a></li>
-              <li className="hover:bg-xgreen2 hover:font-bold rounded-xl"><a>Settings</a></li>
+              <li onClick={() => {account?.accountType == 'user' ? router.push('/users/dashboard/account-settings') : router.push('/organizers/dashboard/account-settings')}} className={`${account?.accountType == null ? "hidden" : "block"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Settings</a></li>
               <li onClick={() => handleLogout()} className={`${account?.accountType == null ? "hidden" : "block"} hover:bg-red-500  text-red-500 hover:text-white font-bold rounded-xl`}><a>log out</a></li>
               <li onClick={() => router.push('/signup')} className={`${account?.accountType == null ? "block" : "hidden"} hover:bg-xgreen2  text-xgreen1 hover:text-white font-bold rounded-xl`}><a>Sign up</a></li>
               <li onClick={() => showModal()} className={`${account?.accountType == null ? "block" : "hidden"} hover:bg-xgreen2 text-xgreen1 hover:text-white font-bold rounded-xl`}><a>log in</a></li>
