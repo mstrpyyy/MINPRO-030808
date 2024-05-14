@@ -91,7 +91,9 @@ export default function Template({children}: Readonly<{children: React.ReactNode
           </button>
         </div>
         <div className="flex justify-center">
-          <button className="text-white text-xl bg-xgreen2 transition-colors hover:bg-xgreen1 p-2 px-4 rounded-xl flex justify-center items-center gap-2">
+          <button
+          onClick={() => {router.push('/organizers/dashboard/create-event')}} 
+          className="text-white text-xl bg-xgreen2 transition-colors hover:bg-xgreen1 p-2 px-4 rounded-xl flex justify-center items-center gap-2">
           <p className='hidden lg:block'>Create Event</p>
             < MdEditCalendar className='text-3xl'/>
           </button>

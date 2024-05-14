@@ -46,6 +46,7 @@ export default function Navbar() {
   useEffect(() => {
     const token = Cookies.get("token")
     if (token !== undefined){
+      console.log(token);
       getUser(token)
     }
   }, [])
@@ -104,7 +105,11 @@ export default function Navbar() {
           <ul tabIndex={0} className="mt-3 z-[1] p-2 menu menu-sm dropdown-content rounded-box w-52 bg-xmetal text-white shadow-[0_0_15px_0px_rgba(0,0,0,0.5)] ">
               <li className={`block hover:bg-xgreen2 hover:font-bold rounded-xl`} onClick={() => {account?.accountType == 'user' ? router.push('/users/dashboard/general') : router.push('/organizers/dashboard/general')}}><a>Dashboard</a></li>
               <li className={`${account?.accountType == "user"? "block" : "hidden"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Wishlist</a></li>
-              <li onClick={() => {account?.accountType == 'user' ? router.push('/users/dashboard/account-settings') : router.push('/organizers/dashboard/account-settings')}} className={`${account?.accountType == null ? "hidden" : "block"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Settings</a></li>
+              <li 
+                onClick={() => {
+                  account?.accountType == 'user' ? router.push('/users/dashboard/account-settings') : router.push('/organizers/dashboard/account-settings')
+                  }} 
+                className={`${account?.accountType == null ? "hidden" : "block"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Settings</a></li>
               <li onClick={() => handleLogout()} className={`${account?.accountType == null ? "hidden" : "block"} hover:bg-red-500  text-red-500 hover:text-white font-bold rounded-xl`}><a>log out</a></li>
               <li onClick={() => router.push('/signup')} className={`${account?.accountType == null ? "block" : "hidden"} hover:bg-xgreen2  text-xgreen1 hover:text-white font-bold rounded-xl`}><a>Sign up</a></li>
               <li onClick={() => showModal()} className={`${account?.accountType == null ? "block" : "hidden"} hover:bg-xgreen2 text-xgreen1 hover:text-white font-bold rounded-xl`}><a>log in</a></li>

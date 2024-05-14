@@ -10,10 +10,58 @@ import { transporter } from '@/helpers/nodemailer';
 export class OrganizerController {
     async getOrganizer(req: Request, res: Response) {
         try {
-            const organizers = await prisma.organizer.findMany()
+            const organizers = await prisma.organizer.findFirst({
+                where: {
+                    id: req.user?.id
+                }
+            })
+            const activeEvent = await prisma.event.count({
+                where: {
+                    organizerId: req.user?.id,
+                    status: "Available"
+                }
+            })
+            const scheduledEvent = await prisma.event.count({
+                where: {
+                    organizerId: req.user?.id,
+                    status: "ComingSoon"
+                }
+            })
+            const getTransaction = await prisma.transaction.aggregate({
+                where: {
+                    status: "Paid",
+                    event: {
+                        organizerId: req.user?.id
+                    }
+                },
+                _sum: {
+                    quantity: true,
+                    grandTotal: true
+                }, 
+                _count: {
+                    status: true
+                }
+            })
+            const review = await prisma.review.aggregate({
+                _avg: {
+                    Rating: true
+                },
+                where: {
+                    event: {
+                        organizerId: req.user?.id
+                    }
+                }
+            })
+            
             res.status(200).send({
                 status:'ok',
-                organizers
+                organizers,
+                activeEvent,
+                scheduledEvent,
+                ticketSold: getTransaction._sum.quantity,
+                totalRevenue: getTransaction._sum.grandTotal,
+                totalTransaction: getTransaction._count.status,
+                averageReview: review._avg.Rating
             })
         } catch (error) {
             res.status(400).send({
@@ -88,7 +136,8 @@ export class OrganizerController {
 
     async loginOrganizer(req: Request, res: Response) {
         try {
-            const {email, password} = req.body                                                           
+            const {email, password} = req.body   
+            console.log(password);                                                        
             const organizer = await prisma.organizer.findFirst({
                 where: {
                     email

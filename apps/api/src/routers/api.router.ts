@@ -32,7 +32,7 @@ export class ApiRouter {
         this.router.use('/users', this.userRouter.getRouter())
         this.router.use('/organizers', this.organizerRouter.getRouter())
         this.router.use('/accounts', this.accountRouter.getRouter())
-        this.router.use('/event', this.eventRouter.getRouter())
+        this.router.use('/events', this.eventRouter.getRouter())
     }
 
     getRouter(): Router {

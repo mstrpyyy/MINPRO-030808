@@ -25,8 +25,6 @@ export default function ChangeEmailModal() {
         try {
             setLoadingDisplay("absolute")
             const token = Cookies.get("token")
-            console.log(token);
-            console.log(dataSet)
             const res = await fetch('http://localhost:8000/api/accounts/change-email',{
               method: "POST",
               headers: {
