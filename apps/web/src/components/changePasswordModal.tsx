@@ -1,6 +1,6 @@
 'use client'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as yup from 'yup'
 import { useAppDispatch, useAppSelector } from '@/lib/features/hooks';
 import Cookies from 'js-cookie';
@@ -17,6 +17,7 @@ const registerSchema = yup.object().shape({
 
 export default function ChangePasswordModal() {
     const [isSave, setIsSave] = useState(false)
+    const [isClient, setIsClient] = useState(false)
     const dispatch = useAppDispatch()
     const account = useAppSelector((state) => state.account.value)
 
@@ -65,8 +66,6 @@ export default function ChangePasswordModal() {
         try {
          
             const token = Cookies.get("token")
-            console.log(token);
-            console.log(dataSet)
             const res = await fetch('http://localhost:8000/api/accounts/change-password', {
               method: "PATCH",
               headers: {
@@ -90,6 +89,10 @@ export default function ChangePasswordModal() {
             console.log(error);
           }
       }
+
+      useEffect(() => {
+        setIsClient(true)
+      }, [])
 
   return (
     <div>
@@ -131,7 +134,7 @@ export default function ChangePasswordModal() {
                                     </div>                                                      
                                     <button type="submit" className="text-white text-lg sm:text-xl bg-xgreen2 transition-colors hover:bg-xgreen1 sm:py-2 sm:px-4 rounded-xl w-full">Save</button>
                                 </Form>
-                                    <div className={`${account?.accountType == "user" ? 'block' : 'hidden'}`}>
+                                    <div className={`${account?.accountType == "user" && isClient ? 'block' : 'hidden'}`}>
                                     <button onClick={toResetUserModal} className='text-zinc-400 text-sm mt-2'>Forgot password?</button>
                                         <dialog id="my_modal_organizerReset" className="modal">
                                             <div className="modal-box bg-white max-w-[350px]">
@@ -142,7 +145,7 @@ export default function ChangePasswordModal() {
                                             </div>
                                         </dialog>
                                     </div>
-                                    <div className={`${account?.accountType == "organizer" ? 'block' : 'hidden'}`}>
+                                    <div className={`${account?.accountType == "organizer" && isClient ? 'block' : 'hidden'}`}>
                                     <button onClick={toResetOrganizerModal} className='text-zinc-400 text-sm mt-2'>Forgot password?</button>
                                         <dialog id="my_modal_organizerReset" className="modal">
                                             <div className="modal-box bg-white max-w-[350px]">

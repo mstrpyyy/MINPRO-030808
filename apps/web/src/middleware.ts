@@ -23,7 +23,6 @@ const protectedOrganizerPages = [
 
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get('token');
-  console.log(token?.value);
   const url = request.nextUrl.pathname;
   if (protectedPages.includes(url)) {
     if (!token) {
@@ -39,9 +38,6 @@ export async function middleware(request: NextRequest) {
         }
       })
       const data = await res.json()
-      console.log(data);
-      console.log(protectedUserPages.includes(url));
-      console.log(protectedOrganizerPages.includes(url));
       
       if (protectedUserPages.includes(url) && data.accountType == 'user') {
         return NextResponse.next();

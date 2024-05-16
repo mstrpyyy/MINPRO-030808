@@ -491,6 +491,7 @@ export class AccountController {
     async forgotPassword_step2(req: Request, res: Response) {
         try {
             const { password } = req.body
+            console.log(password);
             const salt = await genSalt(10)
             const hashPassword = await hash(password, salt)
             if (req.user?.accountType == "user") {

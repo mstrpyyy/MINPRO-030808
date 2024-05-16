@@ -47,8 +47,6 @@ export default function ChangeNameModal() {
         try {
          
             const token = Cookies.get("token")
-            console.log(token);
-            console.log(dataSet)
             const res = await fetch('http://localhost:8000/api/accounts/change-name',{
               method: "PATCH",
               headers: {

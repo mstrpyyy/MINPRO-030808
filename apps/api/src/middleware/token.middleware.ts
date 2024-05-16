@@ -6,7 +6,6 @@ export class VerifyToken {
     verify = (req: Request, res: Response, next: NextFunction) => {
         try {
             let token = req.headers.authorization?.replace("Bearer ", "")
-            console.log(token);
             if(!token) throw "token empty"
             const verifyUser = verify(token, process.env.KEY_JWT!)
             req.user = verifyUser as User

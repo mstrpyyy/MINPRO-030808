@@ -1,16 +1,16 @@
-
 import {Request, Response, Router} from 'express'
 import { UserRouter } from './user.router'
-import { VerifyToken } from '@/middleware/token.middleware'
 import { OrganizerRouter } from './organizer.router'
 import { AccountRouter } from './account.router'
 import { EventRouter } from './event.router'
+import { TransactionRouter } from './transaction.router'
 
 export class ApiRouter {
     private userRouter: UserRouter 
     private organizerRouter: OrganizerRouter
     private accountRouter: AccountRouter
     private eventRouter: EventRouter
+    private transactionRouter: TransactionRouter
     private router: Router
 
     constructor() {
@@ -19,6 +19,7 @@ export class ApiRouter {
         this.organizerRouter = new OrganizerRouter()
         this.accountRouter = new AccountRouter()
         this.eventRouter = new EventRouter()
+        this.transactionRouter = new TransactionRouter()
         this.initializeRoutes();
     }
 
@@ -32,7 +33,8 @@ export class ApiRouter {
         this.router.use('/users', this.userRouter.getRouter())
         this.router.use('/organizers', this.organizerRouter.getRouter())
         this.router.use('/accounts', this.accountRouter.getRouter())
-        this.router.use('/event', this.eventRouter.getRouter())
+        this.router.use('/events', this.eventRouter.getRouter())
+        this.router.use('/transactions', this.transactionRouter.getRouter())
     }
 
     getRouter(): Router {

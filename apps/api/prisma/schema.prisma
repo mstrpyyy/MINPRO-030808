@@ -12,7 +12,7 @@ datasource db {
 
 enum EventStatus {
   ComingSoon
-  available
+  Available
   Finished
 }
 
@@ -31,9 +31,14 @@ enum TransactionStatus {
   Cancel
 }
 
+enum DiscountType {
+  Nominal
+  Percent
+}
+
 model User {
   id             Int           @id @default(autoincrement())
-  name           String
+  name           String   
   email          String        @unique
   profilePicture String?       @db.LongText
   password       String        @db.LongText
@@ -61,13 +66,14 @@ model Organizer {
 
 model Event {
   id               Int            @id @default(autoincrement())
-  name             String
+  name             String         @unique
   organizerId      Int
   startSale        DateTime       @default(now())
   eventDate        DateTime       @default(now())
   status           EventStatus
-  price            Int
-  slug             String         @db.LongText
+  isFree           Boolean        @default(true)
+  price            Int?
+  slug             String         @unique
   category         EventCategory
   city             String
   address          String
@@ -96,20 +102,16 @@ model WishlistItem {
 }
 
 model Promo {
-  id        Int         @id @default(autoincrement())
-  eventId   Int
-  event     Event       @relation(fields: [eventId], references: [id])
-  PromoItem PromoItem[]
-}
-
-model PromoItem {
-  id        Int      @id @default(autoincrement())
-  name      String
-  discount  Int
-  startDate DateTime
-  endDate   DateTime
-  promoId   Int
-  promo     Promo    @relation(fields: [promoId], references: [id])
+  id              Int           @id @default(autoincrement())
+  eventId         Int
+  name            String
+  discount        Int
+  discountType    DiscountType
+  minimalPurchase Int           @default(0)
+  StartDate       DateTime      @default(now())
+  endDate         DateTime      @default(now())
+  event           Event         @relation(fields: [eventId], references: [id])
+  Transaction     Transaction[]
 }
 
 model Transaction {
@@ -117,7 +119,8 @@ model Transaction {
   userId        Int
   eventId       Int
   quantity      Int
-  promoItemId   Int
+  promoId       Int?
+  PointUsed     Int               @default(0)
   totalDiscount Int
   total         Int
   grandTotal    Int
@@ -126,6 +129,7 @@ model Transaction {
   createdAt     DateTime          @default(now())
   user          User              @relation(fields: [userId], references: [id])
   event         Event             @relation(fields: [eventId], references: [id])
+  promo         Promo?            @relation(fields: [promoId], references: [id])
 }
 
 model review {

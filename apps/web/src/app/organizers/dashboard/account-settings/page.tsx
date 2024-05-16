@@ -45,19 +45,19 @@ export default function Page() {
 
 
   return (
-    <div className='m-2 xl:m-7 w-full'>
+    <div className='p-2 xl:p-7 w-full'>
       <div className='flex gap-2 bg-white w-full p-4 max-sm:py-2 text-xgreen2 text-3xl max-md:text-2xl max-sm:text-xl items-center rounded-2xl shadow-[0_0_5px_rgba(0,0,0,0.3)]'>
       <MdManageAccounts className='text-4xl'/>
         <h1 className=''>Account Settings</h1>
       </div>
 
-      <div className='flex max-md:flex-col my-7 bg-white w-full p-10 text-xgreen2 text-3xl max-md:text-2xl max-sm:text-xl items-center rounded-2xl shadow-[0_0_5px_rgba(0,0,0,0.3)]'>
+      <div className='flex my-7 bg-white w-full p-10 items-center rounded-2xl shadow-[0_0_5px_rgba(0,0,0,0.3)]'>
 
         <div className='flex justify-evenly w-full max-md:flex-col '>
 
           <div className='flex flex-col justify-between items-center grow max-w-[600px]'>
             <div className='flex items-center max-md:text-xl max-md:font-medium text-3xl text-xgreen2 gap-1'>
-              <RiImageEditFill />
+              <RiImageEditFill  />
               <p>Profile Picture</p>
             </div>
             <Image src={account?.profilePicture && isClient ? account?.profilePicture : "/images/accountLogo.png"} width={200} height={200} alt='account logo' className={`rounded-full w-auto h-auto my-5 sm:my-10 max-sm:w-[100px]`} />

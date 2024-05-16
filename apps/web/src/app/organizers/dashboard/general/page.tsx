@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import { RiFileChartFill } from 'react-icons/ri';
 import { RiCalendarScheduleFill } from "react-icons/ri";
 import { FaCalendarCheck } from "react-icons/fa";
@@ -6,81 +7,94 @@ import { RiMailStarFill } from "react-icons/ri";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { FaMoneyCheck } from "react-icons/fa";
 import { BsTicketDetailedFill } from "react-icons/bs";
+import Cookies from 'js-cookie';
+import StatBox from '@/components/statBox';
+
+interface Stat {
+  activeEvent?: number | 0,
+  scheduledEvent?: number | 0,
+  ticketSold?: number | 0,
+  totalRevenue?: number | 1000,
+  totalTransaction?: number | 0,
+  averageReview?: number | 0
+}
 
 export default function General() {
+  const [stat, setStat] = useState<Stat>({})
+
+  const getStat = async(token: string) => {
+    try {
+      const res = await fetch('http://localhost:8000/api/organizers', {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      const data = await res.json()
+      setStat(data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const token = Cookies.get("token")
+    if (token) {
+      getStat(token)
+    }
+  }, [])
+
   return (
-    <div className='m-7 w-full'>
-      <div className='flex gap-2 bg-white w-full p-4 max-sm:py-2 text-xgreen2 text-3xl max-md:text-2xl max-sm:text-xl items-center rounded-2xl shadow-[0_0_5px_rgba(0,0,0,0.3)]'>
+    <div className='sm:p-7 p-2 w-full'>
+      <div className='flex gap-2 bg-xdark w-full p-4 max-sm:py-2 text-xgreen1 text-3xl max-md:text-2xl max-sm:text-xl items-center rounded-2xl shadow-[0_0_5px_rgba(0,0,0,0.3)]'>
       <RiFileChartFill className='text-4xl'/>
         <h1 className=''>General Informations</h1>
       </div>
 
       <div className='flex w-full flex-wrap gap-5 my-7'>
-        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
-          <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
-            <FaCalendarCheck  />
-            Active Events
-          </h2>
-          <div className='flex grow items-end'>
-            <p className='text-6xl font-light text-xmetal'>0</p>
-            <p className='text-lg text-zinc-400 font-normal mb-1 ml-1'>Event(s)</p>
-          </div>
-        </div>
+        <StatBox 
+        Icon={FaCalendarCheck}
+        title={'Active Event'}
+        data={stat.activeEvent!}
+        description={'Event(s)'}
+        />
 
-        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
-          <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
-            <RiCalendarScheduleFill  />
-            Scheduled Events
-          </h2>
-          <div className='flex items-end grow'>
-            <p className='text-6xl font-light text-xmetal'>0</p>
-            <p className='text-lg text-zinc-400 font-normal mb-1 ml-1'> Event(s)</p>
-          </div>
-        </div>
+        <StatBox 
+        Icon={RiCalendarScheduleFill}
+        title={'Scheduled Events'}
+        data={stat.scheduledEvent!}
+        description={'Event(s)'}
+        />
 
-        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
-          <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
-            <RiMailStarFill />
-            Average Reviews
-          </h2>
-          <div className='flex items-end grow'>
-            <p className='text-6xl font-light text-xmetal'>0</p>
-            <p className='text-lg text-zinc-400 font-normal mb-1 ml-1'> /5</p>
-          </div>
-        </div>
-
-      <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
-          <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
-            <FaMoneyBillWave />
-            Total Revenues
-          </h2>
-          <div className='flex items-end grow'>
-            <p className='text-6xl font-light text-xmetal'>0</p>
-            <p className='text-lg text-zinc-400 font-normal mb-1 ml-1'> Rupiah(s)</p>
-          </div>
-        </div>
-
-        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
-          <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
-            < BsTicketDetailedFill  />
-            Tickets Sold
-          </h2>
-          <div className='flex items-end grow'>
-            <p className='text-6xl font-light text-xmetal'>0</p>
-            <p className='text-lg text-zinc-400 font-normal mb-1 ml-1'> Ticket(s)</p>
-          </div>
-        </div>
         
-        <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[200px] max-md:min-w-[400px] max-lg:min-w-[250px] min-w-[400px] grow rounded-xl min-h-40 py-6 px-10 flex flex-col'>
-          <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
-            <FaMoneyCheck />
-            Total Transactions
-          </h2>
-          <div className='flex items-end grow'>
-            <p className='text-6xl font-light text-xmetal'>0</p>
-            <p className='text-lg text-zinc-400 font-normal mb-1 ml-1'> Transaction(s)</p>
-          </div>
-        </div>
+        <StatBox 
+        Icon={RiMailStarFill}
+        title={'Average Reviews'}
+        data={+stat.averageReview?.toFixed(2)! || 0}
+        description={'/5'}
+        />
+
+        <StatBox 
+        Icon={FaMoneyBillWave}
+        title={'Total Revenues'}
+        data={Intl.NumberFormat('en-DE').format(stat.totalRevenue || 0)}
+        description={'Rupiah(s)'}
+        />
+
+        <StatBox 
+        Icon={BsTicketDetailedFill}
+        title={'Tickets Sold'}
+        data={stat.ticketSold!}
+        description={'Ticket(s)'}
+        />
+
+        <StatBox 
+        Icon={FaMoneyCheck}
+        title={'Total Transactions'}
+        data={stat.totalTransaction!}
+        description={'Transaction(s)'}
+        />
       </div>
     </div>
   )
