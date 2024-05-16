@@ -38,7 +38,7 @@ enum DiscountType {
 
 model User {
   id             Int           @id @default(autoincrement())
-  name           String
+  name           String   
   email          String        @unique
   profilePicture String?       @db.LongText
   password       String        @db.LongText

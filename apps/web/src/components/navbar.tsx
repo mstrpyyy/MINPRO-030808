@@ -38,7 +38,8 @@ export default function Navbar() {
   }
 
   const handleLogout = () => {
-    deleteToken('token', '/')
+    router.push('/')
+    deleteToken('token')
     Cookies.remove('token')
     dispatch(setUser(null))
   }

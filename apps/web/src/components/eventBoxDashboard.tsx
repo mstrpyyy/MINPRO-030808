@@ -1,5 +1,7 @@
 'use client'
+import { getEvents } from '@/app/action';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
 interface Event {
@@ -14,43 +16,39 @@ interface Event {
 }
 
 interface EventResponse {
-  event?: Event[] 
+  event?: Event[]
 }
 
 export default function EventBoxDashboard() {
   const [event, setEvent] = useState<EventResponse>({})
 
   
-  const getEvents = async(token:any) => {
-    const res = await fetch('http://localhost:8000/api/events', {
-      method: 'GET',
-      headers: {
-        "Content-Type" : "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-    })
-    const data = await res.json()
-    setEvent(data)
-  }
-  useEffect(() => {
-    const token = Cookies.get('token')
-    if (token) {
-      getEvents(token)
+  const getData = async() => {
+    try {
+      const data = await getEvents()
+      console.log(data);
+      setEvent(data)
+    } catch (error) {
+      console.log(error);
     }
+
+  }
+  useEffect(() => { 
+    getData()
   }, [])
 
   return (
-    <div className='bg-white my-7 shadow-[0_0_5px_rgba(0,0,0,0.3)] overflow-x-auto w-full rounded-xl py-3 px-5 md:px-10 '>
-      <table className="table table-fixed min-w-[800px]">
+    <div className='overflow-x-auto w-full vertical-scroll'>
+      <table className="table w-96 lg:w-full">
         <thead>
           <tr className='text-xgreen'>
             <th className='w-2'></th>
-            <th className='w-52 text-center'>event Name</th>
-            <th className='text-center'>Start Sale</th>
+            <th className='w-52 text-center'>Event Name</th>
+            <th className='text-center'>Sale Start</th>
             <th className='text-center'>Event Date</th>
             <th className='text-center'>Status</th>
             <th className='text-center'>City</th>
-            <th className='text-center'>Available Tickets</th>
+            <th className='text-center'>Tickets</th>
             <th className='text-center'></th>
           </tr>
         </thead>
@@ -71,7 +69,9 @@ export default function EventBoxDashboard() {
                 <td className='text-center text-xmetal'>{item.status}</td>
                 <td className='text-center text-xmetal'>{item.city}</td>
                 <td className='text-center text-xmetal'>{item.availableTickets}</td>
-                <td className='text-center text-xmetal'><button className='bg-xgreen2 text-white px-2 py-1 rounded-xl' onClick={() => {console.log(item.slug);}}>Details</button></td>
+                <td className='text-center text-xmetal'>
+                  <Link href={`/organizers/dashboard/event-management/${item.slug}`} className='bg-xgreen2 text-white px-2 py-1 rounded-xl'>Details</Link>
+                </td>
               </tr>
             )
           })}

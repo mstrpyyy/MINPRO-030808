@@ -22,7 +22,7 @@ export default function Template({children}: Readonly<{children: React.ReactNode
   }, [pathname])
 
   return (
-    <div className="bg-xwhite h-[3000px] flex">
+    <div className="bg-xwhite min-h-[calc(100vh-64px)] flex">
       <div className="h-[calc(100vh-64px)] flex flex-col max-sm:hidden justify-between overflow-y-auto w-20 lg:w-80 sticky top-[67px] grow-0 shrink-0 py-10 bg-xdark">
         <DashboardOwner />
         <div className="flex flex-col  justify-center items-center ">
@@ -51,19 +51,19 @@ export default function Template({children}: Readonly<{children: React.ReactNode
             onClick={() => {router.push('/organizers/dashboard/event-management')}}
             className={`w-full text-xl transition-colors text-white p-6 hover:bg-xmetal text-left flex items-center gap-2 
             ${
-              activeButton == 'event-management'
+              activeButton.includes('event-management')
                 ? 'bg-xmetal font-bold lg:pl-10'
                 : 'bg-xdark'
             }`}
           >
             <MdOutlineTableChart
               className={`text-3xl  ${
-                activeButton == 'event-management' ? 'hidden' : 'block'
+                activeButton.includes('event-management') ? 'hidden' : 'block'
               }`}
             />
             <MdTableChart
               className={`text-3xl  ${
-                activeButton == 'event-management' ? 'block' : 'hidden'
+                activeButton.includes('event-management')? 'block' : 'hidden'
               }`}
             />
             <p className='hidden lg:block'>Event Management</p>
@@ -99,7 +99,7 @@ export default function Template({children}: Readonly<{children: React.ReactNode
           </button>
         </div>
       </div>
-      {children}
+        {children}
     </div>
   );
 }

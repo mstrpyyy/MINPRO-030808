@@ -28,17 +28,33 @@ export class EventController {
   }
   async getEventSlug (req: Request, res: Response ){
     try {
-      const events = await prisma.event.findUnique({
+      const details = await prisma.event.findUnique({
         where:{
             slug : req.params.slug
         },
         include: {
-          Promo: true
+          Promo: true,
+          Transaction: true
         }
       })
+      const review = await prisma.review.aggregate({
+          _avg: {
+              Rating: true
+          },
+          where: {
+              event: {
+                slug: req.params.slug
+            }
+          }
+      })
+
       res.status(200).send({
         status : 'ok',
-        events
+        message: 'details found',
+        details : {
+          ...details,
+          averageReview: review._avg.Rating
+        }
       })
     } catch (err) {
       res.status(400).send({
