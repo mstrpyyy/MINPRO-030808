@@ -9,6 +9,7 @@ import { IoChevronBackOutline } from "react-icons/io5";
 
 export default async function EventDetail({params} : {params: {slug:string}}) {
     const data = await getEventSlug(params.slug) 
+    
     let d1 = new Date(data.details.startSale!)
     let d2 = new Date(data.details.eventDate!)
     let saleD = d1.toLocaleDateString()

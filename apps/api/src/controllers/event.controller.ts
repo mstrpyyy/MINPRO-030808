@@ -19,7 +19,6 @@ export class EventController {
             event
         })
     } catch (err) {
-      console.log(err);
         res.status(400).send({
             status: 'error',
             message: err
@@ -81,8 +80,6 @@ export class EventController {
       })
 
     } catch (err) {
-      console.log(err);
-
       res.status(400).send({
         status : 'error',
         message : err

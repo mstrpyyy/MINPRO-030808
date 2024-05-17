@@ -14,6 +14,8 @@ enum EventStatus {
   ComingSoon
   Available
   Finished
+  Cancelled
+  SoldOut
 }
 
 enum EventCategory {
@@ -26,9 +28,11 @@ enum EventCategory {
 }
 
 enum TransactionStatus {
-  Pending
+  WaitingPayment
+  WaitingConfirmation
   Paid
-  Cancel
+  Cancelled
+  Declined
 }
 
 enum DiscountType {
@@ -38,7 +42,7 @@ enum DiscountType {
 
 model User {
   id             Int           @id @default(autoincrement())
-  name           String   
+  name           String
   email          String        @unique
   profilePicture String?       @db.LongText
   password       String        @db.LongText
@@ -47,7 +51,6 @@ model User {
   isRedeem       Boolean       @default(true)
   RedeemExpire   DateTime?
   accountType    String        @default("user")
-  wishlist       Wishlist?
   Transaction    Transaction[]
   review         review[]
   PointUser      PointUser[]
@@ -65,40 +68,24 @@ model Organizer {
 }
 
 model Event {
-  id               Int            @id @default(autoincrement())
-  name             String         @unique
+  id               Int           @id @default(autoincrement())
+  name             String        @unique
   organizerId      Int
-  startSale        DateTime       @default(now())
-  eventDate        DateTime       @default(now())
+  startSale        DateTime      @default(now())
+  eventDate        DateTime      @default(now())
   status           EventStatus
-  isFree           Boolean        @default(true)
+  isFree           Boolean       @default(true)
   price            Int?
-  slug             String         @unique
+  slug             String        @unique
   category         EventCategory
   city             String
   address          String
   availableTickets Int
-  description      String?        @db.LongText
-  organizer        Organizer      @relation(fields: [organizerId], references: [id])
-  wishlistItem     WishlistItem[]
+  description      String?       @db.LongText
+  organizer        Organizer     @relation(fields: [organizerId], references: [id])
   Transaction      Transaction[]
   review           review[]
   Promo            Promo[]
-}
-
-model Wishlist {
-  id           Int            @id @default(autoincrement())
-  userId       Int            @unique
-  user         User           @relation(fields: [userId], references: [id])
-  wishlistItem WishlistItem[]
-}
-
-model WishlistItem {
-  id         Int      @id @default(autoincrement())
-  wishlistId Int
-  eventId    Int
-  wishlist   Wishlist @relation(fields: [wishlistId], references: [id])
-  event      Event    @relation(fields: [eventId], references: [id])
 }
 
 model Promo {
@@ -120,13 +107,16 @@ model Transaction {
   eventId       Int
   quantity      Int
   promoId       Int?
-  PointUsed     Int               @default(0)
-  totalDiscount Int
+  useReferral   Boolean           @default(false)
+  PointUsed     Int?
+  totalDiscount Int?
   total         Int
   grandTotal    Int
   status        TransactionStatus
   imageUrl      String?
   createdAt     DateTime          @default(now())
+  paidAt        DateTime?
+  confirmedAt   DateTime?
   user          User              @relation(fields: [userId], references: [id])
   event         Event             @relation(fields: [eventId], references: [id])
   promo         Promo?            @relation(fields: [promoId], references: [id])

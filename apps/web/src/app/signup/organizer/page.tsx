@@ -6,9 +6,20 @@ import React, { useState } from 'react'
 import * as yup from 'yup'
 
 const registerSchema = yup.object().shape({
-    name: yup.string().required('name can not be empty'),
+    name: yup.string()
+    .matches(/^[a-zA-Z\s]*$/, 'Name can only contain letters and spaces')
+    .required('Name is required')
+    .test(
+      'no-only-spaces-or-symbols',
+      'Name cannot be only spaces or symbols',
+      (value) => {
+        return /^[a-zA-Z]+(?: [a-zA-Z]+)*$/.test(value);
+      }
+    ),
     email: yup.string().email('invalid email').required('email can not be empty'),
-    password: yup.string().min(6, 'password must contains at least 6 characters').required('password can not be empty'),
+    password: yup.string().min(6, 'password must contains at least 6 characters')
+    .required('password can not be empty')
+    .matches(/^\S*$/, 'Password cannot contain spaces')
 })
 
 

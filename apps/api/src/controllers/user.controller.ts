@@ -80,7 +80,6 @@ export class UserController {
                     email: existingUsers.email
                 }
             })
-            console.log(userId);
             const payload = {id: user.id, accountType: user.accountType, userId: userId}
             const token = sign(payload, process.env.KEY_JWT!, {expiresIn: '1h'})
             const link = `http://localhost:3000/signup/verify/${token}`
@@ -105,7 +104,6 @@ export class UserController {
             })
 
         } catch (error) {
-            console.log(error);
             res.status(400).send({
                 status: 'error',
                 message: error
@@ -115,8 +113,7 @@ export class UserController {
 
     async loginUser(req: Request, res: Response) {
         try {
-            const {email, password} = req.body  
-            console.log(req.body);                                                         
+            const {email, password} = req.body                                                        
             const user = await prisma.user.findFirst({
                 where: {
                     email,
@@ -151,6 +148,7 @@ export class UserController {
                     })
                 const expireSoonPoint = await prisma.pointUser.aggregate({
                     where: {
+                        userId: user.id,
                         expireAt: new Date(userPoint._min?.expireAt!),
                         isRedeem: false
                     },

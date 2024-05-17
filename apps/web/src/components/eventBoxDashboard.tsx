@@ -5,6 +5,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
 interface Event {
+  id?: number,
   name?: string,
   startSale?: string,
   eventDate?: string,
@@ -49,7 +50,8 @@ export default function EventBoxDashboard() {
             <th className='text-center'>Status</th>
             <th className='text-center'>City</th>
             <th className='text-center'>Tickets</th>
-            <th className='text-center'></th>
+            <th className='text-center'>Event Details</th>
+            <th className='text-center'>Confirm Payment</th>
           </tr>
         </thead>
         <tbody>
@@ -71,6 +73,9 @@ export default function EventBoxDashboard() {
                 <td className='text-center text-xmetal'>{item.availableTickets}</td>
                 <td className='text-center text-xmetal'>
                   <Link href={`/organizers/dashboard/event-management/${item.slug}`} className='bg-xgreen2 text-white px-2 py-1 rounded-xl'>Details</Link>
+                </td>
+                <td className='text-center text-xmetal'>
+                  <Link href={`/organizers/dashboard/event-management/payment-confirmations/${item.id}`} className='bg-xgreen2 text-white px-2 py-1 rounded-xl'>Confirm</Link>
                 </td>
               </tr>
             )

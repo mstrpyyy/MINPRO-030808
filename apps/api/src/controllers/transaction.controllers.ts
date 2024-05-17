@@ -9,13 +9,191 @@ export class TransactionController {
             status:'ok',
             events
         })
-    } catch (err) {
-      console.log(err);
-      
+    } catch (err) {      
         res.status(400).send({
             status: 'error',
             message: err
         })
+    }
+  }
+
+  async getWaitingConfirmationSlug(req: Request, res: Response) {
+    try {
+      const transaction = await prisma.transaction.findMany({
+        where: {
+          eventId: +req.params.slug,
+          status: "WaitingConfirmation"
+        }
+      })
+
+      const event = await prisma.event.findFirst({
+        where: {
+          id: +req.params.slug
+        }
+      })
+      res.status(200).send({
+        status: 'ok',
+        message: 'transaction found',
+        transaction,
+        event
+      })
+    } catch (error) {
+      res.status(400).send({
+        status: 'error',
+        message: error
+      })
+    }
+  }
+
+  async createTransactions(req: Request, res: Response) {
+    try {
+        await prisma.$transaction(async (tx)=>{
+          const ticketOrder = await tx.transaction.create({
+            data:  {
+              ...req.body,
+              userId: req.user?.id,
+              status: "WaitingPayment"
+            }
+          })
+          if (ticketOrder.PointUsed) {
+            await tx.pointUser.updateMany({
+              where: {
+                userId: req.user?.id
+              },
+              data: {
+                isRedeem: true
+              }
+            })
+          }
+          if (ticketOrder.useReferral) {
+            await tx.user.update({
+              where: {
+                id: req.user?.id
+              },
+              data: {
+                isRedeem: true
+              }
+            })
+          }
+          res.status(201).send({
+              status:'ok',
+              message:'Transaction successfully created. Please complete your payment',
+              ticketOrder
+          });
+        })
+      } catch (error) {
+        console.log(error)
+        res.status(400).send({
+            status: 'error',
+            message: error
+        });
+      }
+    }
+
+  async paymentUpload(req: Request, res: Response) {
+    try {
+      const {file} = req
+      if (!file) throw "no file uploaded"
+      const imageUrl = `http://localhost:8000/public/images/${file.filename}`
+      await prisma.transaction.update({
+        data: {
+          imageUrl: imageUrl,
+          status: "WaitingConfirmation",
+          paidAt: new Date()
+        },
+        where: {
+          id: +req.params.slug
+        }
+      })
+      res.status(200).send({
+        status: 'ok',
+        message: 'payment recieved, waiting for confirmation'
+      })
+    } catch (error) {
+      res.status(400).send({
+        status: 'error',
+        message: error
+      })
+    }
+  }
+
+  async paymentConfirmation(req: Request, res: Response) {
+    try {
+      const transaction = await prisma.transaction.update({
+        data: {
+          status: "Paid"
+        },
+        where:{
+          id: +req.params.slug
+        }
+      })
+
+      const event = await prisma.event.findUnique({
+        where: {
+          id: transaction.eventId
+        }
+      });
+
+      await prisma.event.update({
+        where: {
+          id: transaction.eventId
+        },
+        data: {
+          availableTickets: event?.availableTickets! - transaction.quantity
+        }
+      })      
+      res.status(200).send({
+        status: 'ok',
+        message: 'payment confirmed'
+      })
+    } catch (error) {
+      res.status(400).send({
+        status: 'error',
+        message: error
+      })
+    }
+  }
+
+  async paymentDecline(req:Request, res: Response) {
+    try {
+      const transaction = await prisma.transaction.update({
+        data: {
+          status: "Declined"
+        },
+        where: {
+          id: +req.params.slug
+        }
+      })
+      if (transaction.PointUsed) {
+        await prisma.pointUser.updateMany({
+          where: {
+            userId: req.user?.id
+          },
+          data: {
+            isRedeem: false
+          }
+        })
+      }
+      if (transaction.useReferral) {
+        await prisma.user.update({
+          where: {
+            id: req.user?.id
+          },
+          data: {
+            isRedeem: false
+          }
+        })
+      }
+      res.status(200).send({
+        status: 'ok',
+        message: 'payment declined'
+      })
+    } catch (error) {
+      res.status(400).send({
+        status: 'error',
+        message: error
+      })
+      
     }
   }
 
@@ -138,7 +316,9 @@ export class TransactionController {
         })
     } 
 
-    const groupedTransactionArray = filter === 'year' || filter === 'month' || filter === 'day'   ? Object.values(groupedTransactions) : groupedTransactions;
+    const groupedTransactionArray = filter === 'year' || filter === 'month' || filter === 'day'   
+    ? Object.values(groupedTransactions) 
+    : groupedTransactions;
 
     res.status(200).send({
         status: 'ok',
@@ -158,6 +338,8 @@ export class TransactionController {
       })
     }
   }
+
+
   
 }
 

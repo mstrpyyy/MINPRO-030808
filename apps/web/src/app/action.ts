@@ -41,3 +41,10 @@ export async function getEventSlug(slug:string) {
   const data = await res.json()
   return data
 }
+
+export async function getWaitingTransactionSlug(slug:string) {
+  const res = await fetch(`http://localhost:8000/api/transactions/waiting-confirmation/${slug}`, { next: {revalidate: 1}})
+  const data = await res.json()
+  console.log(data);
+  return data
+}
