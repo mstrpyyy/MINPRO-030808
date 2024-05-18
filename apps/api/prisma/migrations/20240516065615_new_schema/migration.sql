@@ -5,9 +5,9 @@ CREATE TABLE `User` (
     `email` VARCHAR(191) NOT NULL,
     `profilePicture` LONGTEXT NULL,
     `password` LONGTEXT NOT NULL,
-    `isActive` BOOLEAN NOT NULL DEFAULT false,
+    `isActive` BOOLEAN NOT NULL DEFAULT true,
     `referral` VARCHAR(191) NULL,
-    `isRedeem` BOOLEAN NOT NULL DEFAULT true,
+    `isRedeem` BOOLEAN NOT NULL DEFAULT false,
     `accountType` VARCHAR(191) NOT NULL DEFAULT 'user',
 
     UNIQUE INDEX `User_email_key`(`email`),
@@ -23,9 +23,23 @@ CREATE TABLE `Organizer` (
     `profilePicture` LONGTEXT NULL,
     `password` LONGTEXT NOT NULL,
     `accountType` VARCHAR(191) NOT NULL DEFAULT 'organizer',
-    `isActive` BOOLEAN NOT NULL DEFAULT false,
+    `isActive` BOOLEAN NOT NULL DEFAULT true,
 
     UNIQUE INDEX `Organizer_email_key`(`email`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Promo` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `eventId` INTEGER NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `discount` INTEGER NOT NULL,
+    `discountType` ENUM('Nominal', 'Percent') NOT NULL,
+    `minimalPurchase` INTEGER NOT NULL DEFAULT 0,
+    `StartDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `endDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -36,53 +50,18 @@ CREATE TABLE `Event` (
     `organizerId` INTEGER NOT NULL,
     `startSale` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `eventDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `status` ENUM('ComingSoon', 'available', 'Finished') NOT NULL,
-    `price` INTEGER NOT NULL,
-    `slug` LONGTEXT NOT NULL,
+    `status` ENUM('ComingSoon', 'Available', 'Finished') NOT NULL,
+    `isFree` BOOLEAN NOT NULL DEFAULT true,
+    `price` INTEGER NULL,
+    `slug` VARCHAR(191) NOT NULL,
     `category` ENUM('Sports', 'Conferences', 'Expos', 'Concerts', 'Festivals', 'ArtPerformance') NOT NULL,
     `city` VARCHAR(191) NOT NULL,
     `address` VARCHAR(191) NOT NULL,
     `availableTickets` INTEGER NOT NULL,
     `description` LONGTEXT NULL,
 
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Wishlist` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `userId` INTEGER NOT NULL,
-
-    UNIQUE INDEX `Wishlist_userId_key`(`userId`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `WishlistItem` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `wishlistId` INTEGER NOT NULL,
-    `eventId` INTEGER NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Promo` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `eventId` INTEGER NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `PromoItem` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(191) NOT NULL,
-    `discount` INTEGER NOT NULL,
-    `startDate` DATETIME(3) NOT NULL,
-    `endDate` DATETIME(3) NOT NULL,
-    `promoId` INTEGER NOT NULL,
-
+    UNIQUE INDEX `Event_name_key`(`name`),
+    UNIQUE INDEX `Event_slug_key`(`slug`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -92,13 +71,16 @@ CREATE TABLE `Transaction` (
     `userId` INTEGER NOT NULL,
     `eventId` INTEGER NOT NULL,
     `quantity` INTEGER NOT NULL,
-    `promoItemId` INTEGER NOT NULL,
-    `totalDiscount` INTEGER NOT NULL,
-    `total` INTEGER NOT NULL,
+    `transactionStatus` ENUM('Pending', 'Paid', 'Cancel') NOT NULL,
     `grandTotal` INTEGER NOT NULL,
-    `status` ENUM('Pending', 'Paid', 'Cancel') NOT NULL,
-    `imageUrl` VARCHAR(191) NULL,
+    `currency` VARCHAR(191) NOT NULL,
+    `paymentMethod` VARCHAR(191) NOT NULL,
+    `transactionDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `createdBy` VARCHAR(191) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+    `updatedBy` VARCHAR(191) NOT NULL,
+    `promoId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -119,35 +101,26 @@ CREATE TABLE `PointUser` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `point` INTEGER NOT NULL,
-    `expireDate` DATETIME(3) NOT NULL,
+    `expireAt` DATETIME(3) NOT NULL,
     `isRedeem` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Event` ADD CONSTRAINT `Event_organizerId_fkey` FOREIGN KEY (`organizerId`) REFERENCES `Organizer`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Wishlist` ADD CONSTRAINT `Wishlist_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `WishlistItem` ADD CONSTRAINT `WishlistItem_wishlistId_fkey` FOREIGN KEY (`wishlistId`) REFERENCES `Wishlist`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `WishlistItem` ADD CONSTRAINT `WishlistItem_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE `Promo` ADD CONSTRAINT `Promo_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `PromoItem` ADD CONSTRAINT `PromoItem_promoId_fkey` FOREIGN KEY (`promoId`) REFERENCES `Promo`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Event` ADD CONSTRAINT `Event_organizerId_fkey` FOREIGN KEY (`organizerId`) REFERENCES `Organizer`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_promoId_fkey` FOREIGN KEY (`promoId`) REFERENCES `Promo`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `review` ADD CONSTRAINT `review_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

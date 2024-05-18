@@ -7,6 +7,7 @@ import { PiEye } from "react-icons/pi";
 import { PiEyeSlash } from "react-icons/pi";
 import { Card } from './card';
 
+
 export default function PointBox() {
     const [showReferral, setShowReferral] = useState("hidden")
     const account = useAppSelector((state) => state.account.value)
@@ -67,6 +68,7 @@ export default function PointBox() {
             </div>
         </div>
         <Card />
+        
         </>
     )
 }

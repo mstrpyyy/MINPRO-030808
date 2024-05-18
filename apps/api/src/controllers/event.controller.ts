@@ -7,7 +7,7 @@ export class EventController {
         const events = await prisma.event.findMany()
         res.status(200).send({
             status:'ok',
-            events
+            data: events
         })
     } catch (err) {
       console.log(err);
@@ -20,14 +20,14 @@ export class EventController {
   }
   async getEventSlug (req: Request, res: Response ){
     try {
-      const events = await prisma.event.findMany({
+      const event = await prisma.event.findUnique({
         where:{
             slug : req.params.slug
         }
       })
       res.status(200).send({
         status : 'ok',
-        events
+        data: event 
       })
     } catch (err) {
       res.status(400).send({
@@ -36,9 +36,18 @@ export class EventController {
       })
     }
   }
+  
   async createEvent (req: Request, res: Response){
     try {
       const slug = req.body.name.toLowerCase().replaceAll(" ", "-")
+      const organizerIdCheck = await prisma.organizer.findUnique({
+        where: {
+          id: req.body.organizerId
+        }
+      })
+
+      if(organizerIdCheck === null) throw "Organizer ID is not found"
+      
       await prisma.event.create({
         data : {
           ...req.body,

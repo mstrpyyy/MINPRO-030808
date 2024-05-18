@@ -10,12 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum EventStatus {
-  ComingSoon
-  available
-  Finished
-}
-
 enum EventCategory {
   Sports
   Conferences
@@ -25,10 +19,21 @@ enum EventCategory {
   ArtPerformance
 }
 
+enum EventStatus {
+  ComingSoon
+  Available
+  Finished
+}
+
 enum TransactionStatus {
   Pending
   Paid
   Cancel
+}
+
+enum DiscountType {
+  Nominal
+  Percent
 }
 
 model User {
@@ -37,14 +42,13 @@ model User {
   email          String        @unique
   profilePicture String?       @db.LongText
   password       String        @db.LongText
-  isActive       Boolean       @default(false)
+  isActive       Boolean       @default(true)
   referral       String?       @unique
-  isRedeem       Boolean       @default(true)
+  isRedeem       Boolean       @default(false)
   accountType    String        @default("user")
-  wishlist       Wishlist?
   Transaction    Transaction[]
-  review         review[]
-  PointUser      PointUser[]
+  PointUser PointUser[]
+  Review    Review[]
 }
 
 model Organizer {
@@ -54,94 +58,95 @@ model Organizer {
   profilePicture String? @db.LongText
   password       String  @db.LongText
   accountType    String  @default("organizer")
-  isActive       Boolean @default(false)
-  event          Event[]
-}
-
-model Event {
-  id               Int            @id @default(autoincrement())
-  name             String
-  organizerId      Int
-  startSale        DateTime       @default(now())
-  eventDate        DateTime       @default(now())
-  status           EventStatus
-  price            Int
-  slug             String         @db.LongText
-  category         EventCategory
-  city             String
-  address          String
-  availableTickets Int
-  description      String?        @db.LongText
-  organizer        Organizer      @relation(fields: [organizerId], references: [id])
-  wishlistItem     WishlistItem[]
-  Transaction      Transaction[]
-  review           review[]
-  Promo            Promo[]
-}
-
-model Wishlist {
-  id           Int            @id @default(autoincrement())
-  userId       Int            @unique
-  user         User           @relation(fields: [userId], references: [id])
-  wishlistItem WishlistItem[]
-}
-
-model WishlistItem {
-  id         Int      @id @default(autoincrement())
-  wishlistId Int
-  eventId    Int
-  wishlist   Wishlist @relation(fields: [wishlistId], references: [id])
-  event      Event    @relation(fields: [eventId], references: [id])
+  isActive       Boolean @default(true)
+  events         Event[]
 }
 
 model Promo {
-  id        Int         @id @default(autoincrement())
-  eventId   Int
-  event     Event       @relation(fields: [eventId], references: [id])
-  PromoItem PromoItem[]
+  id              Int           @id @default(autoincrement())
+  eventId         Int
+  name            String
+  discount        Int
+  discountType    DiscountType
+  minimalPurchase Int           @default(0)
+  StartDate       DateTime      @default(now())
+  endDate         DateTime      @default(now())
+  event           Event         @relation(fields: [eventId], references: [id])
+  Transaction     Transaction[]
 }
 
-model PromoItem {
-  id        Int      @id @default(autoincrement())
-  name      String
-  discount  Int
-  startDate DateTime
-  endDate   DateTime
-  promoId   Int
-  promo     Promo    @relation(fields: [promoId], references: [id])
+model Event {
+  id                Int           @id @default(autoincrement())
+  name              String        @unique
+  organizerId       Int
+  startSale         DateTime      @default(now())
+  eventDate         DateTime      @default(now())
+  status            EventStatus
+  isFree            Boolean       @default(true)
+  price             Int?
+  slug              String        @unique
+  category          EventCategory
+  city              String
+  address           String
+  availableTickets  Int
+  backgroundTickets String?
+  background1       String?
+  backgorund2       String?
+  background3       String?  
+  descriptionTickets String?       
+  description       String?       @db.LongText
+  organizer        Organizer     @relation(fields: [organizerId], references: [id])
+  Transaction      Transaction[]
+  Review           Review[]
+  Promo            Promo[]
 }
 
 model Transaction {
-  id            Int               @id @default(autoincrement())
-  userId        Int
-  eventId       Int
-  quantity      Int
-  promoItemId   Int
-  totalDiscount Int
-  total         Int
-  grandTotal    Int
-  status        TransactionStatus
-  imageUrl      String?
-  createdAt     DateTime          @default(now())
-  user          User              @relation(fields: [userId], references: [id])
-  event         Event             @relation(fields: [eventId], references: [id])
+  id                Int               @id @default(autoincrement())
+  userId            Int
+  eventId           Int
+  quantity          Int
+  transactionStatus TransactionStatus
+  grandTotal        Int
+  currency          String //gausah
+  paymentMethod     String //gausah
+  transactionDate   DateTime          @default(now()) //gausah
+  createdAt         DateTime          @default(now())
+  createdBy         String //gausah
+  updatedAt         DateTime          @updatedAt //gausah
+  updatedBy         String //gausah
+  event             Event             @relation(fields: [eventId], references: [id])
+  user              User              @relation(fields: [userId], references: [id])
+  Promo             Promo?            @relation(fields: [promoId], references: [id])
+  promoId           Int?
 }
 
-model review {
+model Review {
   id      Int    @id @default(autoincrement())
   userId  Int
   eventId Int
-  Rating  Int
-  Review  String
+  rating  Int
+  descriptionReview  String
   user    User   @relation(fields: [userId], references: [id])
   event   Event  @relation(fields: [eventId], references: [id])
 }
 
 model PointUser {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  point      Int
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  point    Int
   expireAt DateTime
-  isRedeem   Boolean  @default(false)
-  user       User     @relation(fields: [userId], references: [id])
+  isRedeem Boolean  @default(false)
+  user     User     @relation(fields: [userId], references: [id])
 }
+
+// model User {
+//   id        Int          @id @default(autoincrement())
+//   name      String
+//   email     String       @unique
+//   createdAt DateTime     @default(now())
+//   updatedAt DateTime     @updatedAt
+//   transactions Transaction[]
+//   reviews   EventReview[]
+//   // Add other fields as necessary
+// }

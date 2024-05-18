@@ -5,6 +5,7 @@ import { VerifyToken } from '@/middleware/token.middleware'
 import { OrganizerRouter } from './organizer.router'
 import { AccountRouter } from './account.router'
 import { EventRouter } from './event.router'
+import { transactionRouter } from './transaction.router'
 
 export class ApiRouter {
     private userRouter: UserRouter 
@@ -33,6 +34,7 @@ export class ApiRouter {
         this.router.use('/organizers', this.organizerRouter.getRouter())
         this.router.use('/accounts', this.accountRouter.getRouter())
         this.router.use('/event', this.eventRouter.getRouter())
+        this.router.use('/transaction', transactionRouter)
     }
 
     getRouter(): Router {

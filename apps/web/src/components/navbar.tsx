@@ -67,7 +67,7 @@ export default function Navbar() {
 }
 
   return (
-    <div className="navbar bg-xwhite flex w-full shadow-[0_0_15px_0px_rgba(113,113,122,1)]  px-2 md:px-10 select-none sticky top-0 z-40">
+    <div className=" fixed navbar bg-xwhite flex w-full shadow-[0_0_15px_0px_rgba(113,113,122,1)]  px-2 md:px-10 select-none  top-0 z-40">
       <Link href={'/'} className="hidden md:block text-xgreen3 text-2xl font-bold">Eventopia</Link>
       <Link href={'/'} className={`${searchEffect} items-center md:hidden text-xgreen font-bold text-3xl`}><TfiTicket /><p>E</p></Link>
       <div className="flex-1 max-lg:mx-8 mx-16">

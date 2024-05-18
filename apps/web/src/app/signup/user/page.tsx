@@ -24,7 +24,7 @@ export default function Register() {
                 headers: {
                     "content-Type": "application/json"
                 },
-                body: JSON.stringify(dataSet)
+                body: JSON.stringify(dataSet) 
             })
             const data = await response.json()
             if (data.status != "ok") {

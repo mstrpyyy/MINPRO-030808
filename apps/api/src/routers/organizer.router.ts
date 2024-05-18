@@ -16,6 +16,7 @@ export class OrganizerRouter {
     this.router.post('/register', this.organizerController.createOrganizer)
     this.router.post('/login', this.organizerController.loginOrganizer)
     this.router.get('/', this.organizerController.getOrganizer)
+    this.router.delete('/:id', this.organizerController.deleteOrganizer)
   }
 
   getRouter(): Router {

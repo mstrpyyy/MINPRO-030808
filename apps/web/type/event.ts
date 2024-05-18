@@ -1,0 +1,21 @@
+export interface IEvents {
+    id: number;
+    name: string;
+    organizerId: number;
+    startSale: string;
+    eventDate: string;
+    status: string;
+    isFree: boolean;
+    price: number;
+    slug: string;
+    category: string;
+    city: string;
+    adress: string;
+    availableTickets: number;
+    backgroundTickets: string;
+    background1: string;
+    backgorund2: string;
+    background3: string;  
+    descriptionTickets: string;  
+    description: string;
+};

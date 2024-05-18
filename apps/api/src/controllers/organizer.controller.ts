@@ -23,7 +23,38 @@ export class OrganizerController {
         }
     }
 
+    
+    async deleteOrganizer(req: Request, res: Response) {
+        try {
+            const organizer = await prisma.organizer.findUnique({
+                where: {
+                    id : parseInt(req.params.id)
+                }
+            })
+
+            console.log(organizer)
+
+            if(organizer === null) throw "Organizer ID is not found"
+
+            await prisma.organizer.delete({
+                where: {
+                    id : parseInt(req.params.id)
+                }
+            });
+
+            res.status(202).send({
+                message: "Request accepted for processing"
+            })
+        } catch (error) {
+            res.status(400).send({
+                status: 'error',
+                message: error
+            })            
+        }
+    }
+
     async createOrganizer(req: Request, res: Response) {
+        const regex = /^\s*$/
         try {
             const {name, email, password} = req.body
             const salt = await genSalt(10)
@@ -33,7 +64,9 @@ export class OrganizerController {
                     email
                 }
             })
-            if (organizer?.isActive == true) throw "email already exist"
+            if (req.body.name == "" || req.body.name.length > 1 && regex.test(req.body.name)) throw "Name is mandatory field. Please input your name."
+            if (req.body.name.length < 2) throw "Your name is to short. Please input your name at least 3 characters"
+            if (organizer?.isActive == true) throw "Email already exist. Please input another email."
             if (organizer?.isActive == false && organizer) {
                 organizer = await prisma.organizer.update({
                     data: {

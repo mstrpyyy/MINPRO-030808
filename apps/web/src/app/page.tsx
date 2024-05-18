@@ -1,5 +1,6 @@
 import MainHero from '@/components/mainHero'
 import dynamic from 'next/dynamic';
+import EventDetail from './event/[slug]/page';
 const Point = dynamic(() => import('@/components/pointBox'), { ssr: false })
 
 export default function Home() {

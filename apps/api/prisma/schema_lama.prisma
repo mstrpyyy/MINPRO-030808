@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum EventStatus {
+  ComingSoon
+  Available
+  Finished
+}
+
+enum EventCategory {
+  Sports
+  Conferences
+  Expos
+  Concerts
+  Festivals
+  ArtPerformance
+}
+
+enum EventType {
+  Paid
+  Free
+}
+
+enum TransactionStatus {
+  Pending
+  Paid
+  Cancel
+}
+
+model User {
+  id             Int           @id @default(autoincrement())
+  name           String
+  email          String        @unique
+  profilePicture String?       @db.LongText
+  password       String        @db.LongText
+  isActive       Boolean       @default(false)
+  referral       String?       @unique
+  isRedeem       Boolean       @default(true)
+  accountType    String        @default("user")
+  Transaction    Transaction[]
+  review         review[]
+  PointUser      PointUser[]
+}
+
+model Organizer {
+  id             Int     @id @default(autoincrement())
+  name           String
+  email          String  @unique
+  profilePicture String? @db.LongText
+  password       String  @db.LongText
+  accountType    String  @default("organizer")
+  isActive       Boolean @default(false)
+  event          Event[]
+}
+
+model Event {
+  id               Int            @id @default(autoincrement())
+  name             String
+  organizerId      Int
+  startSale        DateTime       @default(now())
+  eventDate        DateTime       @default(now())
+  status           EventStatus
+  price            Int
+  slug             String         @db.LongText
+  category         EventCategory
+  city             String
+  address          String
+  availableTickets Int
+  description      String?        @db.LongText
+  organizer        Organizer      @relation(fields: [organizerId], references: [id])
+  transaction      Transaction[]
+  Review           review[]
+}
+
+model Transaction {
+  id            Int               @id @default(autoincrement())
+  userId        Int
+  eventId       Int
+  quantity      Int
+  promoItemId   Int
+  totalDiscount Int
+  total         Int
+  grandTotal    Int
+  status        TransactionStatus
+  imageUrl      String?
+  createdAt     DateTime          @default(now())
+  user          User              @relation(fields: [userId], references: [id])
+  event         Event             @relation(fields: [eventId], references: [id])
+}
+
+model review {
+  id      Int    @id @default(autoincrement())
+  userId  Int
+  eventId Int
+  Rating  Int
+  Review  String
+  user    User   @relation(fields: [userId], references: [id])
+  event   Event  @relation(fields: [eventId], references: [id])
+}
+
+model PointUser {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  point      Int
+  expireAt DateTime
+  isRedeem   Boolean  @default(false)
+  user       User     @relation(fields: [userId], references: [id])
+}
