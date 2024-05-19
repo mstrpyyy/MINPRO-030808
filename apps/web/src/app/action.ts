@@ -77,3 +77,9 @@ export async function getUserTrans() {
   return data
 }
 
+export async function getAllEvents() {
+  const res = await fetch('http://localhost:8000/api/events/lists')
+  const data = await res.json()
+  console.log(data);
+  return data
+} 

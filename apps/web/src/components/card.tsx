@@ -1,22 +1,43 @@
 'use client'
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
+import { getAllEvents } from "@/app/action"
 
+interface IEvents {
+    image: string
+    name: string
+    slug: string
+    category: string
+}
+
+interface IData {
+    events?: IEvents[]
+}
 
 export const Card = () => {
-    const [events, setPost] = React.useState<any>([]);
-        
-    React.useEffect(() => {
+    const [data, setData] = useState<IData>({})
 
-    }, []);
+    const getData  = async() => {
+        try {
+            const res = await getAllEvents()
+            const data = await res
+            setData(data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(()=> {
+        getData()
+    }, [])
 
     return (
         <>
             <div className="flex gap-10 ">
-                {events.data?.map((listEvents: any) => (
+                {data.events?.map((listEvents: any) => (
                     <div className="card w-96 bg-base-100 shadow-xl">
-                        <figure><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvUAdObRio4jrBycPtHnMZeyd7jtFAJSf7xxCN_nP4_oLrpxpeD78KoDpkMrrceVLldKGyDZpyrDwIC3azr6Wr7RfpdZyisaOI1Bndf3jtKMxs_iXGsTFumJN0OW_HDfiEmVle1mDxxGKG6M0MBKUEdOI3R7_UzxB2FiOJrVph8ZQZXjgrWgiRMBpW8w/w1200-h630-p-k-no-nu/Hammersonic-Lineup.jpg" alt="Event" /></figure>
+                        <figure><img src={listEvents.image} alt="Event" /></figure>
                         <div className="card-body">
                             <h2 className="card-title">
                                 {listEvents.name}
