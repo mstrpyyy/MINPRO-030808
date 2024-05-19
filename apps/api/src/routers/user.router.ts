@@ -9,10 +9,12 @@ export class UserRouter {
   private router: Router;
   private userController: UserController
   private validator: Validator
+  private verifyToken: VerifyToken
 
   constructor() {
     this.userController = new UserController()
     this.validator = new Validator()
+    this.verifyToken = new VerifyToken()
     this.router = Router();
     this.initializeRoutes();
   }
@@ -21,6 +23,7 @@ export class UserRouter {
     this.router.post('/register', this.validator.validatorRegister, this.userController.createUser)
     this.router.post('/login', this.validator.validatorLogin, this.userController.loginUser)
     this.router.get('/', this.userController.getUser)
+    this.router.get('/points', this.verifyToken.verify, this.userController.getUserPoint)
   }
 
   getRouter(): Router {

@@ -3,7 +3,7 @@ import { IconType } from 'react-icons';
 
 export default function StatBox({data, title, description, Icon} :{data:number | string; title: string; description:string; Icon:IconType}) {
   return (
-    <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[270px] min-w-[300px] flex-1 rounded-xl min-h-40 py-6 px-10 flex flex-col'>
+    <div className='bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] max-sm:min-w-[270px] min-w-[300px] 2xl:min-w-[350px] flex-1 rounded-xl min-h-40 py-6 px-10 flex flex-col'>
           <h2 className='text-2xl text-xgreen2 w-60 gap-2 flex items-center'>
             <Icon  />
             {title}

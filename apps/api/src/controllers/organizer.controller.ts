@@ -136,8 +136,7 @@ export class OrganizerController {
 
     async loginOrganizer(req: Request, res: Response) {
         try {
-            const {email, password} = req.body   
-            console.log(password);                                                        
+            const {email, password} = req.body                                                         
             const organizer = await prisma.organizer.findFirst({
                 where: {
                     email

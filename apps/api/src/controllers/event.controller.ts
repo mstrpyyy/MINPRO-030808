@@ -2,15 +2,18 @@ import { Request, Response } from 'express';
 import prisma from '@/prisma';
 
 export class EventController {
-  async getEvent(req: Request, res: Response) {
+  async getEventByOrg(req: Request, res: Response) {
     try {
         const event = await prisma.event.findMany({
           where: {
             organizerId: req.user?.id
           },
+          orderBy: {
+            eventDate: 'desc'
+          },
           include: {
             Promo : true,
-            Transaction: true
+            Transaction : true
           },
         })
         res.status(200).send({
@@ -19,13 +22,13 @@ export class EventController {
             event
         })
     } catch (err) {
-      console.log(err);
         res.status(400).send({
             status: 'error',
             message: err
         })
     }
   }
+  
   async getEventSlug (req: Request, res: Response ){
     try {
       const details = await prisma.event.findUnique({
@@ -64,15 +67,14 @@ export class EventController {
     }
   }
 
-
-
   async createEvent (req: Request, res: Response){
     try {
       const slug = req.body.name.toLowerCase().replaceAll(" ", "-")
       await prisma.event.create({
         data : {
           ...req.body,
-          slug
+          slug,
+          organizerId: req.user?.id
         }
       })
       res.status(201).send({
@@ -81,12 +83,28 @@ export class EventController {
       })
 
     } catch (err) {
-      console.log(err);
-
       res.status(400).send({
         status : 'error',
         message : err
       });      
+    }
+  }
+
+  async getEvent(req: Request, res: Response) {
+    try {
+        const events = await prisma.event.findMany()
+        res.status(200).send({
+            status:'ok',
+            message: 'events found',
+            events
+        })
+    } catch (err) {
+      console.log(err);
+      
+        res.status(400).send({
+            status: 'error',
+            message: err
+        })
     }
   }
 }

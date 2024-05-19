@@ -38,24 +38,26 @@ export default function EventTransDetails() {
   return (
     <div className='flex flex-col sm:min-w-[400px] items-center justify-center flex-1'>
         <div className='flex flex-col items-center justify-center w-full h-full'>
-            <select name="filterTime" id="filterTime" value={filterTime} onChange={(e) => setFilterTime(e.target.value)}>
-                <option value="year">Year</option>
-                <option value="month">Month</option>
-                <option value="day">Day</option>
-            </select>
-            <select name="filterType" id="filterType" value={filterType} onChange={(e) => setFilterType(e.target.value)}>
-                <option value="transactions">transaction</option>
-                <option value="tickets">tickets</option>
-                <option value="revenues">revenues</option>
-            </select>
+            <div className='flex gap-2'>
+                <p className='text-xmetal'>filter:</p>
+                <div>
+                    <select name="filterTime" id="filterTime" className='bg-xmetal text-sm text-white rounded-xl px-1 focus:outline-none' value={filterTime} onChange={(e) => setFilterTime(e.target.value)}>
+                        <option value="year" className='active:bg-xgreen text-white'>Year</option>
+                        <option value="month">Month</option>
+                        <option value="day">Day</option>
+                    </select>
+                    <select name="filterType" id="filterType" className='bg-xmetal text-sm text-white rounded-xl px-1 focus:outline-none'  value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+                        <option value="transactions">transaction</option>
+                        <option value="tickets">tickets</option>
+                        <option value="revenues">revenues</option>
+                    </select>
+                </div>
+            </div>
 
-            <TransactionLineChart 
-            data={transDetail.details}
-            dataType={filterType}
-            />
-            
-
-            
+                <TransactionLineChart 
+                data={transDetail.details}
+                dataType={filterType}
+                />  
         </div>
 
         <div className='flex justify-evenly w-full flex-wrap'>

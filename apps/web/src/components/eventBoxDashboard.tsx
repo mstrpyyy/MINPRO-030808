@@ -5,10 +5,12 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
 interface Event {
+  id?: number,
   name?: string,
   startSale?: string,
   eventDate?: string,
   availableTickets?: number | 0,
+  initialTickets?: number | 0,
   city?: string,
   slug?: string,
   status?: string
@@ -49,34 +51,39 @@ export default function EventBoxDashboard() {
             <th className='text-center'>Status</th>
             <th className='text-center'>City</th>
             <th className='text-center'>Tickets</th>
-            <th className='text-center'></th>
+            <th className='text-center'>Event Details</th>
+            <th className='text-center'>Confirm Payment</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={event.event?.length! > 0? '' : 'hidden'}>
           {event.event?.map((item, index) => {
             let d1 = new Date(item.startSale!)
             let d2 = new Date(item.eventDate!)
-            let saleD = d1.toLocaleDateString()
+            let saleD = d1.toDateString()
             let saleT = d1.toTimeString().slice(0,5)
-            let eventD = d2.toLocaleDateString()
+            let eventD = d2.toDateString()
             let eventT =d2.toTimeString().slice(0,5)
             return (
               <tr key={item.slug}>
                 <th className='w-2'>{index + 1}</th>
                 <td className='text-xgreen2 font-bold w-64'>{item.name}</td>
-                <td className='text-center text-xmetal'>{saleD}<br/>{saleT}</td>
-                <td className='text-center text-xmetal'>{eventD}<br/>{eventT}</td>
-                <td className='text-center text-xmetal'>{item.status}</td>
+                <td className='text-center text-xmetal'>{saleD}<br/>{saleT} WIB</td>
+                <td className='text-center text-xmetal'>{eventD}<br/>{eventT} WIB</td>
+                <td className='text-center text-xmetal'>{item.status == "ComingSoon" ? 'Comming soon' : item.status == "SoldOut" ? 'Sold out' : item.status}</td>
                 <td className='text-center text-xmetal'>{item.city}</td>
-                <td className='text-center text-xmetal'>{item.availableTickets}</td>
+                <td className='text-center text-xmetal'>{item.availableTickets}/{item.initialTickets}</td>
                 <td className='text-center text-xmetal'>
                   <Link href={`/organizers/dashboard/event-management/${item.slug}`} className='bg-xgreen2 text-white px-2 py-1 rounded-xl'>Details</Link>
+                </td>
+                <td className='text-center text-xmetal'>
+                  <Link href={`/organizers/dashboard/event-management/payment-confirmations/${item.id}`} className='bg-xgreen2 text-white px-2 py-1 rounded-xl'>Confirm</Link>
                 </td>
               </tr>
             )
           })}
         </tbody>
       </table>
+      <div className={`w-full ${event.event?.length! > 0? 'hidden' : 'block'} text-center py-5 text-zinc-400`}>no data</div>
     </div>
   )
 }

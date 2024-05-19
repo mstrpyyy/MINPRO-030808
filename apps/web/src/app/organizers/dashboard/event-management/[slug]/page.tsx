@@ -9,11 +9,12 @@ import { IoChevronBackOutline } from "react-icons/io5";
 
 export default async function EventDetail({params} : {params: {slug:string}}) {
     const data = await getEventSlug(params.slug) 
+    
     let d1 = new Date(data.details.startSale!)
     let d2 = new Date(data.details.eventDate!)
-    let saleD = d1.toLocaleDateString()
+    let saleD = d1.toDateString()
     let saleT = d1.toTimeString().slice(0,5)
-    let eventD = d2.toLocaleDateString()
+    let eventD = d2.toDateString()
     let eventT =d2.toTimeString().slice(0,5)
 
     return (
@@ -22,7 +23,7 @@ export default async function EventDetail({params} : {params: {slug:string}}) {
                 
                 <div className="flex items-center justify-between border-b-2 border-b-zinc-400">
                     <div className="flex items-center gap-4">
-                        <Link href={'/organizers/dashboard/event-management'}><IoChevronBackOutline className="text-4xl text-xgreen"/></Link>
+                        <Link href={'/organizers/dashboard/event-management'}><IoChevronBackOutline className="text-4xl text-xgreen hover:rounded-full hover:bg-zinc-200 transition-colors"/></Link>
                         <div className="flex flex-col">    
                             <p className="text-xmetal text-sm md:text-base">Event Details</p>
                             <h1 className="text-xgreen2 text-xl md:text-2xl">{data.details?.name}</h1>
@@ -43,6 +44,7 @@ export default async function EventDetail({params} : {params: {slug:string}}) {
                         saleTime={saleT}
                         category= {data.details.category}
                         ticket= {data.details.availableTickets}
+                        iTicket={data.details.initialTickets}
                         promo= {data.details.Promo}
                         description= {data.details.description}
                     />

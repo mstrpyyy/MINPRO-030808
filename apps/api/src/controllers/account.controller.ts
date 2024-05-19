@@ -50,7 +50,8 @@ export class AccountController {
                     const expireSoonPoint = await prisma.pointUser.aggregate({
                         where: {
                             expireAt: new Date(userPoint._min?.expireAt!),
-                            isRedeem: false
+                            isRedeem: false,
+                            userId: user.id
                         },
                         _sum: {
                             point: true
@@ -156,7 +157,7 @@ export class AccountController {
                     const userPoint = await prisma.pointUser.aggregate({
                             where: {
                                 userId: user?.id,
-                                isRedeem: false
+                                isRedeem: false,
                             },
                             _sum: {
                                 point: true
@@ -168,7 +169,8 @@ export class AccountController {
                     const expireSoonPoint = await prisma.pointUser.aggregate({
                         where: {
                             expireAt: new Date(userPoint._min?.expireAt!),
-                            isRedeem: false
+                            isRedeem: false,
+                            userId: user?.id
                         },
                         _sum: {
                             point: true
@@ -244,7 +246,6 @@ export class AccountController {
 
     async changeName(req: Request, res:Response) {
         try {
-            console.log(req.body);
             const { name } = req.body
             let account
             if (req.user?.accountType == "user") {
@@ -440,7 +441,6 @@ export class AccountController {
     async forgotPassword_step1(req: Request, res: Response) {
         try {
             const { accountType, email } = req.query
-            console.log(accountType, email);
             let account
             if (accountType == "user") {
                 account = await prisma.user.findFirst({
@@ -480,7 +480,6 @@ export class AccountController {
                 token
             })
         } catch (error) {
-            console.log(error);
             res.status(400).send({
                 status: 'error',
                 message: error
@@ -491,7 +490,6 @@ export class AccountController {
     async forgotPassword_step2(req: Request, res: Response) {
         try {
             const { password } = req.body
-            console.log(password);
             const salt = await genSalt(10)
             const hashPassword = await hash(password, salt)
             if (req.user?.accountType == "user") {

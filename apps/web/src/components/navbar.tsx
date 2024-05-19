@@ -9,6 +9,7 @@ import { deleteToken } from "@/app/action";
 import { useAppDispatch, useAppSelector } from "@/lib/features/hooks";
 import { setUser } from "@/lib/features/account/account";
 import { useRouter } from "next/navigation";
+import { HiFilter } from "react-icons/hi";
 
 export default function Navbar() {
   const router = useRouter()
@@ -38,8 +39,7 @@ export default function Navbar() {
   }
 
   const handleLogout = () => {
-    router.push('/')
-    deleteToken('token')
+    deleteToken('token', '/')
     Cookies.remove('token')
     dispatch(setUser(null))
   }
@@ -75,9 +75,10 @@ export default function Navbar() {
         <form className="join w-full">
           <input className="input  input-bordered join-item w-full h-10 rounded-l-xl bg-white text-xdark focus:outline-none" onFocus={() => {setSearchEffect("hidden")}} onBlur={() => {setSearchEffect("flex")}} placeholder="Search events"/>
           <div className="dropdown dropdown-end dropdown-hover">
-            <div tabIndex={0} role="button" className="bg-xgreen hover:bg-xgreen3 text-white w-20 md:w-32 h-10 flex items-center justify-evenly rounded-r-xl">
-              <p>Filter</p>
-              <FaCaretDown />
+            <div tabIndex={0} role="button" className="bg-xgreen hover:bg-xgreen3 text-white w-10 md:w-32 h-10 flex items-center justify-evenly rounded-r-xl">
+              <p className="hidden md:block">Filter</p>
+              <FaCaretDown className="hidden md:block" />
+              <HiFilter className="block md:hidden" />
             </div>
             <ul tabIndex={0} className="dropdown-content z-[2] menu rounded-box w-28 bg-xmetal text-white shadow-[0_0_15px_0px_rgba(0,0,0,0.5)] ">
               <li className="hover:bg-xgreen2 hover:font-bold w-[100%] p-2 rounded-xl">Event</li>
@@ -99,13 +100,15 @@ export default function Navbar() {
         <div className={`dropdown dropdown-end ${account?.accountType == null ? "sm:hidden" : "block"}`}>
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
               <div className={`w-10 rounded-full`}>
-                <img alt="Tailwind CSS Navbar component" src="/images/accountLogo.png" className={`${account?.accountType == null ? "hidden" : "block"}`}/>
+                <img alt="Tailwind CSS Navbar component" src={account?.profilePicture  ? account?.profilePicture : '/images/accountLogo.png'} className={`${account?.accountType == null ? "hidden" : "block"}`}/>
                 <img alt="Tailwind CSS Navbar component" src="/images/noUserLogo.png" className={`${account?.accountType == null ? "block" : "hidden"}`}/>
               </div>
           </div>
           <ul tabIndex={0} className="mt-3 z-[1] p-2 menu menu-sm dropdown-content rounded-box w-52 bg-xmetal text-white shadow-[0_0_15px_0px_rgba(0,0,0,0.5)] ">
               <li className={`block hover:bg-xgreen2 hover:font-bold rounded-xl`} onClick={() => {account?.accountType == 'user' ? router.push('/users/dashboard/general') : router.push('/organizers/dashboard/general')}}><a>Dashboard</a></li>
-              <li className={`${account?.accountType == "user"? "block" : "hidden"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Wishlist</a></li>
+              <li 
+                onClick={() => router.push('/organizers/dashboard/event-management')} 
+                className={`${account?.accountType == 'organizer' ? "block" : "hidden"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Event management</a></li>
               <li 
                 onClick={() => {
                   account?.accountType == 'user' ? router.push('/users/dashboard/account-settings') : router.push('/organizers/dashboard/account-settings')

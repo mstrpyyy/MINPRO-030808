@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { MdOutlineContentCopy } from "react-icons/md";
 import { PiEye } from "react-icons/pi";
 import { PiEyeSlash } from "react-icons/pi";
+import PointDetail from './pointDetail';
 
 export default function PointBox() {
     const [showReferral, setShowReferral] = useState("hidden")
@@ -18,10 +19,16 @@ export default function PointBox() {
         }
     }
 
+    const openModalUserPoint = () => {
+        const modal = document.getElementById("my_modal_pointDetail");
+        if (modal instanceof HTMLDialogElement) {
+            modal.showModal()}
+      }
+
 
   return (
-    <div className='w-full flex drop-shadow-[0_0_4px_rgba(0,0,0,0.3)] gap-4'>
-        <div className={`bg-xdark h-32 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "user" ? "flex" : "hidden"}`}>
+    <div className='w-full flex flex-wrap drop-shadow-[0_0_4px_rgba(0,0,0,0.3)] gap-4'>
+        <div className={`bg-xdark h-32 flex-1 min-w-[300px] flex-col rounded-xl justify-center items-center ${account?.accountType == "user" ? "flex" : "hidden"}`}>
             <p className='text-xl text-xgreen3 font-semibold'>
                 Your points:
             </p>   
@@ -29,14 +36,16 @@ export default function PointBox() {
                 {new Intl.NumberFormat('en-DE').format(+account?.sumPoint!)}
             </p> 
             <p className={`text-white ${+account?.sumPoint! == 0? "hidden" : "block"}`} >
-                {new Intl.NumberFormat('en-DE').format(+account?.expireSoonPoint!)}pts will expire on {account?.expireDate?.slice(0, 10)}
+                {new Intl.NumberFormat('en-DE').format(+account?.expireSoonPoint!)}pts will expire soon.
+                {/* on {account?.expireDate?.slice(0, 10)} */}
+                <button onClick={openModalUserPoint} className='underline ml-2'>details</button>
             </p>
-            <p className={`text-white ${+account?.sumPoint! == 0? "block" : "hidden"}`} >Share your referral and get points!</p>
+            <p className={`text-white ${+account?.sumPoint! == 0? "block" : "hidden"}`} >Get 10.000pts for every referral redeem!</p>
         </div>
         
-        <div className={`bg-xdark h-32 grow flex flex-col rounded-xl justify-center items-center ${account?.accountType == "user" ? "flex" : "hidden"}`}>
+        <div className={`bg-xdark h-32 flex-1 min-w-[300px] flex flex-col rounded-xl justify-center items-center ${account?.accountType == "user" ? "flex" : "hidden"}`}>
             <p className='text-xl text-xgreen3 font-semibold'>Your referral code:</p>
-            <div className='flex justify-between items-center w-60'>
+            <div className='flex justify-between w-64 items-center'>
                 <p className={`text-4xl text-xgreen1 ${showReferral == "show" ? "block" : "hidden"}`}>{account?.referral}</p>
                 <p className={`text-4xl text-xgreen1 ${showReferral == "show" ? "hidden" : "block"}`}>{'●'.repeat(account?.referral?.length!)}</p>
                 <div className='flex items-center gap-1'>
@@ -49,8 +58,9 @@ export default function PointBox() {
                     </button>
                 </div>
             </div>
-            <p className={`text-white ${account?.sumPoint == 0? "hidden" : "block"}`} >Share your referral and get points!</p>
+            <p className={`text-white`} >Share your referral and get points!</p>
         </div>
+        
         <div  className={`signupCTA h-32 grow flex-col rounded-xl justify-center items-center ${account?.accountType == null ? "flex" : "hidden"}`}>
             <h1 className='text-4xl text-xgreen3'>Sign up today and get rewards!</h1>
             <p className='text-white'>Sign up, invite friends, and unlock exclusive discounts together.</p>
@@ -66,6 +76,8 @@ export default function PointBox() {
         <div className={`bg-xgreen3 hover:bg-xgreen transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
             <h1 className='text-xl text-white'>Create Event</h1>
         </div>
+        
+        <PointDetail />
 
     </div>
     )
