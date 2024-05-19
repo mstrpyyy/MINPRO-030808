@@ -50,7 +50,8 @@ export class AccountController {
                     const expireSoonPoint = await prisma.pointUser.aggregate({
                         where: {
                             expireAt: new Date(userPoint._min?.expireAt!),
-                            isRedeem: false
+                            isRedeem: false,
+                            userId: user.id
                         },
                         _sum: {
                             point: true
@@ -156,7 +157,7 @@ export class AccountController {
                     const userPoint = await prisma.pointUser.aggregate({
                             where: {
                                 userId: user?.id,
-                                isRedeem: false
+                                isRedeem: false,
                             },
                             _sum: {
                                 point: true
@@ -168,7 +169,8 @@ export class AccountController {
                     const expireSoonPoint = await prisma.pointUser.aggregate({
                         where: {
                             expireAt: new Date(userPoint._min?.expireAt!),
-                            isRedeem: false
+                            isRedeem: false,
+                            userId: user?.id
                         },
                         _sum: {
                             point: true

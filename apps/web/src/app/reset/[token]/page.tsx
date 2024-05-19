@@ -84,7 +84,7 @@ return (
                     <dialog id="my_modal_resetSuccess" className="modal">
                     <div className="modal-box flex flex-col items-center justify-center mx-3 bg-white rounded-2xl grow max-w-[400px] h-[500px] p-10 drop-shadow-[0_0_4px_rgba(0,0,0,0.3)] ">
                         <form method="dialog">
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-zinc-300 ">✕</button>
                         </form>
                     <h1 className='text-xgreen2 text-4xl sm:text-5xl mb-10 font-bold text-center text-balance'>Password has been reset</h1>
                     <p className="text-zinc-500 text-center">Redirecting to home.</p>

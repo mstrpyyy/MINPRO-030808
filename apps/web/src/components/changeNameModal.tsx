@@ -8,7 +8,18 @@ import { setUser } from '@/lib/features/account/account';
 import { FaCheck } from "react-icons/fa";
 
 const registerSchema = yup.object().shape({
-    name: yup.string().required('name can not be empty'),
+    name: yup.string()
+    .matches(/^[a-zA-Z\s]*$/, 'Name must be letters')
+    .required('Name is required')
+    .test(
+      'no-only-spaces-or-symbols',
+      'Name must be letters',
+      (value) => {
+        return /^[a-zA-Z]+(?: [a-zA-Z]+)*$/.test(value);
+      }
+    )
+    .min(2, 'Name bust contains at lest 2 characters')
+    .max(20, 'Name must be less than 20 characters' ),
 })
 
 
@@ -87,7 +98,7 @@ export default function ChangeNameModal() {
                     <dialog id="my_modal_changeName" className="modal">
                         <div className="modal-box flex flex-col bg-xdark items-center justify-center rounded-2xl max-w-[400px] h-[500px] drop-shadow-[0_0_4px_rgba(0,0,0,0.3)]">
                             <form method="dialog">
-                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-zinc-300 ">✕</button>
                             </form>
                             <div className={`${isSave? 'hidden' : 'flex'} flex-col items-center w-full px-5`}>
                                 <h1 className='text-xgreen1 text-4xl font-bold text-center text-balance'>Change Name</h1>

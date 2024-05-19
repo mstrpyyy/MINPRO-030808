@@ -11,6 +11,8 @@ import cors from 'cors';
 import { PORT } from './config';
 import { ApiRouter } from './routers/api.router';
 import path from "path"
+import schedule from "node-schedule"
+import { pointScheduler } from './services/scheduler';
 
 export default class App {
   private app: Express;
@@ -20,6 +22,7 @@ export default class App {
     this.configure();
     this.routes();
     this.handleError();
+    this.scheduler()
   }
 
   private configure(): void {
@@ -61,6 +64,10 @@ export default class App {
     this.app.use('/api', apiRouter.getRouter())
 
     this.app.use('/public', express.static(path.join(__dirname, '../public')))
+  }
+
+  private scheduler(): void {
+    schedule.scheduleJob('00 41 16 * * *', pointScheduler)
   }
 
   public start(): void {

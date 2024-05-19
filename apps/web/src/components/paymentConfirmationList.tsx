@@ -1,47 +1,60 @@
 'use client'
-import { getEvents } from '@/app/action';
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import ConfirmPaymentModal from './confirmPaymentModal';
+import { getWaitingTransactionSlug } from '@/app/action';
 
-interface Event {
-  name?: string,
-  startSale?: string,
-  eventDate?: string,
-  availableTickets?: number | 0,
-  city?: string,
-  slug?: string,
-  status?: string
-  message?: string
+interface ITransaction {
+  id?: number
+  user?: IUser
+  paidAt?: Date
+  quantity?: number
+  totalDiscount?: number 
+  promoId?: number 
+  useReferral?: boolean
+  pointId?: number 
+  grandTotal?: number
+  promo?: IPromo
+  imageUrl?: string
 }
 
-interface EventResponse {
-  event?: Event[]
+interface IUser {
+  name?: string;
 }
 
-export default function PaymentConfirmationList() {
-//   const [event, setEvent] = useState<EventResponse>({})
+interface IPromo {
+  name?: string;
+  discount?: number
+  discountType?: string
+
+}
+interface IData {
+  transaction?: ITransaction[]
+}
+
+
+export default function PaymentConfirmationList({slug} : {slug: string}) {
+  const [data, setData] = useState<IData>({})
   
-  const openModal = () => {
-    const modal = document.getElementById("my_modal_ConfirmPayment");
+  
+  const getData = async(slug:any) => {
+    try {
+      const data = await getWaitingTransactionSlug(slug)
+      setData(data)
+      console.log(data);
+    } catch (error) {
+     console.log(error); 
+    }
+  }
+  
+  const openModal = (id:any) => {
+    const modal = document.getElementById(`my_modal_ConfirmPayment${id}`);
     if (modal instanceof HTMLDialogElement) {
         modal.showModal()}
   }
 
-  
-//   const getData = async() => {
-//     try {
-//       const data = await getEvents()
-//       console.log(data);
-//       setEvent(data)
-//     } catch (error) {
-//       console.log(error);
-//     }
-
-//   }
-//   useEffect(() => { 
-//     getData()
-//   }, [])
+  useEffect(() => {
+    getData(slug)
+  }, [])
 
   return (
     <div className='overflow-x-auto w-full vertical-scroll'>
@@ -52,54 +65,49 @@ export default function PaymentConfirmationList() {
             <th className='w-32 text-center'>User</th>
             <th className='text-center'>Transaction ID</th>
             <th className='text-center'>Payment Date</th>
-            <th className='text-center'>Tickets</th>
-            <th className='text-center'>Discounts</th>
-            <th className='text-center'>Points</th>
-            <th className='text-center'>Total Deduction</th>
-            <th className='text-center'>Total</th>
+            <th className='text-center'>Quantity</th>
+            <th className='text-center min-w-40'>Discounts</th>
+            <th className='text-center'>Total Deduction (IDR)</th>
+            <th className='text-center'>Total (IDR)</th>
             <th className='text-center'></th>
           </tr>
         </thead>
-        <tbody>
-        <tr>
-            <th className='w-2'>1</th>
-            <td className='text-xgreen2 font-bold max-w-32 truncate'>Arya fafifu wasweswos ngeow</td>
-            <td className='text-center text-xmetal'>#1</td>
-            <td className='text-center text-xmetal'>14 May 2024<br/>17.00</td>
-            <td className='text-center text-xmetal'>2</td>
-            <td className='text-center text-xmetal'>Early Bird<br/>10%</td>
-            <td className='text-center text-xmetal'>30.000</td>
-            <td className='text-center text-xmetal'>Rp50.000</td>
-            <td className='text-center text-xmetal'>Rp150.000</td>
-            <td className='text-center text-xmetal'>
-                <button onClick={openModal} className='bg-xgreen2 text-white px-2 py-1 rounded-xl'>Confirm payment</button>
-                <ConfirmPaymentModal />
-            </td>
-        </tr>
-          {/* {event.event?.map((item, index) => {
-            let d1 = new Date(item.startSale!)
-            let d2 = new Date(item.eventDate!)
-            let saleD = d1.toLocaleDateString()
-            let saleT = d1.toTimeString().slice(0,5)
-            let eventD = d2.toLocaleDateString()
-            let eventT =d2.toTimeString().slice(0,5)
-            return (
-              <tr key={item.slug}>
-                <th className='w-2'>{index + 1}</th>
-                <td className='text-xgreen2 font-bold w-64'>{item.name}</td>
-                <td className='text-center text-xmetal'>{saleD}<br/>{saleT}</td>
-                <td className='text-center text-xmetal'>{eventD}<br/>{eventT}</td>
-                <td className='text-center text-xmetal'>{item.status}</td>
-                <td className='text-center text-xmetal'>{item.city}</td>
-                <td className='text-center text-xmetal'>{item.availableTickets}</td>
-                <td className='text-center text-xmetal'>
-                  <Link href={`/organizers/dashboard/event-management/${item.slug}`} className='bg-xgreen2 text-white px-2 py-1 rounded-xl'>Details</Link>
-                </td>
-              </tr>
-            )
-          })} */}
+        <tbody className={data.transaction?.length! > 0? '' : 'hidden'}>
+          {
+            data.transaction?.map((item, index) => {
+              let d1 = new Date(item.paidAt!)
+              let paymentD = d1.toDateString()
+              let paymentT = d1.toTimeString().slice(0,5)
+              return (
+                <tr key={item.id}>
+                    <th className='w-2'>{index + 1}</th>
+                    <td className='text-xgreen2 font-bold max-w-32 truncate'>{item.user?.name}</td>
+                    <td className='text-center text-xmetal'>#{item.id}</td>
+                    <td className='text-center text-xmetal'>{paymentD}<br/>{paymentT} WIB</td>
+                    <td className='text-center text-xmetal'>{item.quantity}</td>
+                    <td className='text-center text-xmetal min-w-40'>
+                      <div className={item.promo? 'hidden' : 'block'}>-</div>
+                      <div className={`${item.promo? 'block' : 'hidden'} bg-xyellow text-white rounded-xl`}>{item.promo?.discountType == 'nominal' ? 'Rp' : ''}{item.promo?.name || ''} {item.promo?.discount}{item.promo?.discountType == 'Percent'? '%' : ''}</div>
+                      <div className={`${item.promo? 'block' : 'hidden'} bg-xgreen2 text-white rounded-xl my-1`}>Referral 10%</div>
+                      <div className={`${item.promo? 'block' : 'hidden'} bg-xgreen text-white rounded-xl`}>Point 10.000</div>
+                    </td>
+                    <td className='text-center text-xmetal'>{Intl.NumberFormat('en-DE').format(item.totalDiscount!) || '-'}</td>
+                    <td className='text-center text-xmetal'>{Intl.NumberFormat('en-DE').format(item.grandTotal!)}</td>
+                    <td className='text-center text-xmetal'>
+                        <button onClick={() => openModal(item.id)} className='bg-xgreen2 text-white px-2 py-1 rounded-xl'>Confirm payment</button>
+                        <ConfirmPaymentModal 
+                        id={item.id!}
+                        image={item.imageUrl!}
+                        slug={slug}
+                        getData={getData}/>
+                    </td>
+                </tr>
+              )
+            })
+          }
         </tbody>
       </table>
+      <div className={`w-full ${data.transaction?.length! > 0? 'hidden' : 'block'} text-center py-5 text-zinc-400`}>no data</div>
     </div>
   )
 }

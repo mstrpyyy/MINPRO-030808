@@ -30,12 +30,12 @@ export class UserController {
             const salt = await genSalt(10)
             const hashPassword = await hash(password, salt)
             let userId
-            let existingUsers = await prisma.user.findUnique({
+            let newUser = await prisma.user.findUnique({
                 where: {
                     email
                 }
             })
-            if (existingUsers?.isActive == true) throw "email already exist"
+            if (newUser?.isActive == true) throw "email already exist"
             if (refCode.length !== 0) {
                 const existingReferrals = await prisma.user.findUnique({
                     where: {
@@ -47,8 +47,8 @@ export class UserController {
                 userId = existingReferrals.id
                 
             }
-            if (existingUsers?.isActive == false && existingUsers) {
-                existingUsers = await prisma.user.update({
+            if (newUser?.isActive == false && newUser) {
+                newUser = await prisma.user.update({
                     data: {
                         name,
                         email,
@@ -60,7 +60,7 @@ export class UserController {
                 })               
             }
             else {
-                existingUsers = await prisma.user.create({
+                newUser = await prisma.user.create({
                     data: {
                         name,
                         email,
@@ -70,14 +70,14 @@ export class UserController {
             }
 
             const mili = new Date().getMilliseconds().toString()
-            const referralNum = mili + existingUsers.id
-            const referralItem = name.replace(" ", "").toUpperCase().slice(0, 7) + referralNum
+            const referralNum = mili + newUser.id
+            const referralItem = name.replace(" ", "").toUpperCase().slice(0, 5) + referralNum
             const user = await prisma.user.update({
                 data: {
                     referral: referralItem,
                 },
                 where: {
-                    email: existingUsers.email
+                    email: newUser.email
                 }
             })
             const payload = {id: user.id, accountType: user.accountType, userId: userId}
@@ -187,6 +187,27 @@ export class UserController {
                     token
                 })
             }
+        } catch (error) {
+            res.status(400).send({
+                status: 'error',
+                message: error
+            })
+        }
+    }
+
+    async getUserPoint(req: Request, res: Response) {
+        try {
+            const userPoint = await prisma.pointUser.findMany({
+                where: {
+                    userId: req.user?.id,
+                    isRedeem: false
+                }
+            })
+            res.status(200).send({
+                status: 'ok',
+                messsage: 'get user point success',
+                userPoint
+            })
         } catch (error) {
             res.status(400).send({
                 status: 'error',

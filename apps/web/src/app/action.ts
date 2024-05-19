@@ -11,8 +11,9 @@ export async function getToken() {
     return cookies().get("token")
 }
 
-export async function deleteToken(key: string) {
+export async function deleteToken(key: string, url: string) {
   cookies().delete(key)
+  redirect(url)
 }
 
 export async function getEvents() {
@@ -45,6 +46,34 @@ export async function getEventSlug(slug:string) {
 export async function getWaitingTransactionSlug(slug:string) {
   const res = await fetch(`http://localhost:8000/api/transactions/waiting-confirmation/${slug}`, { next: {revalidate: 1}})
   const data = await res.json()
-  console.log(data);
   return data
 }
+
+export async function getUserPoint() {
+  const token = cookies().get('token')
+  console.log(token);
+  const res = await fetch('http://localhost:8000/api/users/points', {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token?.value}`
+    }
+  })
+  const data = await res.json()
+  return data
+}
+
+export async function getUserTrans() {
+  const token = cookies().get('token')
+  console.log(token);
+  const res = await fetch('http://localhost:8000/api/transactions/user-transactions', {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token?.value}`
+    }
+  })
+  const data = await res.json()
+  return data
+}
+

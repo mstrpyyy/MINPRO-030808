@@ -10,8 +10,14 @@ import OrganizerResetForm from './organizerResetForm';
 import UserResetForm from './userResetForm';
 
 const registerSchema = yup.object().shape({
-    password: yup.string().required('Password can not be empty'),
-    newPassword: yup.string().required('New password can not be empty'),
+    password: yup.string().min(6, 'password must contains at least 6 characters')
+    .max(20, 'password must be less than 20 characters')
+    .required('password can not be empty')
+    .matches(/^\S*$/, 'Password cannot contain spaces'),
+    newPassword: yup.string().min(6, 'password must contains at least 6 characters')
+    .max(20, 'password must be less than 20 characters')
+    .required('password can not be empty')
+    .matches(/^\S*$/, 'Password cannot contain spaces'),
 })
 
 
@@ -112,7 +118,7 @@ export default function ChangePasswordModal() {
                     <dialog id="my_modal_changePassword" className="modal">
                         <div className="modal-box flex flex-col bg-xdark items-center justify-center rounded-2xl max-w-[400px] h-[500px] drop-shadow-[0_0_4px_rgba(0,0,0,0.3)]">
                             <form method="dialog">
-                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-zinc-300 ">✕</button>
                             </form>
                             <div className={`${isSave? 'hidden' : 'flex'} flex-col items-center w-full px-5`}>
                                 <h1 className='text-xgreen1 text-4xl font-bold text-center text-balance'>Change Password</h1>
@@ -139,7 +145,7 @@ export default function ChangePasswordModal() {
                                         <dialog id="my_modal_organizerReset" className="modal">
                                             <div className="modal-box bg-white max-w-[350px]">
                                                 <form method="dialog">
-                                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+                                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-zinc-300 ">✕</button>
                                                 </form>
                                                 <UserResetForm/>
                                             </div>
@@ -150,7 +156,7 @@ export default function ChangePasswordModal() {
                                         <dialog id="my_modal_organizerReset" className="modal">
                                             <div className="modal-box bg-white max-w-[350px]">
                                                 <form method="dialog">
-                                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+                                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-zinc-300 ">✕</button>
                                                 </form>
                                                 <OrganizerResetForm/>
                                             </div>

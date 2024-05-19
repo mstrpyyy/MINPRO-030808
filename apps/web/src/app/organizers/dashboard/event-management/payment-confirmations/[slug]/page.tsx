@@ -7,7 +7,6 @@ import { IoChevronBackOutline } from "react-icons/io5";
 
 export default async function PaymentConfirmationsPage({params} : {params: {slug:string}}) {
   const data = await getWaitingTransactionSlug(params.slug) 
-  console.log(data);
 
   return (
       <div className='overflow-x-auto p-2 xl:p-7 w-full vertical-scroll'>
@@ -27,7 +26,9 @@ export default async function PaymentConfirmationsPage({params} : {params: {slug
             </div>
             <p className="text-sm md:text-base font-bold px-2 py-1 bg-xgreen text-white rounded-xl">Available</p>
         </div>
-          <PaymentConfirmationList />
+          <PaymentConfirmationList
+          slug={params.slug}
+          />
         </div>
       </div>
   )

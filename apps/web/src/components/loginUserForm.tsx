@@ -95,7 +95,7 @@ export default function UserLoginForm() {
                             <dialog id="my_modal_userReset" className="modal">
                                 <div className="modal-box bg-white max-w-[350px]">
                                     <form method="dialog">
-                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-zinc-300 ">✕</button>
                                     </form>
                                     <UserResetForm />
                                 </div>

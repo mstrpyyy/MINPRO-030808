@@ -80,6 +80,8 @@ model Event {
   category         EventCategory
   city             String
   address          String
+  initialTickets   Int?
+  image            String?       @db.LongText
   availableTickets Int
   description      String?       @db.LongText
   organizer        Organizer     @relation(fields: [organizerId], references: [id])
@@ -108,7 +110,7 @@ model Transaction {
   quantity      Int
   promoId       Int?
   useReferral   Boolean           @default(false)
-  PointUsed     Int?
+  pointId       Int?
   totalDiscount Int?
   total         Int
   grandTotal    Int
@@ -117,9 +119,12 @@ model Transaction {
   createdAt     DateTime          @default(now())
   paidAt        DateTime?
   confirmedAt   DateTime?
+  DeclinedAt    DateTime?
+  CancelledAt   DateTime?
   user          User              @relation(fields: [userId], references: [id])
   event         Event             @relation(fields: [eventId], references: [id])
   promo         Promo?            @relation(fields: [promoId], references: [id])
+  PointUser     PointUser[]
 }
 
 model review {
@@ -133,10 +138,12 @@ model review {
 }
 
 model PointUser {
-  id       Int      @id @default(autoincrement())
-  userId   Int
-  point    Int      @default(10000)
-  expireAt DateTime
-  isRedeem Boolean  @default(false)
-  user     User     @relation(fields: [userId], references: [id])
+  id            Int          @id @default(autoincrement())
+  userId        Int
+  point         Int          @default(10000)
+  expireAt      DateTime
+  isRedeem      Boolean      @default(false)
+  transactionId Int?
+  user          User         @relation(fields: [userId], references: [id])
+  transaction   Transaction? @relation(fields: [transactionId], references: [id])
 }

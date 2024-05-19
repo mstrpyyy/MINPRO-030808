@@ -1,5 +1,8 @@
 import { Response, Request } from "express";
 import prisma from "@/prisma";
+import db from "@/helpers/db";
+import { createEvent } from "@/services/transaction.event";
+import { formatDateToLocalString } from "@/helpers/dateConverter";
 
 export class TransactionController {
   async getTransaction(req: Request, res: Response) {
@@ -23,6 +26,20 @@ export class TransactionController {
         where: {
           eventId: +req.params.slug,
           status: "WaitingConfirmation"
+        },
+        include: {
+          user: {
+            select: {
+              name: true
+            }
+          },
+          promo: {
+            select: {
+              name: true,
+              discount: true,
+              discountType: true
+            }
+          }
         }
       })
 
@@ -45,6 +62,58 @@ export class TransactionController {
     }
   }
 
+  async getUserTransaction(req: Request, res: Response) {
+    try {
+      const transaction = await prisma.transaction.findMany({
+        where:{
+          userId: req.user?.id
+        },
+        include: {
+          event: {
+            select: {
+              name: true,
+              eventDate: true
+            }
+          }
+        }
+      })
+  
+      const successTrans = await prisma.transaction.count({
+        where:{
+          userId: req.user?.id,
+          status: "Paid"
+        }
+      })
+  
+      const upcoming = await prisma.transaction.count({
+        where:{
+          userId: req.user?.id,
+          event: {
+            eventDate: {
+              lt: new Date()
+            }
+          }       
+        }
+      })
+      res.status(200).send({
+        status: 'ok',
+        message: 'transaction found',
+        transaction,
+        successTrans,
+        upcoming
+      })
+    } catch (error) {
+      res.status(400).send({
+        status: 'error',
+        message: error
+      })
+    }
+    
+
+    
+
+  }
+
   async createTransactions(req: Request, res: Response) {
     try {
         await prisma.$transaction(async (tx)=>{
@@ -55,13 +124,14 @@ export class TransactionController {
               status: "WaitingPayment"
             }
           })
-          if (ticketOrder.PointUsed) {
-            await tx.pointUser.updateMany({
+          if (ticketOrder.pointId) {
+            await tx.pointUser.update({
               where: {
-                userId: req.user?.id
+                id: ticketOrder.pointId,
               },
               data: {
-                isRedeem: true
+                isRedeem: true,
+                transactionId: ticketOrder.id
               }
             })
           }
@@ -75,6 +145,29 @@ export class TransactionController {
               }
             })
           }
+          const event = await tx.event.findUnique({
+            where: {
+              id: ticketOrder.eventId
+            }
+          });
+    
+          await tx.event.update({
+            where: {
+              id: ticketOrder.eventId
+            },
+            data: {
+              availableTickets: event?.availableTickets! - ticketOrder.quantity
+            }
+          })  
+          
+          const d = new Date()
+          const expireAt = new Date(d.setMinutes(d.getMinutes() + 10))
+          createEvent({
+            name: `INV${ticketOrder.id}`,
+            expireAt: formatDateToLocalString(expireAt),
+            orderId: ticketOrder.id
+          })
+          
           res.status(201).send({
               status:'ok',
               message:'Transaction successfully created. Please complete your payment',
@@ -121,27 +214,25 @@ export class TransactionController {
     try {
       const transaction = await prisma.transaction.update({
         data: {
-          status: "Paid"
+          status: "Paid",
+          confirmedAt: new Date()
         },
         where:{
           id: +req.params.slug
         }
       })
 
-      const event = await prisma.event.findUnique({
-        where: {
-          id: transaction.eventId
-        }
-      });
+      if (transaction.pointId) {
+        await prisma.pointUser.update({
+          data: {
+            transactionId: transaction.id
+          },
+          where: {
+            id: transaction.pointId
+          }
+        })
+      }
 
-      await prisma.event.update({
-        where: {
-          id: transaction.eventId
-        },
-        data: {
-          availableTickets: event?.availableTickets! - transaction.quantity
-        }
-      })      
       res.status(200).send({
         status: 'ok',
         message: 'payment confirmed'
@@ -158,32 +249,50 @@ export class TransactionController {
     try {
       const transaction = await prisma.transaction.update({
         data: {
-          status: "Declined"
+          status: "Declined",
+          DeclinedAt: new Date()
         },
         where: {
           id: +req.params.slug
         }
       })
-      if (transaction.PointUsed) {
-        await prisma.pointUser.updateMany({
+      if (transaction.pointId) {
+        await prisma.pointUser.update({
           where: {
-            userId: req.user?.id
+            id: transaction.pointId
           },
           data: {
-            isRedeem: false
+            isRedeem: false,
+            transactionId: null
           }
         })
       }
       if (transaction.useReferral) {
         await prisma.user.update({
           where: {
-            id: req.user?.id
+            id: transaction.userId
           },
           data: {
             isRedeem: false
           }
         })
       }
+
+      const event = await prisma.event.findUnique({
+        where: {
+          id: transaction.eventId
+        }
+      });
+
+      await prisma.event.update({
+        where: {
+          id: transaction.eventId
+        },
+        data: {
+          availableTickets: event?.availableTickets! + transaction.quantity
+        }
+      })   
+
       res.status(200).send({
         status: 'ok',
         message: 'payment declined'

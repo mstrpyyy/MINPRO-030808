@@ -39,7 +39,7 @@ export default function LoginRedirectModal() {
         <dialog id="my_modal_redirect" className="modal">
         <div className="modal-box bg-white max-w-[750px] pb-16">
             <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-zinc-300 ">✕</button>
             </form>
             <div className='bg-white flex flex-col items-center'>
             <h1 className='text-xgreen2 text-4xl md:text-5xl font-bold mt-7 max-sm:mb-6 text-center text-balance'>Choose your account type.</h1>
@@ -53,7 +53,7 @@ export default function LoginRedirectModal() {
                 <dialog id="my_modal_userLogin" className="modal">
                     <div className="modal-box bg-white max-w-[350px]">
                         <form method="dialog">
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-zinc-300 ">✕</button>
                         </form>
                         <UserLoginForm />
                     </div>
@@ -66,7 +66,7 @@ export default function LoginRedirectModal() {
                 <dialog id="my_modal_organizerLogin" className="modal">
                     <div className="modal-box bg-white max-w-[350px]">
                         <form method="dialog">
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">✕</button>
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-zinc-300 ">✕</button>
                         </form>
                         <OrganizerLoginForm />
                     </div>

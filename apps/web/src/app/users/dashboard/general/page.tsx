@@ -1,14 +1,15 @@
 import React from 'react'
 import { RiFileChartFill } from 'react-icons/ri';
 import { RiCalendarScheduleFill } from "react-icons/ri";
-import { RiHandCoinFill } from "react-icons/ri";
 import { FaMoneyCheck } from "react-icons/fa";
 import dynamic from 'next/dynamic';
+import { getUserTrans } from '@/app/action';
 const Point = dynamic(() => import('@/components/pointBox'), { ssr: false })
 
-export default function General() {
+export default async function General() {
+  const data = await getUserTrans()
   return (
-    <div className='m-7 w-full'>
+    <div className='sm:p-7 p-2 w-full'>
       <div className='flex gap-2 bg-xdark w-full p-4 max-sm:py-2 text-xgreen1 text-3xl max-md:text-2xl max-sm:text-xl items-center rounded-2xl shadow-[0_0_5px_rgba(0,0,0,0.3)]'>
       <RiFileChartFill className='text-4xl'/>
         <h1 className=''>General Informations</h1>
@@ -22,7 +23,7 @@ export default function General() {
             Upcoming Events
           </h2>
           <div className='flex items-center xl:justify-center grow'>
-            <p className='text-6xl xl:text-[10rem] font-light text-white'>0</p>
+            <p className='text-6xl xl:text-[10rem] font-light text-white'>{data.upcoming}</p>
             <p className='text-lg text-zinc-400 font-normal mb-1 ml-1'> Event(s)</p>
           </div>
         </div>
@@ -33,7 +34,7 @@ export default function General() {
             Total Transactions
           </h2>
           <div className='flex items-center xl:justify-center grow'>
-            <p className='text-6xl xl:text-[10rem] font-light text-white'>0</p>
+            <p className='text-6xl xl:text-[10rem] font-light text-white'>{data.successTrans}</p>
             <p className='text-lg text-zinc-400 font-normal mb-1 ml-1'> Transaction(s)</p>
           </div>
         </div>
