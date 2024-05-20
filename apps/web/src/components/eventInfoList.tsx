@@ -44,8 +44,8 @@ export default function EventInfoList({name, eventDate, eventTime, city, address
 
       <div className='flex gap-2 max-sm:flex-wrap'>
         <div className='flex justify-between items-start w-full flex-col border-b-2 border-zinc-300 shrink sm:p-2 py-2 overflow-x-hidden'>
-          <p className='text-xgreen text-sm font-semibold'>Price</p>
-          <p className='text-xmetal text-lg w-full sm:pr-5 truncate'>{price}</p>
+          <p className='text-xgreen text-sm font-semibold'>Price (IDR)</p>
+          <p className='text-xmetal text-lg w-full sm:pr-5 truncate'>{Intl.NumberFormat('en-DE').format(price)}</p>
         </div>
     
 

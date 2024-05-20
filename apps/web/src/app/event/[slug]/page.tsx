@@ -44,9 +44,14 @@ export const revalidate = 3600
 
 export default async function EventDetail({ params }: { params: { slug: string } }) {
     const data = await getEventSlug(params.slug)
-    // const dataReview = await getEventReview
     console.log(`Isi nya : ${JSON.stringify(data)}`)
-    // console.log(dataReview)
+
+    let d1 = new Date(data.details.startSale!)
+    let d2 = new Date(data.details.eventDate!)
+    let saleD = d1.toDateString()
+    let saleT = d1.toTimeString().slice(0,5)
+    let eventD = d2.toDateString()
+    let eventT = d2.toTimeString().slice(0,5)
 
     return (
         <div>
@@ -77,8 +82,8 @@ export default async function EventDetail({ params }: { params: { slug: string }
                                     {data.details.description}
                                 </p>
                                 <div className="p-3">
-                                    <p className="text-1xl font-bold sm:text-1xl text-blue-800 ">🗓️ {data.details.startSale}</p>
-                                    <p className="text-1xl font-bold sm:text-1xl text-blue-800 ">🕓 {data.details.eventDate} - Selesai</p>
+                                    <p className="text-1xl font-bold sm:text-1xl text-blue-800 ">🗓️ {saleD} at {saleT} WIB</p>
+                                    <p className="text-1xl font-bold sm:text-1xl text-blue-800 ">🕓 {eventD} at {eventT} WIB - Selesai</p>
                                     <p className="text-1xl font-bold sm:text-1xl text-blue-800 ">📍  {data.details.city}, {data.details.address}</p>
                                 </div>
 

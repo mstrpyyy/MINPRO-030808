@@ -26,10 +26,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <Navbar />
-        {/* <Header /> */}
         {children}
-        {/* <Footer /> */}
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
     </StoreProvider>

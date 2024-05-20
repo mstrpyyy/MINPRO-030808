@@ -10,6 +10,7 @@ import { MdManageAccounts } from 'react-icons/md';
 import { MdEditCalendar } from "react-icons/md";
 import { usePathname, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 const DashboardOwner = dynamic(() => import('@/components/dashboardOwnerCard'), { ssr: false })
 
 export default function Template({children}: Readonly<{children: React.ReactNode}>) {
@@ -94,7 +95,7 @@ export default function Template({children}: Readonly<{children: React.ReactNode
           <button
           onClick={() => {router.push('/organizers/dashboard/create-event')}} 
           className="text-white text-xl bg-xgreen2 transition-colors hover:bg-xgreen1 p-2 px-4 rounded-xl flex justify-center items-center gap-2">
-          <p className='hidden lg:block'>Create Event</p>
+          <Link href={'/organizers/dashboard/create-event'} className='hidden lg:block'>Create Event</Link>
             < MdEditCalendar className='text-3xl'/>
           </button>
         </div>

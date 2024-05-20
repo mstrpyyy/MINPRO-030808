@@ -78,7 +78,7 @@ export async function getUserTrans() {
 }
 
 export async function getAllEvents() {
-  const res = await fetch('http://localhost:8000/api/events/lists')
+  const res = await fetch('http://localhost:8000/api/events/lists', {next: {revalidate: 1}})
   const data = await res.json()
   console.log(data);
   return data

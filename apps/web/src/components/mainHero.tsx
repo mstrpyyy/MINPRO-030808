@@ -12,16 +12,11 @@ export default function MainHero() {
         </div>
         <div className="relative z-[1] flex flex-col items-center justify-center h-[300px] md:rounded-3xl">
             <div className='flex flex-col items-center'>
-                <div className='text-xl sm:text-4xl text-white text-center font-light sm:max-w-[1000px] drop-shadow-[0_0_10px_rgba(0,0,0,1)] px-6'>
+                <div className='text-4xl xl:text-7xl font-bold text-white text-center  sm:max-w-[1000px] drop-shadow-[0_0_10px_rgba(0,0,0,1)] px-6'>
                     <p data-aos="fade">
-                    test
+                    Welcome to Eventopia!
                     </p>
                 </div>
-            </div>
-            <div className='flex flex-col items-center mt-10'>
-                <Link href={`/`} data-aos="fade">
-                    <MdKeyboardArrowDown className='text-amber-500 text-4xl drop-shadow-[0_0_10px_rgba(0,0,0,1)] active:text-white'/>
-                </Link>
             </div>
         </div>
         </div>
