@@ -27,7 +27,7 @@ export default function PointBox() {
 
 
   return (
-    <div className='w-full flex flex-wrap drop-shadow-[0_0_4px_rgba(0,0,0,0.3)] gap-4'>
+    <div className='w-full flex flex-wrap drop-shadow-[0_0_4px_rgba(0,0,0,0.3)] gap-4 max-md:px-4 max-md:my-5'>
         <div className={`bg-xdark h-32 flex-1 min-w-[300px] flex-col rounded-xl justify-center items-center ${account?.accountType == "user" ? "flex" : "hidden"}`}>
             <p className='text-xl text-xgreen3 font-semibold'>
                 Your points:
@@ -62,20 +62,20 @@ export default function PointBox() {
         </div>
         
         <div  className={`signupCTA h-32 grow flex-col rounded-xl justify-center items-center ${account?.accountType == null ? "flex" : "hidden"}`}>
-            <h1 className='text-4xl text-xgreen3'>Sign up today and get rewards!</h1>
-            <p className='text-white'>Sign up, invite friends, and unlock exclusive discounts together.</p>
+            <h1 className='text-2xl max-md:text-center font-semibold md:text-4xl text-xgreen3'>Sign up today and get rewards!</h1>
+            <p className='max-md:text-sm max-md:text-center text-white'>Sign up, invite friends, and unlock exclusive discounts together.</p>
         </div>
         
 
-        <Link href={'/organizers/dashboard/account-settings'} className={`bg-white hover:bg-xwhite transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
+        <Link href={'/organizers/dashboard/account-settings'} className={`bg-white min-w-60 hover:bg-xwhite transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
             <h1 className='text-xl text-xblue'>Manage account</h1>
         </Link>
-        <Link href={'/organizers/dashboard/general'} className={`bg-white hover:bg-xwhite transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
+        <Link href={'/organizers/dashboard/general'} className={`bg-white min-w-60 hover:bg-xwhite transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
             <h1 className='text-xl text-xblue'>Dashboard</h1>
         </Link>
-        <div className={`bg-xgreen3 hover:bg-xgreen transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
+        <Link href={'/organizers/dashboard/create-event'} className={`bg-xgreen3 min-w-60 hover:bg-xgreen transition-colors hover:cursor-pointer select-none w-3 h-14 grow flex flex-col rounded-xl justify-center items-center ${account?.accountType == "organizer" ? "flex" : "hidden"}`}>
             <h1 className='text-xl text-white'>Create Event</h1>
-        </div>
+        </Link>
         
         <PointDetail />
 

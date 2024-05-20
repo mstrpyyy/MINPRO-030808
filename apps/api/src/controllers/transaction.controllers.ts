@@ -85,16 +85,22 @@ export class TransactionController {
         }
       })
   
-      const upcoming = await prisma.transaction.count({
-        where:{
+      const upcomingEvents = await prisma.transaction.findMany({
+        where: {
           userId: req.user?.id,
           event: {
             eventDate: {
-              lt: new Date()
+              gt: new Date()
             }
-          }       
-        }
-      })
+          }
+        },
+        select: {
+          eventId: true
+        },
+        distinct: ['eventId']
+      });
+      
+      const upcoming = upcomingEvents.length
       res.status(200).send({
         status: 'ok',
         message: 'transaction found',
@@ -166,7 +172,7 @@ export class TransactionController {
             name: `INV${ticketOrder.id}`,
             expireAt: formatDateToLocalString(expireAt),
             orderId: ticketOrder.id
-          })
+          }) 
           
           res.status(201).send({
               status:'ok',

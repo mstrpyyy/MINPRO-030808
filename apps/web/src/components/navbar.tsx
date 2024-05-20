@@ -92,7 +92,7 @@ export default function Navbar() {
         <div className="flex gap-4 items-center">
           <button className="text-xblue font-bold text-sm  px-4 py-2 rounded-xl max-lg:hidden block">Explore</button>
           <button  className={`${account?.accountType == "organizer"? "block" : "hidden"} text-xblue font-bold text-sm  px-4 py-2 rounded-xl max-lg:hidden block`} onClick={() => checkOrganizer('/organizers/dashboard/general')}>Dashboard</button>
-          <button  className="text-xblue font-bold text-sm  px-4 py-2 rounded-xl max-lg:hidden block" onClick={() => checkOrganizer('/')}>Create event</button>
+          <button  className="text-xblue font-bold text-sm  px-4 py-2 rounded-xl max-lg:hidden block" onClick={() => checkOrganizer('/organizers/dashboard/create-event')}>Create event</button>
           <Link className={`${account?.accountType == null ? "block" : "hidden"} w-20 h-8 grow-0 py-1 text-white bg-xblue  hover:bg-xblue1  rounded-xl max-sm:hidden text-center`} href={"/signup"}>Sign Up</Link>
           <LoginRedirectModal />
         </div>
@@ -105,18 +105,28 @@ export default function Navbar() {
               </div>
           </div>
           <ul tabIndex={0} className="mt-3 z-[1] p-2 menu menu-sm dropdown-content rounded-box w-52 bg-xmetal text-white shadow-[0_0_15px_0px_rgba(0,0,0,0.5)] ">
-              <li className={`block hover:bg-xgreen2 hover:font-bold rounded-xl`} onClick={() => {account?.accountType == 'user' ? router.push('/users/dashboard/general') : router.push('/organizers/dashboard/general')}}><a>Dashboard</a></li>
-              <li 
-                onClick={() => router.push('/organizers/dashboard/event-management')} 
-                className={`${account?.accountType == 'organizer' ? "block" : "hidden"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Event management</a></li>
-              <li 
-                onClick={() => {
-                  account?.accountType == 'user' ? router.push('/users/dashboard/account-settings') : router.push('/organizers/dashboard/account-settings')
-                  }} 
-                className={`${account?.accountType == null ? "hidden" : "block"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Settings</a></li>
-              <li onClick={() => handleLogout()} className={`${account?.accountType == null ? "hidden" : "block"} hover:bg-red-500  text-red-500 hover:text-white font-bold rounded-xl`}><a>log out</a></li>
-              <li onClick={() => router.push('/signup')} className={`${account?.accountType == null ? "block" : "hidden"} hover:bg-xgreen2  text-xgreen1 hover:text-white font-bold rounded-xl`}><a>Sign up</a></li>
-              <li onClick={() => showModal()} className={`${account?.accountType == null ? "block" : "hidden"} hover:bg-xgreen2 text-xgreen1 hover:text-white font-bold rounded-xl`}><a>log in</a></li>
+            <li className={`${account?.accountType ? "block" : "hidden"} hover:bg-xgreen2 hover:font-bold rounded-xl`} onClick={() => {account?.accountType == 'user' ? router.push('/users/dashboard/general') : router.push('/organizers/dashboard/general')}}><a>Dashboard</a></li>
+            <li 
+              onClick={() => router.push('/organizers/dashboard/event-management')} 
+              className={`${account?.accountType == 'organizer' ? "block" : "hidden"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Event management</a>
+            </li>
+            <li 
+              onClick={() => router.push('/users/dashboard/transactions')} 
+              className={`${account?.accountType == 'user' ? "block" : "hidden"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Transactions</a>
+            </li>
+            <li 
+              onClick={() => {
+                account?.accountType == 'user' ? router.push('/users/dashboard/account-settings') : router.push('/organizers/dashboard/account-settings')
+                }} 
+              className={`${account?.accountType == null ? "hidden" : "block"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Account</a>
+            </li>
+            <li 
+              onClick={() => router.push('/organizers/dashboard/create-event')} 
+              className={`${account?.accountType == 'organizer' ? "block" : "hidden"} hover:bg-xgreen2 hover:font-bold rounded-xl`}><a>Create event</a>
+            </li>
+            <li onClick={() => handleLogout()} className={`${account?.accountType == null ? "hidden" : "block"} hover:bg-red-500  text-red-500 hover:text-white font-bold rounded-xl`}><a>log out</a></li>
+            <li onClick={() => router.push('/signup')} className={`${account?.accountType == null ? "block" : "hidden"} hover:bg-xgreen2  text-xgreen1 hover:text-white font-bold rounded-xl`}><a>Sign up</a></li>
+            <li onClick={() => showModal()} className={`${account?.accountType == null ? "block" : "hidden"} hover:bg-xgreen2 text-xgreen1 hover:text-white font-bold rounded-xl`}><a>log in</a></li>
           </ul>
         </div>     
       </div>

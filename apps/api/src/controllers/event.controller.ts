@@ -68,6 +68,8 @@ export class EventController {
   }
 
   async createEvent (req: Request, res: Response){
+    console.log(req.body);
+    
     try {
       const slug = req.body.name.toLowerCase().replaceAll(" ", "-")
       await prisma.event.create({
@@ -107,4 +109,5 @@ export class EventController {
         })
     }
   }
+  
 }
